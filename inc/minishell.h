@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 18:21:17 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:48:57 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_shell
 	int		tmp_fd;
 	int		exit_status;
 	char		*retprompt;
+	char		**ms_env;
 	char		**env_paths;
 }		t_shell;
 
@@ -938,8 +939,12 @@ int	prep_exec(t_shell *shell, char **envp);
 void    free_cmd_lst(t_cmd *cmd);
 void    free_cmd_link(t_cmd *cmd);
 void	free_all(t_shell *shell);
-void	ft_env_varadd_back(t_envp_cpy **envpc_lst, t_envp_cpy *new);
-t_envp_cpy	*ft_envpcnew(void);
+char	**lst_to_envp(t_envp_cpy *envpc_lst);
+t_envp_cpy	*envp_to_lst(char **envp);
+int	get_envp_lst_size(t_envp_cpy *envpc_lst);
+void	clear_envpc_lst(t_envp_cpy *envpc_lst);
+void	ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new);
+t_envp_cpy	*ft_envpcnew(char *var);
 char	*find_path(char *cmd, char **env_paths);
 char	**get_env_paths(char **envp);
 //t_cmd_lst	*parse_args(char *str);

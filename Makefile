@@ -6,7 +6,7 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/10/12 09:02:51 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/10/24 13:25:31 by bgrulois         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ PARSRCS		=	common_core.c common_initializations.c common_memory.c \
 				#tests_main.c
 EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c \
 				exec_utils.c wait.c cd.c echo.c pwd.c env.c \
-				builtins_ctl.c \
+				builtins_ctl.c envpc_lst_ops.c env_handler.c \
 				signals.c exec.c ../../shell.c #../../builtins/*.c\
 
 PARSRCDIR	=	src/pars

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 13:42:27 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:58:32 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,30 @@ int	is_valid_history(char *str)
 	return (1);
 }
 
+void	set_env(t_shell *shell, char **envp)
+{
+	if (shell->ms_env == NULL)
+		shell->envpc = envp_to_lst(envp);
+	else
+	{
+		clear_envpc_lst(shell->envpc);
+		shell->envpc = envp_to_lst(shell->ms_env);
+	}
+	return ;
+}
+
 int	start_shell(t_shell *shell, char **envp)
 {
 	t_hdoc_tab	*hdoc_tab;
 
 	hdoc_tab = NULL;
+	shell->ms_env = NULL;
 	shell->env_paths = get_env_paths(envp);		//call again if env builtins are used
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
+		set_env(shell, envp);
 		shell->retprompt = readline("minishell#> ");
 		if (shell->retprompt == NULL)
 			break ;
@@ -47,13 +61,15 @@ int	start_shell(t_shell *shell, char **envp)
 		if (shell->cmd_head != NULL)
 		{
 			if (!shell->cmd->next)
-				exit_code = simple_exec(shell, envp);
+				exit_code = simple_exec(shell, shell->ms_env);
 			else
-				exit_code = pipeline(shell, envp);
+				exit_code = pipeline(shell, shell->ms_env);
 			if (shell->retprompt)
 				bzero(shell->retprompt,
 					ft_strlen(shell->retprompt));
 			free_cmd_lst(shell->cmd);
+			free(shell->ms_env);
+			shell->ms_env = lst_to_envp(shell->envpc);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 17:48:59 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:51:28 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_envp_lst_size(t_envp_cpy *envpc_lst)
 		envpc_lst = envpc_lst->next;
 	}
 	printf("lst_size_debug +++> %i\n", n);
-	return (n)
+	return (n);
 }
 
 t_envp_cpy	*envp_to_lst(char **envp)
@@ -39,9 +39,10 @@ t_envp_cpy	*envp_to_lst(char **envp)
 		return (NULL);
 	while (envp[i] != NULL)
 	{
-		envpc_lst->var = ft_strdup(envp[i]);
-		ft_env_varadd_back(&envpc_lst, ft_envpcnew());
+		//envpc_lst->var = ft_strdup(envp[i]);
+		ft_env_varadd_back(envpc_lst, ft_envpcnew(ft_strdup(envp[i])));
 		envpc_lst = envpc_lst->next;
+		i++;
 	}
 	envpc_lst->next = NULL;
 	return (envpc_lst);
@@ -60,7 +61,7 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	envpc = malloc(sizeof(char *) * lst_size + 1);
 	if (!envpc)
 		return (NULL);
-	while (envp_lst->next != NULL)
+	while (envpc_lst->next != NULL)
 	{
 		envpc[i] = ft_strdup(envpc_lst->var);
 		envpc_lst = envpc_lst->next;

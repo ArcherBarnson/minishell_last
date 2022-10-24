@@ -1,33 +1,26 @@
 #include "../../inc/minishell.h"
 
-t_envp_cpy	ft_envpcnew(void)
+t_envp_cpy	*ft_envpcnew(char *var)
 {
 	t_envp_cpy	*new;
 
 	new = malloc(sizeof(t_envp_cpy));
 	if (!new)
 		return (NULL);
-	new->var = NULL;
+	new->var = var;
 	new->next = NULL;
 	return (new);
 }
 
-void	ft_env_varadd_back(t_envp_cpy **envpc_lst, t_envp_cpy *new)
+void	ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new)
 {
-	t_envp_cpy	*last;
-
-	last = NULL;
 	if (!envpc_lst || !new)
 		return ;
-	new = *envpc_lst;
-	if (!new)
+	while (envpc_lst->next)
 	{
-		*envpc_lst = new;
-		return ;
+		envpc_lst = envpc_lst->next;
 	}
-	while (last->next)
-		last = last->next;
-	last->next = new;
+	envpc_lst->next = new;
 	return ;
 }
 
@@ -42,13 +35,10 @@ void	clear_envpc_lst(t_envp_cpy *envpc_lst)
 	while (envpc_lst->next)
 	{
 		free(head->var);
-		free(envpc->var);
 		free(head);
 		head = envpc_lst;
 		envpc_lst = envpc_lst->next;
 	}
-	free(envpc_lst->var);
-	free(envpc_lst);
 	free(head->var);
 	free(head);
 	return ;
