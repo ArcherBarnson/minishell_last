@@ -36,6 +36,7 @@ t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
 	*hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
 	ft_tklist_freeall(&lex);
+	//test
 	//ft_execfree_freeall(&pars);
 	//ft_pars_freeall(&pars);
 	return (pars.cmd);
