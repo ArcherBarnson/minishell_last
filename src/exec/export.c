@@ -4,19 +4,19 @@ int	export_error(char *str, int i, int error_type)
 {
 	if (error_type == 0)
 	{
-		write(2, "Needs a variable name before '=' operator\n", 123);
+		write(2, "Needs a variable name before '=' operator\n", 43);
 		return (0);
 	}
 	if (error_type == 1)
 	{
 		write(2, &str[i], 1);
-		write(2, " : Invalid identifier before '='\n", 123);
+		write(2, " : Invalid identifier before '='\n", 34);
 		return (0);
 	}
 	return (0);
 }
 
-int	is_env_var(char *str);
+int	is_env_var(char *str)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ int	is_env_var(char *str);
 int	is_valid_identifier(char c)
 {
 	if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') &&
-		(c < '0' || c > '9') && str[0] != '_')
+		(c < '0' || c > '9') && c != '_')
 		return (0);
 	return (1);
 }
@@ -56,7 +56,21 @@ int	is_valid_string(char *str)
 	return (1);
 }
 
-int	env_var_exists(char *str, char **envpc);
+int	ft_strccmp(char *s1, char *s2, char c)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (1);
+	while (s1[i] && s2[i] && s1[i] != c && s2[i] != c && s1[i] == s2[i])
+		i++;
+	if (s1[i] == s2[i])
+		return (0);
+	return (1);
+}
+
+int	env_var_exists(char *str, char **envpc)
 {
 	int	i;
 
@@ -65,29 +79,42 @@ int	env_var_exists(char *str, char **envpc);
 		return (0);
 	while (envpc[i] != NULL)
 	{
-		if (strcmp(str, envpc[i]) == 0)
+		if (ft_strccmp(str, envpc[i], '=') == 0)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	export(int ac, char **av, char **envpc)
+
+void	mod_env_var(char *var, t_envp_cpy *envpc_lst)
+{
+	while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
+		envpc_lst = envpc_lst->next;
+	free(envpc_lst->var);
+	envpc_lst->var = ft_strdup(var);
+	return ;
+}
+
+int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (ac == 1)
 		return (1);
-	while (++i < ac)
+	while (i < ac)
 	{
 		if (is_valid_string(av[i]))
 		{
+			printf("\n\nav[%i] == %s\n\n", i, av[i]);
 			if (env_var_exists(av[i], envpc))
-				;//mod_var_in_envpc_lst
+				mod_env_var(av[i], envpc_lst);
 			else
-				;//add_var_to_envpc_lst
+				ft_env_varadd_back(envpc_lst,
+					ft_envpcnew(ft_strdup(av[i])));
 		}
+		i++;
 	}
 	return (0);
 }

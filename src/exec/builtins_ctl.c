@@ -12,9 +12,8 @@
 
 #include "../inc/minishell.h"
 
-int	exec_builtin(t_shell *shell, char **envp)
+int	exec_builtin(t_shell *shell)
 {
-	(void)envp;
 	if (ft_strcmp(shell->cmd->token[0], PWD) == 1)
 		return (pwd(get_tab_size(shell->cmd->token),
 			shell->cmd->token));
@@ -24,15 +23,20 @@ int	exec_builtin(t_shell *shell, char **envp)
 	if (ft_strcmp(shell->cmd->token[0], CD) == 1)
 		return (cd(get_tab_size(shell->cmd->token),
 			shell->cmd->token));
-	/*if (ft_strcmp(shell->cmd->token[0], UNSET) == 1)
-		return (unset(get_tab_size(shell->cmd->token),
-			shell->cmd->token, envp));
+	if (ft_strcmp(shell->cmd->token[0], UNSET) == 1)
+	{
+		if (unset(get_tab_size(shell->cmd->token),
+			shell->cmd->token, shell->envpc) == NULL)
+			return (1);
+		else
+			return (0);
+	}
 	if (ft_strcmp(shell->cmd->token[0], EXPORT) == 1)
 		return (export(get_tab_size(shell->cmd->token),
-			shell->cmd->token, envp));*/
+			shell->cmd->token, shell->ms_env, shell->envpc));
 	if (ft_strcmp(shell->cmd->token[0], ENV) == 1)
 		return (env(get_tab_size(shell->cmd->token),
-			shell->cmd->token, envp));
+			shell->cmd->token, shell->ms_env));
 	return (-1);
 }
 

@@ -9,10 +9,14 @@ t_shell	*minishell_init(char **envp)
 	if (!shell)
 		return (NULL);
 	shell->cmd = NULL;
+	shell->cmd_head = NULL;
 	shell->env_paths = NULL;
 	shell->retprompt = NULL;
-	//shell->envpc = NULL;
-	//shell->envpc = envp_cpy(envp);		//fct doesnt exist
+	shell->envpc = NULL;
+	pipe(shell->pipefd);
+	shell->ms_env = NULL;
+	shell->env_paths = NULL;
+	shell->envpc = NULL;
 	/*if (!shell->envpc)
 	{
 		free(shell);

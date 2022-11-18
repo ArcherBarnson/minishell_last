@@ -20,7 +20,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	pid = make_pid_tab(cmds_get_n(shell));
 	signal(SIGINT, SIG_IGN);
 	if (check_builtins(shell) == 1)
-		return (exec_builtin(shell, envp));
+		return (exec_builtin(shell));
 	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
 	if (command_not_found(shell) == -1)
 		return (127);
@@ -59,9 +59,9 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 	is_builtin = check_builtins(shell);
 	if (is_builtin == 0)
 	{
-	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-	if (command_not_found(shell) == -1)
-		return (127);
+		shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
+		if (command_not_found(shell) == -1)
+			return (127);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -74,7 +74,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 			execve(shell->cmd->cmd, shell->cmd->token, envp);
 		else
 		{
-			exec_builtin(shell, envp);
+			exec_builtin(shell);
 			exit(0);
 		}
 	}

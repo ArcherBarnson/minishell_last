@@ -810,13 +810,13 @@ int				ft_tests(void);
 /* ************************************************************************** */
 /*                                 EXEC PART                                  */
 /* ************************************************************************** */
-/*typedef struct	s_envp_cpy
+struct	s_envp_cpy
 {
 	char		*var;
-	void	*next;
-}	t_envp_cpy;
+	t_envp_cpy	*next;
+};
 
-
+/*
 typedef struct	s_cmd_lst
 {
 	char	*cmd;		// = NULL
@@ -826,15 +826,15 @@ typedef struct	s_cmd_lst
 	int	len;		// = number of commands (size of the linked list)
 	struct	s_cmd_lst *next;
 	struct	s_cmd_lst *prev;
-}		t_cmd_lst;*/
+}		t_cmd_lst;
 
 //int	ft_strlen(char *str);
 int	ft_strcmp(char *s1, char *s2);
 //int	ft_strncmp(const char *s1, const char *s2, size_t size);
 char	**ft_split(char const *s, char c);
 //char	**envp_update(char **envp, int mode, char *var);
-char	**export(char **envp, char *var);
-char	**unset(char **envp, char *var);
+int	**export(char **envp, char *var);
+t_envp_cpy	*unset(char **envp, char *var);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	get_tab_size(char **tab);
 //char	*ft_strdup(char *src);
@@ -871,18 +871,17 @@ char	**get_env_paths(char **envp);
 t_shell		*minishell_init(char **envp);
 //void	ft_lstadd_back(t_envp_cpy **lst, t_envp_cpy *new);
 //t_envp_cpy	*ft_lstnew(void *content);
-
+*/
 ////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                 EXEC PART                                  */
 /* ************************************************************************** */
-struct	s_envp_cpy
+/*struct	s_envp_cpy
 {
 	char		*var;
 	void	*next;
 };
 
-/*
 typedef struct	s_cmd_lst
 {
 	char	*cmd;		// = NULL
@@ -899,8 +898,8 @@ int	ft_strcmp(char *s1, char *s2);
 //int	ft_strncmp(const char *s1, const char *s2, size_t size);
 char	**ft_split(char const *s, char c);
 //char	**envp_update(char **envp, int mode, char *var);
-char	**export(char **envp, char *var);
-char	**unset(char **envp, char *var);
+int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
+t_envp_cpy	*unset(int ac, char **av, t_envp_cpy *envpc_lst);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	get_tab_size(char **tab);
 //char	*ft_strdup(char *src);
@@ -918,7 +917,7 @@ int	ft_wait(int *pid, t_shell *shell);
 void    display_signal_intercept(int sig);
 void	sigquit_ignore(int sig);
 int     check_builtins(t_shell *shell);
-int     exec_builtin(t_shell *shell, char **envp);
+int     exec_builtin(t_shell *shell);
 void	sigint_handler(int sig);
 //void    free_cmd_set(t_cmd **cmds);
 int	start_shell(t_shell *shell, char **envp);
