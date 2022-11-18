@@ -13,6 +13,7 @@ t_shell	*minishell_init(char **envp)
 	shell->env_paths = NULL;
 	shell->retprompt = NULL;
 	shell->envpc = NULL;
+	shell->envpc_head = NULL;
 	pipe(shell->pipefd);
 	shell->ms_env = NULL;
 	shell->env_paths = NULL;
