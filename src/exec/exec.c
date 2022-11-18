@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void	debug_exec(t_shell *shell)
+/*void	debug_exec(t_shell *shell)
 {
 	if (!shell->cmd)
 		printf("oh no thats not good \n");
@@ -11,7 +11,7 @@ void	debug_exec(t_shell *shell)
 	if (shell->cmd->next)
 		printf("next_in +++> %i\n\n", shell->cmd->next->fd_in);
 	return ;
-}
+}*/
 
 int	simple_exec(t_shell *shell, char **envp)
 {

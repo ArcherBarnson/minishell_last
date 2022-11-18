@@ -64,9 +64,11 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	t_envp_cpy	*envpc_lst_head;
 
 	i = 0;
+	if (envpc_lst->var == NULL && envpc_lst->next != NULL)
+		envpc_lst = envpc_lst->next;
 	envpc_lst_head = envpc_lst;
 	lst_size = get_envp_lst_size(envpc_lst);
-	envpc = malloc(sizeof(char *) * (lst_size + 1));
+	envpc = malloc(sizeof(char *) * (lst_size + 2));
 	if (!envpc)
 		return (NULL);
 	while (envpc_lst->next != NULL)

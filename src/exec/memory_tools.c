@@ -59,21 +59,18 @@ void	free_tab(char **tab)
 
 void	free_all(t_shell *shell)
 {
-	int	i;
-
-	i = -1;
 	if (shell)
 	{
-		//if (shell->cmd != NULL)
-		//	free_cmd_lst(shell->cmd);
+		if (shell->cmd != NULL)
+			free_cmd_lst(shell->cmd);
 		if (shell->retprompt)
 			free(shell->retprompt);
 		if (shell->env_paths)
-		{
-			while (shell->env_paths[++i])
-				free(shell->env_paths[i]);
-			free(shell->env_paths);
-		}
+			free_tab(shell->env_paths);
+		if (shell->ms_env)
+			free_tab(shell->ms_env);
+		if (shell->envpc_head)
+			clear_envpc_lst(shell->envpc_head);
 		free(shell);
 	}
 	return ;

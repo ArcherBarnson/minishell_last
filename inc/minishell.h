@@ -89,6 +89,7 @@ typedef struct	s_shell
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_envp_cpy	*envpc;
+	t_envp_cpy	*envpc_head;
 	int		pipefd[2];
 	int		tmp_fd;
 	int		exit_status;

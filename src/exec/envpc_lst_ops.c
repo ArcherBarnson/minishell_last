@@ -20,7 +20,6 @@ void	ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new)
 	{
 		envpc_lst = envpc_lst->next;
 	}
-	//printf("\n\nENVPC_LAST_LINK IS : %s\n\n", envpc_lst->var);
 	envpc_lst->next = new;
 	return ;
 }

@@ -46,11 +46,15 @@ int	command_not_found(t_shell *shell)
 int	*make_pid_tab(int size)
 {
 	int	*pids;
+	int	i;
 
+	i = -1;
 	if (size < 1)
 		return (NULL);
-	pids = malloc(sizeof(int) * size);
+	pids = malloc(sizeof(int) * (size + 1));
 	if (!pids)
 		return (NULL);
+	while (++i <= size)
+		pids[i] = 0;
 	return (pids);
 }
