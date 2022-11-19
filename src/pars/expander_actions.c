@@ -113,13 +113,13 @@ int	ft_exp_record(t_pars *pars)
 
 	if (pars->nb_taken_char)
 	{
-		if (!pars->temp)
-			ft_init_exp_temp(pars);
-		else
+		if (pars->temp)
 		{
 			temp1 = ft_strndup(pars->temp, 0);
 			free(pars->temp);
 		}
+		else
+			temp1 = ft_strndup("", 0);
 		temp2 = ft_substr(pars->parser_text - pars->offset_start,
 				pars->start_std, pars->nb_taken_char);
 		pars->temp = ft_tempjoin(temp1, temp2);
@@ -128,14 +128,14 @@ int	ft_exp_record(t_pars *pars)
 	return (0);
 }
 
-char	*ft_init_exp_temp(t_pars *pars)
+/*char	*ft_init_exp_temp(t_pars *pars)
 {
 	pars->temp = malloc(sizeof(char));
 	if (!pars->temp)
 		return (ft_msgerr(ERR_MALLOC), NULL);
 	ft_bzero(pars->temp, sizeof(char));
 	return (pars->temp);
-}
+}*/
 
 char	*ft_tempjoin(char *temp1, char *temp2)
 {
