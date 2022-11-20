@@ -23,15 +23,19 @@ int	ft_tests(void)
 {
 	int			fd;
 	char		*user_input;
-	t_hdoc_tab	*hdoc_tab;
+	//t_hdoc_tab	*hdoc_tab;
+	t_shell		shell;
 
+ 	ft_bzero(&shell, sizeof(t_shell));
 	fd = open("parser.test", O_RDONLY, 644);
 	if (fd < 0)
 		return (ft_msgerr(ERR_TESTFILE), 1);
 	user_input = get_next_line(fd);
 	while (user_input)
 	{
-		ft_read_prompt(user_input, &hdoc_tab);
+		shell.retprompt = user_input;
+		//ft_read_prompt(user_input, &hdoc_tab);
+		ft_read_prompt(&shell);
 		free(user_input);
 		user_input = get_next_line(fd);
 	}
