@@ -12,7 +12,8 @@
 
 #include "minishell.h"
 
-t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
+//t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
+int	ft_read_prompt(t_shell *shell)
 {
 	t_lex		lex;
 	t_pars		pars;
@@ -20,7 +21,8 @@ t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
 	ft_general_initialize(&lex, &pars);
-	lex.user_input = user_input;
+	//lex.user_input = user_input;
+	lex.user_input = shell->ret_prompt;
 	printf("\n--------------------------\n");
 	printf("\033[0;32m%s\033[0m", lex.user_input);
 	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
@@ -33,13 +35,13 @@ t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
 		return (NULL);
 	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
 		return (NULL);
-	*hdoc_tab = pars.hdoc_tab;
+	//*hdoc_tab = pars.hdoc_tab;
+	shell->hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
 	ft_tklist_freeall(&lex);
-	//test
-	//ft_execfree_freeall(&pars);
-	//ft_pars_freeall(&pars);
-	return (pars.cmd);
+	ft_execfree_freeall(&pars);
+	ft_pars_freeall(&pars);
+	return (0);
 }
 
 int	ft_around_lexer(t_lex *lex)

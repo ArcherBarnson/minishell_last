@@ -524,7 +524,7 @@ struct s_hdoc_tab
 /*                                 common_core.c                              */
 /* ************************************************************************** */
 //int				main(void);
-t_cmd			*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab);
+int			ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab);
 int				ft_around_lexer(t_lex *lex);
 int				ft_around_parser(t_lex *lex, t_pars *pars);
 int				ft_around_redirector(t_lex *lex, t_pars *pars);

@@ -103,7 +103,7 @@ int	ft_lex_end(t_lex *lex)
 {
 	if (!lex->token)
 	{
-		lex->temp = strdup("");
+		lex->temp = ft_strdup("");
 		ft_lex_catch(lex);
 	}
 	else
