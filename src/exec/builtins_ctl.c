@@ -44,6 +44,8 @@ int	check_builtins(t_shell *shell)
 {
 	if (!shell->cmd)
 		return (0);
+	//if (ft_strcmp(shell->cmd->token[0], EXIT) == 1)
+	//	return (2);
 	if (ft_strcmp(shell->cmd->token[0], ECHO) == 1 ||
 		ft_strcmp(shell->cmd->token[0], ENV) == 1 ||
 		ft_strcmp(shell->cmd->token[0], EXPORT) == 1 ||

@@ -8,6 +8,7 @@ t_shell	*minishell_init(char **envp)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
+	shell->hdoc_tab = NULL;
 	shell->cmd = NULL;
 	shell->cmd_head = NULL;
 	shell->env_paths = NULL;

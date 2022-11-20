@@ -84,8 +84,11 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct	s_envp_cpy		t_envp_cpy;
 
+int	exit_code;
+
 typedef struct	s_shell
 {
+	t_hdoc_tab	*hdoc_tab;
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_envp_cpy	*envpc;
@@ -524,7 +527,8 @@ struct s_hdoc_tab
 /*                                 common_core.c                              */
 /* ************************************************************************** */
 //int				main(void);
-int			ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab);
+int				ft_read_prompt(t_shell *shell);
+int     			ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_around_lexer(t_lex *lex);
 int				ft_around_parser(t_lex *lex, t_pars *pars);
 int				ft_around_redirector(t_lex *lex, t_pars *pars);
