@@ -12,7 +12,7 @@
 
 #include "inc/minishell.h"
 
-int	exit_code;
+extern int	exit_code;
 
 int	is_valid_history(char *str)
 {
@@ -37,6 +37,7 @@ t_envp_cpy	*set_env(t_shell *shell, char **envp)
 	return (shell->envpc);
 }
 //############### DEBUG FUNCTIONS ################################
+
 char 	**file_to_tab(int fd, int size)
 {
 	char	fileline[size + 1];
@@ -75,8 +76,6 @@ char	**debug_lst(void)
 
 int	start_shell(t_shell *shell, char **envp)
 {
-	t_hdoc_tab	*hdoc_tab;
-
 	//debug --- remove last line to disable
 	char	**tests;
 	int	i;
@@ -85,7 +84,6 @@ int	start_shell(t_shell *shell, char **envp)
 	tests = NULL;
 	tests = debug_lst();
 	//-------------------------------------
-	hdoc_tab = NULL;
 	shell->ms_env = NULL;
 	shell->env_paths = get_env_paths(envp);		//call again if env builtins are used
 	while (1)
@@ -94,16 +92,16 @@ int	start_shell(t_shell *shell, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		shell->envpc_head = set_env(shell, envp);
 		if (tests && tests[++i])
-			printf("DEBUG MODE ENABLED\n");
+			printf("DEBUG MODE ENABLED, COMMAND : [%s]\n", tests[i]);
 		shell->retprompt = readline("minishell#> ");
 		if (shell->retprompt == NULL && tests == NULL)
 			break ;
 		if (is_valid_history(shell->retprompt))
 			add_history(shell->retprompt);
 		if (tests && tests[++i])
-			shell->cmd = ft_read_prompt(tests[i], &hdoc_tab);
+			shell->cmd = ft_read_prompt(tests[i]);
 		else
-			shell->cmd = ft_read_prompt(shell->retprompt, &hdoc_tab);
+			shell->cmd = ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
 		//printf("exit_status = %i\n", exit_code);
 		if (shell->cmd_head != NULL)
@@ -117,6 +115,7 @@ int	start_shell(t_shell *shell, char **envp)
 					ft_strlen(shell->retprompt));
 			free_cmd_lst(shell->cmd);
 			shell->ms_env = lst_to_envp(shell->envpc);
+			shell->retprompt = NULL;
 		}
 	}
 	return (0);

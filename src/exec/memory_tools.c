@@ -41,6 +41,7 @@ void	free_cmd_lst(t_cmd *cmd)
 				free_cmd_link(cmd->prev);
 			cmd = cmd->next;
 		}
+		cmd = NULL;
 		//free_cmd_link(cmd);
 	}
 	return ;

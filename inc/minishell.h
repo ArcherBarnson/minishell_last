@@ -84,8 +84,11 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct	s_envp_cpy		t_envp_cpy;
 
+int	exit_code;
+
 typedef struct	s_shell
 {
+	t_hdoc_tab	*hdoc_tab;
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_envp_cpy	*envpc;
