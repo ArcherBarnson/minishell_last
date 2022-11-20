@@ -115,7 +115,7 @@ int	start_shell(t_shell *shell, char **envp)
 					ft_strlen(shell->retprompt));
 			//free_cmd_lst(shell->cmd);
 			ft_execfree_freeall(shell->pars);
-			ft_pars_freeall(shell->pars);
+			//ft_pars_freeall(shell->pars);
 			shell->ms_env = lst_to_envp(shell->envpc);
 			shell->retprompt = NULL;
 		}

@@ -43,14 +43,9 @@ int	ft_read_prompt(t_shell *shell)
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_tklist_freeall(&lex);
-<<<<<<< HEAD
+	shell->pars = &pars;
 	//ft_execfree_freeall(&pars);
 	//ft_pars_freeall(&pars);
-=======
-	shell->pars = &pars;
-//	ft_execfree_freeall(&pars);
-//	ft_pars_freeall(&pars);
->>>>>>> 3b3954dac82f88063dab81626e0fa72cb5e3bd6d
 	return (0);
 }
 
