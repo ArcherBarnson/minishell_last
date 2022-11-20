@@ -108,7 +108,7 @@ int	ft_lex_end(t_lex *lex)
 	}
 	else
 	{
-		ft_lex_take(lex);
+		//ft_lex_take(lex);
 		lex->prev_decision.token_type = lex->new_decision.token_type;
 		ft_lex_catch(lex);
 	}

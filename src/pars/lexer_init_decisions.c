@@ -29,7 +29,7 @@ int	ft_init_lex_decision_1(t_lex *lex)
 
 int	ft_init_lex_decision_2(t_lex *lex)
 {
-	lex->decision[STD_LEX_RD_MD][SEP_CHAR] = (t_lex_proc){LEX_REC, LEX_SKIP, NEW_LEX_RD_MD, TOK_WORD};
+	lex->decision[STD_LEX_RD_MD][SEP_CHAR] = (t_lex_proc){LEX_CATCH, LEX_SKIP, NEW_LEX_RD_MD, TOK_WORD};
 	lex->decision[STD_LEX_RD_MD][STD_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, STD_LEX_RD_MD, TOK_WORD};
 	lex->decision[STD_LEX_RD_MD][SPL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, SPL_LEX_RD_MD, TOK_WORD};
 	lex->decision[STD_LEX_RD_MD][DBL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, DBL_LEX_RD_MD, TOK_WORD};
@@ -38,7 +38,7 @@ int	ft_init_lex_decision_2(t_lex *lex)
 	lex->decision[STD_LEX_RD_MD][LT_CHAR] = (t_lex_proc){LEX_CATCH, LEX_TAKE, LT_LEX_RD_MD, TOK_LSS};
 	lex->decision[STD_LEX_RD_MD][GT_CHAR] = (t_lex_proc){LEX_CATCH, LEX_TAKE, GT_LEX_RD_MD, TOK_GRT};
 	lex->decision[STD_LEX_RD_MD][DOL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, STD_LEX_RD_MD, TOK_WORD};
-	lex->decision[STD_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_CATCH, LEX_SKIP, NEW_LEX_RD_MD, TOK_WORD};
+	lex->decision[STD_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_END, LEX_SKIP, NEW_LEX_RD_MD, TOK_WORD};
 	return (0);
 }
 
@@ -53,7 +53,7 @@ int	ft_init_lex_decision_3(t_lex *lex)
 	lex->decision[SPL_LEX_RD_MD][LT_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, SPL_LEX_RD_MD, TOK_WORD};
 	lex->decision[SPL_LEX_RD_MD][GT_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, SPL_LEX_RD_MD, TOK_WORD};
 	lex->decision[SPL_LEX_RD_MD][DOL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, SPL_LEX_RD_MD, TOK_WORD};
-	lex->decision[SPL_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_NONE, LEX_DROP, ERR_LEX_RD_MD, TOK_ERR_SPL};
+	lex->decision[SPL_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_DROP, LEX_DROP, ERR_LEX_RD_MD, TOK_ERR_SPL};
 	return (0);
 }
 
@@ -68,7 +68,7 @@ int	ft_init_lex_decision_4(t_lex *lex)
 	lex->decision[DBL_LEX_RD_MD][LT_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, DBL_LEX_RD_MD, TOK_WORD};
 	lex->decision[DBL_LEX_RD_MD][GT_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, DBL_LEX_RD_MD, TOK_WORD};
 	lex->decision[DBL_LEX_RD_MD][DOL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, DBL_LEX_RD_MD, TOK_WORD};
-	lex->decision[DBL_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_NONE, LEX_SKIP, ERR_LEX_RD_MD, TOK_ERR_DBL};
+	lex->decision[DBL_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_DROP, LEX_SKIP, ERR_LEX_RD_MD, TOK_ERR_DBL};
 	return (0);
 }
 
