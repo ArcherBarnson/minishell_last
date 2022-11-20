@@ -23,6 +23,7 @@ int	ft_read_prompt(t_shell *shell)
 	ft_general_initialize(&lex, &pars);
 	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
+	//printf("check shell->retprompt : %s\n", lex.user_input);
 	printf("\n--------------------------\n");
 	printf("\033[0;32m%s\033[0m", lex.user_input);
 	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
@@ -37,11 +38,14 @@ int	ft_read_prompt(t_shell *shell)
 		ft_error_return(&lex, &pars, shell);
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
+	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);
+	//printf("pars.cmd_head : %s\n", pars.cmd_head->cmd);
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_tklist_freeall(&lex);
-	ft_execfree_freeall(&pars);
-	ft_pars_freeall(&pars);
+	shell->pars = &pars;
+//	ft_execfree_freeall(&pars);
+//	ft_pars_freeall(&pars);
 	return (0);
 }
 
