@@ -18,7 +18,7 @@ SRCDIR	=	src
 LB_PATH	=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJDIR	=	obj
 OBJS	=	$(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(LB_PATH:.c=.o))
-#HDDIR	=	inc
+HDDIR	=	inc
 
 NAME	= libft.a
 
@@ -35,7 +35,7 @@ ${NAME}:	${OBJS}
 			${AR} ${NAME} ${OBJS}
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c | $(OBJDIR)
-				${CC} ${CFLAGS} -c $< -o $@
+				${CC} -I${HDDIR} ${CFLAGS} -c $< -o $@
 
 $(OBJDIR):
 			@${MK} $@

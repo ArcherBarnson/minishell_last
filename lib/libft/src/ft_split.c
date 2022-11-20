@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "libft.h"
 
 static int	word_count(char const *s, char c)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "libft.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -51,10 +51,7 @@ char	*ft_strndup(const char *s, size_t n)
 		n = ft_strlen(s);
 	cpy = malloc((n + 1) * sizeof(char));
 	if (!cpy)
-	{
-		ft_msgerr(ERR_MALLOC);
 		return (NULL);
-	}
 	i = 0;
 	while (n--)
 	{
