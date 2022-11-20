@@ -40,8 +40,8 @@ int	ft_read_prompt(t_shell *shell)
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_tklist_freeall(&lex);
-	ft_execfree_freeall(&pars);
-	ft_pars_freeall(&pars);
+	//ft_execfree_freeall(&pars);
+	//ft_pars_freeall(&pars);
 	return (0);
 }
 

@@ -72,6 +72,11 @@ void	free_all(t_shell *shell)
 			free_tab(shell->ms_env);
 		if (shell->envpc_head)
 			clear_envpc_lst(shell->envpc_head);
+		if (shell->pars != NULL)
+		{
+			ft_execfree_freeall(shell->pars);
+			ft_pars_freeall(shell->pars);
+		}
 		free(shell);
 	}
 	return ;

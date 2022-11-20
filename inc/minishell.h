@@ -99,6 +99,7 @@ typedef struct	s_shell
 	char		*retprompt;
 	char		**ms_env;
 	char		**env_paths;
+	t_pars		*pars;
 }		t_shell;
 
 enum e_err_msgs

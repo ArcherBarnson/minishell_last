@@ -82,7 +82,7 @@ int	start_shell(t_shell *shell, char **envp)
 
 	i = -1;
 	tests = NULL;
-	tests = debug_lst();
+	//tests = debug_lst();
 	//-------------------------------------
 	shell->ms_env = NULL;
 	shell->env_paths = get_env_paths(envp);		//call again if env builtins are used
@@ -98,10 +98,10 @@ int	start_shell(t_shell *shell, char **envp)
 			break ;
 		if (is_valid_history(shell->retprompt))
 			add_history(shell->retprompt);
-		if (tests && tests[++i])
-			shell->cmd = ft_read_prompt(tests[i]);
-		else
-			shell->cmd = ft_read_prompt(shell);
+		/*if (tests && tests[++i])
+			ft_read_prompt(tests[i]);*/
+		//else
+		ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
 		//printf("exit_status = %i\n", exit_code);
 		if (shell->cmd_head != NULL)
@@ -113,7 +113,9 @@ int	start_shell(t_shell *shell, char **envp)
 			if (shell->retprompt)
 				bzero(shell->retprompt,
 					ft_strlen(shell->retprompt));
-			free_cmd_lst(shell->cmd);
+			//free_cmd_lst(shell->cmd);
+			ft_execfree_freeall(shell->pars);
+			ft_pars_freeall(shell->pars);
 			shell->ms_env = lst_to_envp(shell->envpc);
 			shell->retprompt = NULL;
 		}
