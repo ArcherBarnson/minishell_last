@@ -19,6 +19,8 @@ int	is_valid_history(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] && str[i] != '\0' && str[i] == ' ')
 		i++;
 	if (str[i] == '\0')
@@ -34,11 +36,55 @@ t_envp_cpy	*set_env(t_shell *shell, char **envp)
 		shell->envpc = envp_to_lst(shell->ms_env);
 	return (shell->envpc);
 }
+//############### DEBUG FUNCTIONS ################################
+char 	**file_to_tab(int fd, int size)
+{
+	char	fileline[size + 1];
+	char	**returntab;
+
+	returntab = NULL;
+	read(fd, fileline, size);
+	fileline[size] = '\0';
+	returntab = ft_split(fileline, '\n');
+	return (returntab);
+}
+
+char	**debug_lst(void)
+{
+	int	fd_msh;
+	int	i = 0;
+	char	**msh_tab;
+	char	dudbuf[2048];
+
+	fd_msh = open("./test.dbg", O_RDONLY);		//use with caution
+	if (fd_msh < 0)
+	{
+		printf("Fd failure, check your files\n");
+		return (NULL);
+	}
+	while (read(fd_msh, dudbuf, 1) != 0)
+		i++;
+	close(fd_msh);
+	fd_msh = open("./test.dbg", O_RDONLY);		//use with caution
+	msh_tab = file_to_tab(fd_msh, i);
+	close(fd_msh);
+	return (msh_tab);
+
+}
+//#################################################################
 
 int	start_shell(t_shell *shell, char **envp)
 {
 	t_hdoc_tab	*hdoc_tab;
 
+	//debug --- remove last line to disable
+	char	**tests;
+	int	i;
+
+	i = -1;
+	tests = NULL;
+	tests = debug_lst();
+	//-------------------------------------
 	hdoc_tab = NULL;
 	shell->ms_env = NULL;
 	shell->env_paths = get_env_paths(envp);		//call again if env builtins are used
@@ -47,14 +93,19 @@ int	start_shell(t_shell *shell, char **envp)
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
 		shell->envpc_head = set_env(shell, envp);
+		if (tests && tests[++i])
+			printf("DEBUG MODE ENABLED\n");
 		shell->retprompt = readline("minishell#> ");
-		if (shell->retprompt == NULL)
+		if (shell->retprompt == NULL && tests == NULL)
 			break ;
 		if (is_valid_history(shell->retprompt))
 			add_history(shell->retprompt);
-		shell->cmd = ft_read_prompt(shell->retprompt, &hdoc_tab);
+		if (tests && tests[++i])
+			shell->cmd = ft_read_prompt(tests[i], &hdoc_tab);
+		else
+			shell->cmd = ft_read_prompt(shell->retprompt, &hdoc_tab);
 		shell->cmd_head = shell->cmd;
-		printf("exit_status = %i\n", exit_code);
+		//printf("exit_status = %i\n", exit_code);
 		if (shell->cmd_head != NULL)
 		{
 			if (!shell->cmd->next)
