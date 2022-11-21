@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 07:51:19 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 08:07:29 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ int	start_shell(t_shell *shell, char **envp)
 			free_cmd_lst(shell->cmd);
 			//ft_execfree_freeall(shell->pars);
 			//ft_pars_freeall(shell->pars);
+			printf("DEBUG\n\n");
 			shell->ms_env = lst_to_envp(shell->envpc);
+			printf("DEBUG\n\n");
 			shell->retprompt = NULL;
 		}
 		free(shell->env_paths);
