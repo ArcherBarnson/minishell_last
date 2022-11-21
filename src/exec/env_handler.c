@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 08:21:39 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:17:27 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	i = 0;
 	if (!envpc_lst)
 		return (NULL);
+	envpc_lst_head = envpc_lst;
 	if (envpc_lst->var == NULL && envpc_lst->next != NULL)
 		envpc_lst = envpc_lst->next;
-	envpc_lst_head = envpc_lst;
 	lst_size = get_envp_lst_size(envpc_lst);
 	envpc = malloc(sizeof(char *) * (lst_size + 2));
 	if (!envpc)

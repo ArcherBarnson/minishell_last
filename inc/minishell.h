@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/21 09:23:11 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 10:48:28 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -907,6 +907,8 @@ char	**ft_split(char const *s, char c);
 int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
 t_envp_cpy	*unset(int ac, char **av, t_envp_cpy *envpc_lst);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	**dup_tab(char **tab);
+void	free_tab(char **tab);
 int	get_tab_size(char **tab);
 //char	*ft_strdup(char *src);
 int	cd(int ac, char **path);

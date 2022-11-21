@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 08:07:29 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:24:43 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_envp_cpy	*set_env(t_shell *shell, char **envp)
 {
 	if (shell->ms_env == NULL)
 		shell->envpc = envp_to_lst(envp);
+		//shell->ms_env = dup_tab(envp);
 	else
 		shell->envpc = envp_to_lst(shell->ms_env);
 	return (shell->envpc);
@@ -116,12 +117,11 @@ int	start_shell(t_shell *shell, char **envp)
 			free_cmd_lst(shell->cmd);
 			//ft_execfree_freeall(shell->pars);
 			//ft_pars_freeall(shell->pars);
-			printf("DEBUG\n\n");
 			shell->ms_env = lst_to_envp(shell->envpc);
-			printf("DEBUG\n\n");
 			shell->retprompt = NULL;
 		}
-		free(shell->env_paths);
+		free_tab(shell->env_paths);
+		//free(shell->cmd->cmd);
 		shell->env_paths = get_env_paths(shell->ms_env);
 	}
 	return (0);

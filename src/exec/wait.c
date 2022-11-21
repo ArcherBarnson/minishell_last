@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:27:00 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 13:43:28 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:29:17 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	ft_wait(int *pid, t_shell *shell)
 			exit_code = WEXITSTATUS(exit_code);
 		i++;
 	}
+	free(pid);
 	return (exit_code);
 }

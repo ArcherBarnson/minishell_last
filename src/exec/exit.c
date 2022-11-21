@@ -58,6 +58,9 @@ int	is_exit_arg_valid(char *arg)
 		if (arg[i] <  '0' || arg[i] > '9')
 			return (invalid_exit_arg(arg));
 	}
+	if ((ft_atoll(arg) > 0 && arg[0] == '-') ||
+		(ft_atoll(arg) < 0 && arg[0] != '-'))
+		return (invalid_exit_arg(arg));
 	return (1);
 }
 
@@ -89,7 +92,8 @@ int	ft_exit(int ac, char **av)
 		return (1);
 	}
 	status = get_formated_status(av[1]);
-	printf("exit_status = %d\n", status);
+	//printf("exit_status = %d\n", status);
+	write(1, "exit\n", 5);
 	exit(status);
 	return (0);
 }
