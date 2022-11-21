@@ -1,13 +1,13 @@
-//#include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 //comment for real test
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <unistd.h>
+//#include <string.h>
 //#####################
 
-int	exit_code;
+//int	exit_code;
 
 long long	ft_atoll(const char	*str)
 {
@@ -48,7 +48,7 @@ int	is_exit_arg_valid(char *arg)
 	int	size;
 
 	i = 0;
-	size = strlen(arg);					//ft_strlen
+	size = ft_strlen(arg);					//ft_strlen
 	if (arg[i] != '-' && (arg[i] < '0' || arg[i] > '9'))
 		return (invalid_exit_arg(arg));
 	if ((arg[i] == '-' && size > 20) || (arg[i] != '-' && size > 19))
@@ -94,11 +94,11 @@ int	ft_exit(int ac, char **av)
 	return (0);
 }
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
 	int test;
 	exit_code = 127;
 	test = ft_exit(ac, av);
 	printf("[-%d-]\n", test);
 	return (0);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/21 07:51:21 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:23:11 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -914,7 +914,12 @@ int	pwd(int ac, char **av);
 void    write_arg(char *str);
 int     n_flag_present(char *str);
 int	echo(int ac, char **av);
-int    env(int ac, char **av, char **envp);
+int	env(int ac, char **av, char **envp);
+int	ft_exit(int ac, char **av);
+int	get_formated_status(char *arg);
+int	is_exit_arg_valid(char *arg);
+int	invalid_exit_arg(char *arg);
+long long	ft_atoll(const char	*str);		//maybe put that in libft
 //void	command_interpreter(char **envp, t_cmd *cmd, int fds[3], int pipefd[2]);
 void	child_signals(void);
 void	sigquit_cmd(int sig);
