@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:20:11 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/12 19:33:21 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 07:51:23 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ char	**get_env_paths(char **envp)
 	paths = NULL;
 	path_var = NULL;
 	i = 0;
+	if (!envp || !envp[i])
+		return (NULL);
 	while (envp[i] != NULL && ft_strncmp((const char *)envp[i], "PATH=", 5 )!= 0)
 		i++;
-	if (ft_strncmp((const char *)envp[i], "PATH=", 5 != 0))
-		return (paths);
 	if (envp[i] == NULL)
 		return (NULL);
+	if (ft_strncmp((const char *)envp[i], "PATH=", 5 != 0))
+		return (paths);
 	path_var = ft_strdup(envp[i]);
 	paths = ft_split(path_var, ':');
 	free(path_var);
@@ -40,7 +42,7 @@ char	*find_path(char *cmd, char **env_paths)
         char    *path;
 
         i = -1;
-	if (!cmd || cmd[0] == '\0')
+	if (!cmd || cmd[0] == '\0' || !env_paths || !env_paths[0])
 		return (NULL);
         if (access((const char *)cmd, X_OK) == 0)
 		return (cmd);

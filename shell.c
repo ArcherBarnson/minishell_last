@@ -6,13 +6,13 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/24 13:58:32 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 07:51:19 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-extern int	exit_code;
+int	exit_code;
 
 int	is_valid_history(char *str)
 {
@@ -113,12 +113,14 @@ int	start_shell(t_shell *shell, char **envp)
 			if (shell->retprompt)
 				bzero(shell->retprompt,
 					ft_strlen(shell->retprompt));
-			//free_cmd_lst(shell->cmd);
-			ft_execfree_freeall(shell->pars);
+			free_cmd_lst(shell->cmd);
+			//ft_execfree_freeall(shell->pars);
 			//ft_pars_freeall(shell->pars);
 			shell->ms_env = lst_to_envp(shell->envpc);
 			shell->retprompt = NULL;
 		}
+		free(shell->env_paths);
+		shell->env_paths = get_env_paths(shell->ms_env);
 	}
 	return (0);
 }

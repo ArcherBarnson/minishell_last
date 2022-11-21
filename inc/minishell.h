@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/24 13:48:57 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 07:51:21 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct	s_envp_cpy		t_envp_cpy;
 
-int	exit_code;
+extern int	exit_code;
 
 typedef struct	s_shell
 {
