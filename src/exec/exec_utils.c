@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 11:49:48 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:40:44 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int	command_not_found(t_shell *shell)
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
 		write(2, " : Command not found\n", 21);
 		shell->exit_status = 127;
-		return (-1);
+		return (127);
+	}
+	else if (shell->cmd->cmd[0] == '.' && shell->cmd->cmd[1] == '\0')
+	{
+		write(2, shell->cmd->cmd, ft_strlen(shell->cmd->token[0]));
+		write(2, ": usage . filename[arguments]\n", 29);
+		return (2);
 	}
 	return (0);
 }

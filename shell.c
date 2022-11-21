@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 11:24:43 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:01:31 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	start_shell(t_shell *shell, char **envp)
 		shell->envpc_head = set_env(shell, envp);
 		if (tests && tests[++i])
 			printf("DEBUG MODE ENABLED, COMMAND : [%s]\n", tests[i]);
-		shell->retprompt = readline("minishell#> ");
+		//shell->retprompt = readline("minishell#> ");
+		shell->retprompt = readline("$>");
 		if (shell->retprompt == NULL && tests == NULL)
 			break ;
 		if (is_valid_history(shell->retprompt))

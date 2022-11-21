@@ -24,8 +24,8 @@ int	simple_exec(t_shell *shell, char **envp)
 	if (check_builtins(shell) == 1)
 		return (exec_builtin(shell));
 	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-	if (command_not_found(shell) == -1)
-		return (127);
+	if (command_not_found(shell) != 0)
+		return (command_not_found(shell));
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
