@@ -26,7 +26,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	if (is_builtin == 2)
 		exit(exit_code);
 	pid = make_pid_tab(cmds_get_n(shell));
-	if (is_builtin == 1)
+	if (is_builtin == 1 && shell->cmd->fd_out == 1)
 		return (exec_builtin(shell));
 	err_code = check_for_invalid_cmd(shell);
 	if (err_code)
@@ -37,7 +37,10 @@ int	simple_exec(t_shell *shell, char **envp)
 		child_signals();
 		dup2(shell->cmd->fd_in, STDIN_FILENO);
 		dup2(shell->cmd->fd_out, STDOUT_FILENO);
-		execve(shell->cmd->cmd, shell->cmd->token, envp);
+		if (is_builtin == 1)
+			exit(exec_builtin(shell));
+		else
+			execve(shell->cmd->cmd, shell->cmd->token, envp);
 	}
 	return (ft_wait(pid, shell));
 }

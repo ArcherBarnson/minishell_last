@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 14:08:45 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:39:41 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ int	command_not_found(t_shell *shell)
 		write(2, " : Command not found\n", 21);
 		shell->exit_status = 127;
 		return (127);
+	}
+	if (open(shell->cmd->cmd, O_RDONLY) == -1 && errno == EACCES)
+	{
+		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
+		write(2, " : permission denied\n", 22);
+		return (-1);
 	}
 	return (0);
 }
