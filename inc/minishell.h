@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/22 10:50:26 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:07:42 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -951,6 +951,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp);
 int	*make_pid_tab(int size);
 int	set_fds(t_shell *shell);
 int	exec(t_shell *shell, char **envp);
+int	check_for_invalid_cmd(t_shell *shell);
 int	simple_exec(t_shell *shell, char **envp);
 int	prep_exec(t_shell *shell, char **envp);
 void    free_cmd_lst(t_cmd *cmd);
