@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:42:06 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 14:17:23 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:54:06 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,13 @@ int	echo(int ac, char **av)
 		write(1, "\n", 1);
 		return (0);
 	}
-	if (n_flag_present(av[1]) == 1)
+	while (n_flag_present(av[i]) == 1)
 		i++;
 	while (av[i] && i < ac)
 	{
-		if (!n_flag_present(av[1]) || !n_flag_present(av[i]))
-		{
-			write_arg(av[i]);
-			if (av[i + 1] != NULL)
-				write(1, " ", 1);
-		}
+		write_arg(av[i]);
+		if (av[i + 1] != NULL)
+			write(1, " ", 1);
 		i++;
 	}
 	if (n_flag_present(av[1]) != 1)
