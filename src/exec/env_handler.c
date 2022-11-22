@@ -6,11 +6,25 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 11:17:27 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:30:55 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	**build_minimal_env(void)
+{
+	char	**minimal_env;
+	char	cwd[4096];
+
+	getcwd(cwd, 4096);
+	minimal_env = malloc(sizeof(char *) * 2);
+	if (!minimal_env)
+		return (NULL);
+	minimal_env[0] = ft_strjoin("PWD=", cwd);
+	minimal_env[1] = NULL;
+	return (minimal_env);
+}
 
 int	get_envp_lst_size(t_envp_cpy *envpc_lst)
 {
@@ -61,6 +75,7 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	int	i;
 	int	lst_size;
 	char	**envpc;
+
 	t_envp_cpy	*envpc_lst_head;
 
 	i = 0;

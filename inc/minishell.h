@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/22 14:07:42 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:12:08 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -957,6 +957,7 @@ int	prep_exec(t_shell *shell, char **envp);
 void    free_cmd_lst(t_cmd *cmd);
 void    free_cmd_link(t_cmd *cmd);
 void	free_all(t_shell *shell);
+char	**build_minimal_env(void);
 char	**lst_to_envp(t_envp_cpy *envpc_lst);
 t_envp_cpy	*envp_to_lst(char **envp);
 int	get_envp_lst_size(t_envp_cpy *envpc_lst);

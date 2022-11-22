@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 08:35:18 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:17:42 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	start_shell(t_shell *shell, char **envp)
 	//tests = debug_lst();
 	//-------------------------------------
 	shell->ms_env = dup_tab(envp);
+	if (shell->ms_env[0] == NULL)
+		shell->ms_env = build_minimal_env();
 	shell->env_paths = get_env_paths(envp);		//call again if env builtins are used
 	while (1)
 	{

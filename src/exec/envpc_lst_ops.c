@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 07:54:56 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 10:21:50 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:30:32 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ void	clear_envpc_lst(t_envp_cpy *envpc_lst)
 		return ;
 	head = envpc_lst;
 	envpc_lst = envpc_lst->next;
-	while (envpc_lst->next)
+	while (envpc_lst && envpc_lst->next)
 	{
 		free(head->var);
 		free(head);
 		head = envpc_lst;
 		envpc_lst = envpc_lst->next;
 	}
-	free(envpc_lst->var);
-	free(envpc_lst);
+	if (envpc_lst)
+	{
+		free(envpc_lst->var);
+		free(envpc_lst);
+	}
 	free(head->var);
 	free(head);
 	return ;
