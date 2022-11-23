@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 17:17:42 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:37:25 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	}
 	start_shell(shell, envp);
-	free_all(shell);					//doesnt exist
+	free_all(shell);
+	ft_exit(1, NULL);
 	return (0);
 }

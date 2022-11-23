@@ -84,15 +84,17 @@ int	ft_exit(int ac, char **av)
 	int	status;
 
 	status = 2;
-	if (ac == 1)
+	if (ac == 1 || av == NULL)
+	{
+		write(1, "exit\n", 5);
 		exit(exit_code);
+	}
 	if (ac > 2)
 	{
 		write(2, "Too many arguments\n", 20);
 		return (1);
 	}
 	status = get_formated_status(av[1]);
-	//printf("exit_status = %d\n", status);
 	write(1, "exit\n", 5);
 	exit(status);
 	return (0);

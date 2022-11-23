@@ -23,8 +23,8 @@ int	simple_exec(t_shell *shell, char **envp)
 
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
-	if (is_builtin == 2)
-		exit(exit_code);
+	//if (is_builtin == 2)
+	//	ft_exit(exit_code);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1 && shell->cmd->fd_out == 1)
 		return (exec_builtin(shell));

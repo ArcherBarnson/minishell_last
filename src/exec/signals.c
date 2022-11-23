@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 04:43:20 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 11:42:11 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:19:13 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	display_signal_intercept(int sig)
 	if (sig == SIG_INT)
 		write(1, "\n", 1);
 	if (sig == SIG_QUIT)
-		write(1, "Quit (core dumped)\n", 19);
+		//write(1, "Quit (core dumped)\n", 19);
+		write(1, "lol\n", 4);
 	if (sig == SIG_ABORT)
 		write(1, "Aborted (core dumped)\n", 22);
 	if (sig == BUS_ERR)
