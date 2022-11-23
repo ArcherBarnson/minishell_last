@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/22 17:12:08 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:41:15 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -905,6 +905,7 @@ int	ft_strcmp(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 //char	**envp_update(char **envp, int mode, char *var);
 int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
+void	export_no_args(t_envp_cpy *envpc_lst);
 int	export_error(char *str, int i, int error_type);
 int	ft_strccmp(char *s1, char *s2, char c);
 int	is_env_var(char *str);

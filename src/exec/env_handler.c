@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 17:30:55 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:57:15 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,12 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	int	i;
 	int	lst_size;
 	char	**envpc;
-
-	t_envp_cpy	*envpc_lst_head;
+	//t_envp_cpy	*envpc_lst_head;
 
 	i = 0;
-	if (!envpc_lst)
+	if (!envpc_lst || !envpc_lst->var)
 		return (NULL);
-	envpc_lst_head = envpc_lst;
+	//envpc_lst_head = envpc_lst;
 	if (envpc_lst->var == NULL && envpc_lst->next != NULL)
 		envpc_lst = envpc_lst->next;
 	lst_size = get_envp_lst_size(envpc_lst);
@@ -96,6 +95,6 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	}
 	envpc[i] = ft_strdup(envpc_lst->var);
 	envpc[i + 1] = NULL;
-	clear_envpc_lst(envpc_lst_head);
+	//clear_envpc_lst(envpc_lst_head);
 	return (envpc);
 }

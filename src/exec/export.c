@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:26:22 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 09:59:00 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:02:27 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst)
 
 	i = 1;
 	if (ac == 1)
+	{
+		export_no_args(envpc_lst);
 		return (1);
+	}
 	while (i < ac)
 	{
 		mode = is_valid_string(av[i]);

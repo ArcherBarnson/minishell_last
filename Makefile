@@ -6,7 +6,7 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/11/22 10:51:20 by bgrulois         ###   ########.fr        #
+#    Updated: 2022/11/23 13:39:18 by bgrulois         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ PARSRCS		=	common_core.c common_initializations.c common_memory.c \
 				transformer_list.c \
 				#tests_main.c
 EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c exec_utils.c\
-		       		exit.c wait.c export_utils.c cd.c echo.c pwd.c env.c export.c \
-				unset.c builtins_ctl.c envpc_lst_ops.c env_handler.c \
+		       		exit.c wait.c export_utils.c cd.c echo.c pwd.c env.c\
+				export_no_args.c export.c unset.c builtins_ctl.c \
+				envpc_lst_ops.c env_handler.c \
 				signals.c exec.c ../../shell.c #../../builtins/*.c\
 
 PARSRCDIR	=	src/pars

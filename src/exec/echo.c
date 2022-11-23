@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:42:06 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 11:54:06 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:19:36 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	write_arg(char *str)
 {
+	if (!str)
+		return ;
 	write(1, str, ft_strlen(str));
 	return ;
 }
@@ -23,6 +25,8 @@ int	n_flag_present(char *str)
 	int	i;
 
 	i = 1;
+	if (!str)
+		return (0);
 	if (str[0] == '-' && str[1] == 'n')
 	{
 		while (str[++i])

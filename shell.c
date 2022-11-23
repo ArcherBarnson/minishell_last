@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 12:37:25 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:08:50 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int	start_shell(t_shell *shell, char **envp)
 			//ft_execfree_freeall(shell->pars);
 			//ft_pars_freeall(shell->pars);
 			shell->ms_env = lst_to_envp(shell->envpc);
+			clear_envpc_lst(shell->envpc_head);
 			shell->retprompt = NULL;
 		}
 		free_tab(shell->env_paths);
