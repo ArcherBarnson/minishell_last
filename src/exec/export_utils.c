@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 08:53:58 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 10:47:38 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:04:22 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	is_valid_string(char *str)
 		if (!is_valid_identifier(str[i]))
 			return (export_error(str, i, 1));
 	}
-	if (str[i] == '\0')
-		return (0);
 	return (1);
 }
 

@@ -42,8 +42,7 @@ t_envp_cpy	*remove_var_if_first(int len, char *var, t_envp_cpy *envpc_lst)
 	t_envp_cpy	*tmp;
 
 	tmp = NULL;
-	if (ft_strncmp(var, envpc_lst->var, len) == 0 &&
-			envpc_lst->var[len] == '=')
+	if (ft_strncmp(var, envpc_lst->var, len) == 0)
 	{
 		tmp = envpc_lst;
 		if (envpc_lst->next)
@@ -66,8 +65,7 @@ t_envp_cpy	*remove_var_if_present(char *var, int var_len, t_envp_cpy *envpc_lst)
 	head = envpc_lst;
 	while (envpc_lst->next)
 	{
-		if (ft_strncmp(var, envpc_lst->next->var, var_len) == 0 &&
-			envpc_lst->next->var[var_len] == '=')
+		if (ft_strncmp(var, envpc_lst->next->var, var_len) == 0)
 		{
 			to_remove = envpc_lst->next;
 			if (envpc_lst->next->next)

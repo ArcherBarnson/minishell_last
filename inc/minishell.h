@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/23 13:41:15 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:13:58 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -922,7 +922,7 @@ int	pwd(int ac, char **av);
 void    write_arg(char *str);
 int     n_flag_present(char *str);
 int	echo(int ac, char **av);
-int	env(int ac, char **av, char **envp);
+int	env(int ac, char **av, char **envp, int mode);
 int	ft_exit(int ac, char **av);
 int	get_formated_status(char *arg);
 int	is_exit_arg_valid(char *arg);
