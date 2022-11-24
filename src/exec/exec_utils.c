@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 13:14:25 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/23 10:16:12 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,28 @@ int	cmds_get_n(t_shell *shell)
 	return (n);
 }
 
+int	check_for_invalid_cmd(t_shell *shell)
+{
+	if (!shell->cmd->token || !shell->cmd->token[0])
+		return (0);
+	if (shell->cmd->token[0][0] == '.' && shell->cmd->token[0][1] == '\0')
+	{
+		write(2, shell->cmd->cmd, ft_strlen(shell->cmd->token[0]));
+		write(2, ": usage . filename[arguments]\n", 29);
+		return (2);
+	}
+	if (open(shell->cmd->token[0], O_DIRECTORY) != -1)
+	{
+		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
+		write(2, " : is a directory\n", 19);
+		return (126);
+	}
+	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
+	if (command_not_found(shell))
+		return (127);
+	return (0);
+}
+
 int	command_not_found(t_shell *shell)
 {
 	if (!is_valid_history(shell->retprompt))
@@ -38,7 +60,13 @@ int	command_not_found(t_shell *shell)
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
 		write(2, " : Command not found\n", 21);
 		shell->exit_status = 127;
-		return (-1);
+		return (127);
+	}
+	if (open(shell->cmd->cmd, O_RDONLY) == -1 && errno == EACCES)
+	{
+		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
+		write(2, " : permission denied\n", 22);
+		return (126);
 	}
 	return (0);
 }

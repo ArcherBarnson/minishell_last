@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 08:52:39 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:27:37 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	ft_flag(void)
 
 int	ft_print_debug_content(t_lex *lex, t_pars *pars, char *choice)
 {
+//	(void)lex;
+//	(void)pars;
+//	(void)choice;
+	
 	if (ft_strcmp(choice, "lex"))
 		ft_print_lexer_content(lex);
 	else if (ft_strcmp(choice, "pars"))

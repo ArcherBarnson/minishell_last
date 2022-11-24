@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/24 11:46:43 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:20:32 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	ft_read_prompt(t_shell *shell)
 	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
-	printf("\n--------------------------\n");
-	printf("\033[0;32m%s\033[0m", lex.user_input);
+	//printf("\n--------------------------\n");
+	//printf("\033[0;32m%s\033[0m", lex.user_input);
 	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars) || ft_print_debug_content(&lex, &pars, "pars"))

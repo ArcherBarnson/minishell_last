@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/10/18 13:49:51 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:22:26 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_cmd_link(t_cmd *cmd)
 			free(cmd->token[i]);
 		free(cmd->token);
 	}
-	free(cmd);
+	//free(cmd);
 	return ;
 }
 
@@ -42,7 +42,6 @@ void	free_cmd_lst(t_cmd *cmd)
 			cmd = cmd->next;
 		}
 		cmd = NULL;
-		//free_cmd_link(cmd);
 	}
 	return ;
 }
@@ -51,6 +50,8 @@ void	free_tab(char **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = -1;
 	while (tab[++i])
 		free(tab[i]);

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/24 13:48:57 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:32:54 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct	s_envp_cpy		t_envp_cpy;
 
-int	exit_code;
+extern int	exit_code;
 
 typedef struct	s_shell
 {
@@ -921,16 +921,30 @@ int	ft_strcmp(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 //char	**envp_update(char **envp, int mode, char *var);
 int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
+void	export_no_args(t_envp_cpy *envpc_lst);
+int	export_error(char *str, int i, int error_type);
+int	ft_strccmp(char *s1, char *s2, char c);
+int	is_env_var(char *str);
+int	is_valid_identifier(char c);
+int	is_valid_string(char *str);
 t_envp_cpy	*unset(int ac, char **av, t_envp_cpy *envpc_lst);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	**dup_tab(char **tab);
+void	free_tab(char **tab);
 int	get_tab_size(char **tab);
 //char	*ft_strdup(char *src);
-int	cd(int ac, char **path);
+int	cd(int ac, char **path, char **envp);
 int	pwd(int ac, char **av);
 void    write_arg(char *str);
 int     n_flag_present(char *str);
 int	echo(int ac, char **av);
-int    env(int ac, char **av, char **envp);
+int	env(int ac, char **av, char **envp, int mode);
+t_envp_cpy	*set_env(t_shell *shell, char **envp);
+int	ft_exit(int ac, char **av);
+int	get_formated_status(char *arg);
+int	is_exit_arg_valid(char *arg);
+int	invalid_exit_arg(char *arg);
+long long	ft_atoll(const char	*str);		//maybe put that in libft
 //void	command_interpreter(char **envp, t_cmd *cmd, int fds[3], int pipefd[2]);
 void	child_signals(void);
 void	sigquit_cmd(int sig);
@@ -942,7 +956,7 @@ int     check_builtins(t_shell *shell);
 int     exec_builtin(t_shell *shell);
 void	sigint_handler(int sig);
 //void    free_cmd_set(t_cmd **cmds);
-int	start_shell(t_shell *shell, char **envp);
+int	start_shell(t_shell *shell);
 int     is_valid_history(char *str);
 int     command_not_found(t_shell *shell);
 int     cmds_get_n(t_shell *shell);
@@ -955,11 +969,13 @@ int	pipexec(t_shell *shell, int tbc, char **envp);
 int	*make_pid_tab(int size);
 int	set_fds(t_shell *shell);
 int	exec(t_shell *shell, char **envp);
+int	check_for_invalid_cmd(t_shell *shell);
 int	simple_exec(t_shell *shell, char **envp);
 int	prep_exec(t_shell *shell, char **envp);
 void    free_cmd_lst(t_cmd *cmd);
 void    free_cmd_link(t_cmd *cmd);
 void	free_all(t_shell *shell);
+char	**build_minimal_env(void);
 char	**lst_to_envp(t_envp_cpy *envpc_lst);
 t_envp_cpy	*envp_to_lst(char **envp);
 int	get_envp_lst_size(t_envp_cpy *envpc_lst);

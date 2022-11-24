@@ -15,28 +15,6 @@
 
 extern	int exit_code;
 
-int	simple_exec(t_shell *shell, char **envp)
-{
-	int	*pid;
-
-	pid = make_pid_tab(cmds_get_n(shell));
-	signal(SIGINT, SIG_IGN);
-	if (check_builtins(shell) == 1)
-		return (exec_builtin(shell));
-	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-	if (command_not_found(shell) == -1)
-		return (127);
-	pid[0] = fork();
-	if (pid[0] == 0)
-	{
-		child_signals();
-		dup2(shell->cmd->fd_in, STDIN_FILENO);
-		dup2(shell->cmd->fd_out, STDOUT_FILENO);
-		execve(shell->cmd->cmd, shell->cmd->token, envp);
-	}
-	return (ft_wait(pid, shell));
-}
-
 void	dup_fds(t_shell *shell)
 {
 	if (shell->cmd->prev || shell->cmd->fd_in != 0)
@@ -52,20 +30,55 @@ void	dup_fds(t_shell *shell)
 	return ;
 }
 
+void	execute_command(t_shell *shell, char **envp, int mode)
+{
+	dup_fds(shell);
+	if (mode == 1)
+		exit(exec_builtin(shell));
+	else
+		execve(shell->cmd->cmd, shell->cmd->token, envp);
+	return ;
+}
+
+int	simple_exec(t_shell *shell, char **envp)
+{
+	int	*pid;
+	int	err_code;
+	int	is_builtin;
+
+	signal(SIGINT, SIG_IGN);
+	is_builtin = check_builtins(shell);
+	pid = make_pid_tab(cmds_get_n(shell));
+	if (is_builtin == 1 && shell->cmd->fd_out == 1)
+		return (exec_builtin(shell));
+	err_code = check_for_invalid_cmd(shell);
+	if (err_code)
+		return (err_code);
+	pid[0] = fork();
+	if (pid[0] == 0)
+	{
+		child_signals();
+		execute_command(shell, envp, is_builtin);
+	}
+	return (ft_wait(pid, shell));
+}
+
 int	pipexec(t_shell *shell, int tbc, char **envp)
 {
 	int	pid;
 	int	is_builtin;
+	int	err_code;
 
+	err_code = 0;
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	if (is_builtin == 2)
 		exit(exit_code);
 	if (is_builtin == 0)
 	{
-		shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-		if (command_not_found(shell) == -1)
-			return (127);
+		err_code = check_for_invalid_cmd(shell);
+		if (err_code)
+			return (err_code);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -73,14 +86,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 		child_signals();
 		if (tbc >= 0)
 			close(tbc);
-		dup_fds(shell);
-		if (is_builtin == 0)
-			execve(shell->cmd->cmd, shell->cmd->token, envp);
-		else
-		{
-			exec_builtin(shell);
-			exit(0);
-		}
+		execute_command(shell, envp, is_builtin);
 	}
 	return (pid);
 }
