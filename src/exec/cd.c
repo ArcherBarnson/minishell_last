@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 09:41:39 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:02:40 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,23 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-int	cd(int ac, char **path, char **envp)
+void	update_oldpwd(char **envp, t_envp_cpy *envpc_lst)
+{
+	char	cwd[4096];
+	char	**export_cwd;
+
+	export_cwd = malloc(sizeof(char *) * 3);
+	if (!export_cwd)
+		return ;
+	getcwd(cwd, 4096);
+	export_cwd[0] = NULL;
+	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
+	export_cwd[2] = NULL;
+	export(2, export_cwd, envp, envpc_lst);
+	free_tab(export_cwd);
+}
+
+int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst)
 {
 	char	*home;
 
@@ -65,6 +81,7 @@ int	cd(int ac, char **path, char **envp)
 			write(2, "cd : HOME not set\n", 19);
 			return (1);
 		}
+		update_oldpwd(envp, envpc_lst);
 		chdir(home);
 		free(home);
 		return (0);
@@ -76,6 +93,7 @@ int	cd(int ac, char **path, char **envp)
 		return (1);
 	}
 	free(home);
+	update_oldpwd(envp, envpc_lst);
 	chdir(path[1]);
 	return (0);
 }

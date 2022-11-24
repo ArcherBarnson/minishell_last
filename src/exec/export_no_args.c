@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:58:17 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 11:25:22 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:42:31 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void	export_no_args(t_envp_cpy *envpc_lst)
 	i = 1;
 	j = 0;
 	envpc = lst_to_envp(envpc_lst);
+	tmp = NULL;
 	if (!envpc)
 		return ;
-	sort_env_args(envpc, i, j);
+	sort_env_args(envpc, tmp, i, j);
 	env(1, NULL, envpc, 1);
 	free(envpc);
 	free(tmp);

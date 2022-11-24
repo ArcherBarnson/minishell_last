@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:44:46 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 11:25:10 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:33:17 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_builtin(t_shell *shell)
 			shell->cmd->token));
 	if (ft_strcmp(shell->cmd->token[0], CD) == 1)
 		return (cd(get_tab_size(shell->cmd->token),
-			shell->cmd->token, shell->ms_env));
+			shell->cmd->token, shell->ms_env, shell->envpc));
 	if (ft_strcmp(shell->cmd->token[0], EXPORT) == 1)
 		return (export(get_tab_size(shell->cmd->token),
 			shell->cmd->token, shell->ms_env, shell->envpc));
