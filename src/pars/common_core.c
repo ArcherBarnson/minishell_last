@@ -27,9 +27,9 @@ int	ft_read_prompt(t_shell *shell)
 	printf("\n--------------------------\n");
 	printf("\033[0;32m%s\033[0m", lex.user_input);
 	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
-		ft_error_return(&lex, &pars, shell);
+		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars) || ft_print_debug_content(&lex, &pars, "pars"))
-		ft_error_return(&lex, &pars, shell);
+		return (ft_error_return(&lex, &pars, shell));
 	if (ft_expander(&pars) || ft_print_debug_content(&lex, &pars, "exp"))
 		ft_error_return(&lex, &pars, shell);
 	if (ft_around_redirector(&lex, &pars) || ft_print_debug_content(&lex, &pars, "redir"))
@@ -51,11 +51,13 @@ int	ft_read_prompt(t_shell *shell)
 
 int	ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell)
 {
+	(void)pars;
 	shell->cmd = NULL;
+	printf("return 1 to exec with shell->cmd = NULL\n");
 	ft_tklist_freeall(lex);
-	ft_execfree_freeall(pars);
-	ft_pars_freeall(pars);
-	return (2);
+//	ft_execfree_freeall(pars);
+//	ft_pars_freeall(pars);
+	return (1);
 }
 
 int	ft_around_lexer(t_lex *lex)
@@ -101,41 +103,51 @@ int	ft_around_redirector(t_lex *lex, t_pars *pars)
 
 int	ft_lexer(t_lex *lex)
 {
+	int	ret;
+
+	ret = ft_check_forbidden_cmb(lex->user_input);
 	while (*lex->user_input && *lex->user_input != '\n'
-		&& lex->prev_decision.lex_read_mode != ERR_LEX_RD_MD)
+		&& ret == 0)
 	{
-		if (ft_lex_apply_decision(lex))
-			return (1);
+		ret = ft_lex_apply_decision(lex);
 		lex->user_input++;
 	}
-	if (lex->new_decision.lex_read_mode != ERR_LEX_RD_MD)
-	{
-		if (ft_lex_apply_decision(lex))
-			return (1);
-	}
-	if (lex->new_decision.lex_read_mode == ERR_LEX_RD_MD)
-		return (ft_msgerr((char *)ft_getlabel_error_msgs
-				(lex->new_decision.token_type - TOK_ERR_MARK - 1)));
-	if (lex->new_decision.lex_read_mode != ERR_LEX_RD_MD)
+	if (!ret)
+		ret = ft_lex_apply_decision(lex);
+	if (lex->token)
 		lex->token = lex->token->next;
-	return (0);
+	if (ret)
+		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
+				(ret - 1)));
+	else
+		return (0);
 }
 
 int	ft_parser(t_lex *lex, t_pars *pars)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
+	ret = 0;
 	pars->token = lex->token;
-	while (i++ < pars->nb_of_tokens)
+	pars->crt_tok_type = pars->token->type;
+	while (i++ < pars->nb_of_tokens && ret == 0)
 	{
-		if (ft_pars_apply_decision(pars))
-			return (1);
+		ret = ft_pars_apply_decision(pars);
 		pars->token = pars->token->next;
+		pars->crt_tok_type = pars->token->type;
+	}
+	if (!ret)
+	{
+		pars->crt_tok_type = TOK_END_OF_INPUT;
+		ret = ft_pars_apply_decision(pars);
 	}
 	pars->command->token = pars->command->token->next;
 	pars->command = pars->command->next;
-	//ft_print_parser_content(pars);
+	if (ret)
+		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
+				(ret - 1)));
 	return (0);
 }
 

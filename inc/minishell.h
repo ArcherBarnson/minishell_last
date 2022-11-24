@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <fcntl.h>
 # include <errno.h>
+# include "../lib/libft/inc/libft.h"
 # include "../lib/gnl/inc/get_next_line.h"
 
 # define CD "cd"
@@ -38,6 +39,7 @@
 # define SIG_ABORT 134
 # define BUS_ERR 135
 # define SIG_SEGV 139
+# define NB_FORBIDDEN 2
 # define ERR_NOT_HANDLED "Error! Syntax. Character not handled"
 # define ERR_MALLOC "Error! Malloc"
 # define ERR_NULLTKN "Error! New TOKEN is NULL in list"
@@ -47,6 +49,9 @@
 # define ERR_SYNTAX "Error! Syntax"
 # define ERR_STRNULL "Error! String is NULL"
 # define ERR_TESTFILE "Error! Reading file parser.test"
+# define ERR_CMB "Error! Combination is unknown"
+# define ERR_SYN "Error! Syntax"
+# define ERR_CHR "Error! Syntax. Character (combination) not handled"
 # define ERR_SPL "Error! Simple quote is missing"
 # define ERR_DBL "Error! Double quote is missing"
 # define ERR_CASE "Error! Automate did not find current case"
@@ -77,7 +82,7 @@ typedef enum e_pars_actions		t_pars_actions;
 typedef enum e_exp_actions		t_exp_actions;
 typedef enum e_redir_actions	t_redir_actions;
 typedef enum e_token_types		t_token_types;
-typedef enum e_err_msgs			t_err_msgs;
+typedef enum e_err_codes		t_err_codes;
 typedef int						(*t_lex_func)(t_lex *);
 typedef int						(*t_pars_func)(t_pars *);
 typedef int						(*t_exp_func)(t_pars *);
@@ -102,11 +107,14 @@ typedef struct	s_shell
 	t_pars		*pars;
 }		t_shell;
 
-enum e_err_msgs
+enum e_err_codes
 {
-	ERR_MSG_SPL,
-	ERR_MSG_DBL,
-	LEN_ERR_MSGS
+	ERR_CD_CMB,
+	ERR_CD_SYN,
+	ERR_CD_CHR,
+	ERR_CD_SPL,
+	ERR_CD_DBL,
+	LEN_ERR_CODES
 };
 
 enum e_token_types
@@ -163,7 +171,6 @@ enum e_lex_actions
 enum e_pars_actions
 {
 	PARS_ERR,
-	PARS_SYN_ERR,
 	PARS_NONE,
 	PARS_NEW,
 	PARS_CATCH,
@@ -214,7 +221,11 @@ enum e_redir_actions
 
 enum e_lex_read_modes
 {
-	ERR_LEX_RD_MD,
+	CMB_ERR_LEX_RD_MD,
+	SYN_ERR_LEX_RD_MD,
+	CHR_ERR_LEX_RD_MD,
+	SPL_ERR_LEX_RD_MD,
+	DBL_ERR_LEX_RD_MD,
 	NEW_LEX_RD_MD,
 	STD_LEX_RD_MD,
 	SPL_LEX_RD_MD,
@@ -233,7 +244,8 @@ enum e_lex_read_modes
 
 enum e_pars_read_modes
 {
-	ERR_PARS_RD_MD,
+	CMB_ERR_PARS_RD_MD,
+	SYN_ERR_PARS_RD_MD,
 	NEW_PARS_RD_MD,
 	STD_PARS_RD_MD,
 	SPL_PARS_RD_MD,
@@ -430,6 +442,7 @@ struct s_lex
 	char		*temp;
 	int			nb_taken_char;
 	char		*user_input;
+	char		forbidden[NB_FORBIDDEN];
 	t_lex_proc	prev_decision;
 	t_lex_proc	new_decision;
 	t_lex_proc	decision[LEN_LEX_RD_MDS][LEN_CHAR_TYPES];
@@ -471,6 +484,7 @@ struct s_pars
 	int				nb_of_commands;
 	int				nb_of_tokens;
 	t_token			*token;
+	t_token_types		crt_tok_type;
 	int				fd_in;
 	int				fd_out;
 	char			*current_filename;
@@ -599,7 +613,8 @@ int				ft_open_append_outfile(t_pars *pars, char *file);
 /* ************************************************************************** */
 /*                              common_labels.c                               */
 /* ************************************************************************** */
-char			*ft_getlabel_error_msgs(const t_err_msgs index);
+char			*ft_getlabel_error_msgs(const t_err_codes index);
+char			*ft_getlabel_error_msgs_txt(const t_err_codes index);
 char			*ft_getlabel_token_types(const t_token_types index);
 char			*ft_getlabel_char_types(const t_char_types index);
 char			*ft_getlabel_lex_actions(const t_lex_actions index);
@@ -713,6 +728,7 @@ int				ft_print_debug_redir(t_pars *pars);
 /*                            lexer_actions.c                                 */
 /* ************************************************************************** */
 int				ft_init_lex_actions(t_lex *lex);
+int     			ft_check_forbidden_cmb(char *user_input);
 int				ft_lex_none(t_lex *lex);
 int				ft_lex_catch(t_lex *lex);
 int				ft_lex_keep(t_lex *lex);
@@ -736,7 +752,7 @@ int				ft_pars_take(t_pars *pars);
 int				ft_pars_skip(t_pars *pars);
 int				ft_pars_record(t_pars *pars);
 int				ft_pars_end(t_pars *pars);
-int				ft_pars_err_syn(t_pars *pars);
+int				ft_pars_err(t_pars *pars);
 
 /* ************************************************************************** */
 /*                           expander_actions.c                               */
@@ -784,14 +800,14 @@ int				ft_redir_err(t_pars *pars);
 /* ************************************************************************** */
 /*                              common_utils.c                                */
 /* ************************************************************************** */
-size_t			ft_strlen(const char *s);
-char			*ft_strdup(const char *s);
-char			*ft_strndup(const char *s, size_t n);
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
-char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_substr(char const *s, unsigned int start, size_t len);
-int				ft_getsize(int n);
-char			*ft_itoa(int n);
+//size_t			ft_strlen(const char *s);
+//char			*ft_strdup(const char *s);
+//char			*ft_strndup(const char *s, size_t n);
+//int				ft_strncmp(const char *s1, const char *s2, size_t n);
+//char			*ft_strjoin(char const *s1, char const *s2);
+//char			*ft_substr(char const *s, unsigned int start, size_t len);
+//int				ft_getsize(int n);
+//char			*ft_itoa(int n);
 
 /* ************************************************************************** */
 /*                             common_ascii.c                                 */

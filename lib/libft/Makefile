@@ -10,10 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	= common_utils.c \
-			ft_split.c \
-			ft_strcmp.c
-
+SRCS	= ft_isalpha.c ft_isdigit.c ft_strlen.c ft_strdup.c ft_strndup.c \
+	  ft_strncmp.c ft_strjoin.c ft_substr.c ft_getsize.c ft_itoa.c \
+	  ft_split.c ft_strcmp.c ft_strnstr.c
 SRCDIR	=	src
 LB_PATH	=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJDIR	=	obj

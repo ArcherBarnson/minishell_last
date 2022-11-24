@@ -35,7 +35,7 @@ int	ft_print_debug_content(t_lex *lex, t_pars *pars, char *choice)
 int	ft_print_debug_lex(t_lex *lex)
 {
 	printf("\033[33;2m");
-	if (lex->new_decision.buffer_action == LEX_ERR)
+	if (lex->new_decision.lex_read_mode == CMB_ERR_LEX_RD_MD)
 	{
 		printf("\033[31;2m\n<- ERROR in LEXER -> \n\033[0m");
 		printf("[1] : %s\n", ft_getlabel_lex_read_modes
@@ -51,7 +51,7 @@ int	ft_print_debug_lex(t_lex *lex)
 int	ft_print_debug_pars(t_pars *pars)
 {
 	printf("\033[33;2m");
-	if (pars->new_pars_decision.token_action == PARS_ERR)
+	if (pars->new_pars_decision.pars_read_mode == CMB_ERR_PARS_RD_MD)
 	{
 		printf("\033[31;2m\n<- ERROR in PARSER -> \n\033[0m");
 		printf("[1] : %s\n", ft_getlabel_pars_read_modes

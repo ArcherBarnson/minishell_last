@@ -14,7 +14,6 @@
 
 int	ft_init_pars_actions(t_pars *pars)
 {
-	pars->ft_pars[PARS_SYN_ERR] = ft_pars_err_syn;
 	pars->ft_pars[PARS_NONE] = ft_pars_none;
 	pars->ft_pars[PARS_NEW] = ft_pars_new;
 	pars->ft_pars[PARS_CATCH] = ft_pars_catch;
@@ -23,6 +22,7 @@ int	ft_init_pars_actions(t_pars *pars)
 	pars->ft_pars[PARS_TAKE] = ft_pars_take;
 	pars->ft_pars[PARS_SKIP] = ft_pars_skip;
 	pars->ft_pars[PARS_END] = ft_pars_end;
+	pars->ft_pars[PARS_ERR] = ft_pars_err;
 	return (0);
 }
 
@@ -73,7 +73,8 @@ int	ft_pars_drop(t_pars *pars)
 
 int	ft_pars_take(t_pars *pars)
 {
-	if (pars->prev_pars_decision.pars_read_mode == NEW_PARS_RD_MD)
+	if (pars->prev_pars_decision.pars_read_mode == NEW_PARS_RD_MD ||
+		pars->prev_pars_decision.pars_read_mode == PIPE_PARS_RD_MD)
 	{
 		ft_pars_new(pars);
 	}
@@ -107,8 +108,8 @@ int	ft_pars_end(t_pars *pars)
 	return (0);
 }
 
-int	ft_pars_err_syn(t_pars *pars)
+int	ft_pars_err(t_pars *pars)
 {
 	(void)pars;
-	return (ft_msgerr(ERR_SYNTAX));
+	return(1 + pars->new_pars_decision.pars_read_mode);
 }

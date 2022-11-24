@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_apply_decision.c                            :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 06:11:11 by mbourgeo         ###   ########.fr       */
+/*   Created: 2021/10/21 03:28:49 by mbourgeo          #+#    #+#             */
+/*   Updated: 2021/11/30 22:34:34 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_pars_apply_decision(t_pars *pars)
+int	ft_isdigit(int c)
 {
-	pars->prev_pars_decision = pars->new_pars_decision;
-	pars->new_pars_decision = pars->pars_decision[pars
-		->prev_pars_decision.pars_read_mode][pars->crt_tok_type];
-	ft_print_debug_pars(pars);
-	pars->ft_pars[pars->new_pars_decision.token_action](pars);
-	return (pars->ft_pars[pars->new_pars_decision.pars_list_action](pars));
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

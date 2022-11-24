@@ -21,9 +21,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-/* ************************************************************************** */
-/*                             common_utils.c                                 */
-/* ************************************************************************** */
+int	ft_isalpha(int c);
+int	ft_isdigit(int c);
 size_t  ft_strlen(const char *s);
 char    *ft_strdup(const char *s);
 char    *ft_strndup(const char *s, size_t n);
@@ -32,15 +31,8 @@ char    *ft_strjoin(char const *s1, char const *s2);
 char    *ft_substr(char const *s, unsigned int start, size_t len);
 int     ft_getsize(int n);
 char    *ft_itoa(int n);
-
-/* ************************************************************************** */
-/*                               ft_split.c                                   */
-/* ************************************************************************** */
 char    **ft_split(char const *s, char c);
-
-/* ************************************************************************** */
-/*                                ft_strcmp.c                                 */
-/* ************************************************************************** */
 int     ft_strcmp(char *s1, char *s2);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 #endif

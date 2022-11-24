@@ -12,10 +12,20 @@
 
 #include "minishell.h"
 
-char	*ft_getlabel_error_msgs(const t_err_msgs index)
+char	*ft_getlabel_error_msgs(const t_err_codes index)
 {
-	static const char	*label[LEN_ERR_MSGS] = {
-		ERR_SPL, ERR_DBL
+	static const char	*label[LEN_ERR_CODES] = {
+		"ERR_CD_CMB", "ERR_CD_SYN", "ERR_CD_CHR",
+		"ERR_CD_SPL", "ERR_CD_DBL"
+	};
+
+	return ((char *)label[index]);
+}
+
+char	*ft_getlabel_error_msgs_txt(const t_err_codes index)
+{
+	static const char	*label[LEN_ERR_CODES] = {
+		ERR_CMB, ERR_SYN, ERR_CHR, ERR_SPL, ERR_DBL
 	};
 
 	return ((char *)label[index]);
@@ -57,7 +67,7 @@ char	*ft_getlabel_lex_actions(const t_lex_actions index)
 char	*ft_getlabel_pars_actions(const t_pars_actions index)
 {
 	static const char	*label[LEN_PARS_ACTIONS] = {
-		"PARS_ERR", "PARS_SYN_ERR", "PARS_NONE", "PARS_NEW", "PARS_CATCH",
+		"PARS_ERR", "PARS_NONE", "PARS_NEW", "PARS_CATCH",
 		"PARS_KEEP", "PARS_DROP", "PARS_TAKE", "PARS_SKIP", "PARS_END"
 	};
 
@@ -89,7 +99,9 @@ char	*ft_getlabel_redir_actions(const t_redir_actions index)
 char	*ft_getlabel_lex_read_modes(const t_lex_read_modes index)
 {
 	static const char	*label[LEN_LEX_RD_MDS] = {
-		"ERR_LEX_RD_MD", "NEW_LEX_RD_MD", "STD_LEX_RD_MD", "SPL_LEX_RD_MD",
+		"CMB_ERR_LEX_RD_MD", "SYN_ERR_LEX_RD_MD", "CHR_ERR_LEX_RD_MD",
+		"SPL_ERR_LEX_RD_MD", "DBL_ERR_LEX_RD_MD", "NEW_LEX_RD_MD",
+		"STD_LEX_RD_MD", "SPL_LEX_RD_MD",
 		"DBL_LEX_RD_MD", "ESCP_LEX_RD_MD", "PIPE_LEX_RD_MD", "AMP_LEX_RD_MD",
 		"LT_LEX_RD_MD", "GT_LEX_RD_MD", "OR_LEX_RD_MD", "AND_LEX_RD_MD",
 		"HDOC_LEX_RD_MD", "GGRT_LEX_RD_MD"
@@ -101,10 +113,10 @@ char	*ft_getlabel_lex_read_modes(const t_lex_read_modes index)
 char	*ft_getlabel_pars_read_modes(const t_pars_read_modes index)
 {
 	static const char	*label[LEN_PARS_RD_MDS] = {
-		"ERR_PARS_RD_MD", "NEW_PARS_RD_MD", "STD_PARS_RD_MD", "SPL_PARS_RD_MD",
-		"DBL_PARS_RD_MD", "ESCP_PARS_RD_MD", "PIPE_PARS_RD_MD",
-		"AMP_PARS_RD_MD", "LT_PARS_RD_MD", "GT_PARS_RD_MD", "OR_PARS_RD_MD",
-		"AND_PARS_RD_MD", "HDOC_PARS_RD_MD", "GGRT_PARS_RD_MD"
+		"CMB_ERR_PARS_RD_MD", "SYN_ERR_PARS_RD_MD", "NEW_PARS_RD_MD",
+		"STD_PARS_RD_MD", "SPL_PARS_RD_MD", "DBL_PARS_RD_MD", "ESCP_PARS_RD_MD",
+		"PIPE_PARS_RD_MD", "AMP_PARS_RD_MD", "LT_PARS_RD_MD", "GT_PARS_RD_MD",
+		"OR_PARS_RD_MD", "AND_PARS_RD_MD", "HDOC_PARS_RD_MD", "GGRT_PARS_RD_MD"
 	};
 
 	return ((char *)label[index]);

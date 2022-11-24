@@ -26,6 +26,21 @@ int	ft_init_lex_actions(t_lex *lex)
 	return (0);
 }
 
+int	ft_check_forbidden_cmb(char *user_input)
+{
+	char 	*forbidden[] = { "&", NULL };
+	int	i;
+
+	i = 0;
+	while(forbidden[i])
+	{
+		if (ft_strnstr(user_input, forbidden[i], ft_strlen(user_input)))
+			return (1 + ERR_CD_CHR);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_lex_none(t_lex *lex)
 {
 	(void)lex;
@@ -117,6 +132,5 @@ int	ft_lex_end(t_lex *lex)
 
 int	ft_lex_err(t_lex *lex)
 {
-	return (ft_msgerr(ft_getlabel_error_msgs(
-				(t_err_msgs)lex->new_decision.buffer_action)));
+	return(1 + lex->new_decision.lex_read_mode);
 }

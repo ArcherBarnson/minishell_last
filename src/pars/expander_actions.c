@@ -232,6 +232,8 @@ int	ft_exp_end(t_pars *pars)
 
 int	ft_exp_err(t_pars *pars)
 {
-	return (ft_msgerr(ft_getlabel_error_msgs((t_err_msgs)
-				pars->new_exp_decision.token_type)), 0);
+	(void)pars;
+	return (1);
+	//return (ft_msgerr(ft_getlabel_error_msgs((t_err_msgs)
+	//			pars->new_exp_decision.token_type)), 0);
 }
