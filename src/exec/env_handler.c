@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 14:57:15 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:28:37 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ char	**build_minimal_env(void)
 	minimal_env[0] = ft_strjoin("PWD=", cwd);
 	minimal_env[1] = NULL;
 	return (minimal_env);
+}
+
+t_envp_cpy	*set_env(t_shell *shell, char **envp)
+{
+	if (shell->ms_env == NULL)
+		shell->envpc = envp_to_lst(envp);
+		//shell->ms_env = dup_tab(envp);
+	else
+		shell->envpc = envp_to_lst(shell->ms_env);
+	return (shell->envpc);
 }
 
 int	get_envp_lst_size(t_envp_cpy *envpc_lst)

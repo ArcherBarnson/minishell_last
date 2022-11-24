@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:58:17 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 16:16:29 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:25:22 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,8 @@ static int	strcmp_diff(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-void	export_no_args(t_envp_cpy *envpc_lst)
+void	sort_env_args(char **envpc, char *tmp, int i, int j)
 {
-	char	**envpc;
-	char	*tmp;
-	int	i;
-	int	j;
-
-	i = 1;
-	j = 0;
-	envpc = lst_to_envp(envpc_lst);
-	if (!envpc)
-		return ;
 	while (envpc[j])
 	{
 		while (envpc[i])
@@ -51,6 +41,22 @@ void	export_no_args(t_envp_cpy *envpc_lst)
 		j++;
 		i = j + 1;
 	}
+	return ;
+}
+
+void	export_no_args(t_envp_cpy *envpc_lst)
+{
+	char	**envpc;
+	char	*tmp;
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	envpc = lst_to_envp(envpc_lst);
+	if (!envpc)
+		return ;
+	sort_env_args(envpc, i, j);
 	env(1, NULL, envpc, 1);
 	free(envpc);
 	free(tmp);

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/22 11:21:25 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:41:39 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*ft_strdup_offset(char *str, int offset)
 		size++;
 	}
 	returnstr[size] = '\0';
-	printf("%s\n", returnstr);
 	return (returnstr);
 }
 

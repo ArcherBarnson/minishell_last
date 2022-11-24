@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/23 16:13:58 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:32:54 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -923,6 +923,7 @@ void    write_arg(char *str);
 int     n_flag_present(char *str);
 int	echo(int ac, char **av);
 int	env(int ac, char **av, char **envp, int mode);
+t_envp_cpy	*set_env(t_shell *shell, char **envp);
 int	ft_exit(int ac, char **av);
 int	get_formated_status(char *arg);
 int	is_exit_arg_valid(char *arg);
@@ -939,7 +940,7 @@ int     check_builtins(t_shell *shell);
 int     exec_builtin(t_shell *shell);
 void	sigint_handler(int sig);
 //void    free_cmd_set(t_cmd **cmds);
-int	start_shell(t_shell *shell, char **envp);
+int	start_shell(t_shell *shell);
 int     is_valid_history(char *str);
 int     command_not_found(t_shell *shell);
 int     cmds_get_n(t_shell *shell);
