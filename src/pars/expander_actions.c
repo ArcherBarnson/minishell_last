@@ -82,7 +82,8 @@ int	ft_exp_catch(t_pars *pars)
 
 int	ft_exp_keep(t_pars *pars)
 {
-	(void)pars;
+//	(void)pars;
+	printf("********temp : %s\n", pars->temp);
 	return (0);
 }
 
@@ -198,18 +199,30 @@ int	ft_exp_dol(t_pars *pars)
 {
 	if (!pars->start_dol)
 	{
+		printf("--------------------START_1\n");
 		pars->start_dol = pars->offset_start + 1;
 		pars->before_dol_mode = pars->prev_exp_decision.exp_read_mode;
 	}
 	else
 	{
+		printf("--------------------START_2\n");
 		ft_exp_record_dol(pars);
+		printf("temp : %s\n", pars->temp);
 		if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 			pars->start_dol = pars->offset_start + 1;
 		else
 		{
-			pars->new_exp_decision.exp_read_mode = pars->before_dol_mode;
-			pars->before_dol_mode = 0;
+			if (pars->before_dol_mode == DBL_EXP_RD_MD)
+			{
+				if (pars->new_exp_decision.exp_read_mode == DBL_EXP_RD_MD)
+					pars->new_exp_decision.exp_read_mode = STD_EXP_RD_MD;
+				else
+				{
+					printf("--------------------HERE\n");
+					pars->new_exp_decision.exp_read_mode = pars->before_dol_mode;
+				}
+				pars->before_dol_mode = CMB_ERR_EXP_RD_MD;
+			}
 		}
 	}
 	return (0);

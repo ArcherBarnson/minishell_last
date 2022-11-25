@@ -53,7 +53,7 @@ int	ft_init_exp_decision_3(t_pars *pars)
 
 int	ft_init_exp_decision_4(t_pars *pars)
 {
-	pars->exp_decision[DOL_EXP_RD_MD][SEP_CHAR] = (t_exp_proc){EXP_DOL, EXP_TAKE, NEW_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DOL_EXP_RD_MD][SEP_CHAR] = (t_exp_proc){EXP_DOL, EXP_TAKE, STD_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DOL_EXP_RD_MD][STD_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DOL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DOL_EXP_RD_MD][SPL_CHAR] = (t_exp_proc){EXP_DOL, EXP_SKIP, SPL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DOL_EXP_RD_MD][DBL_CHAR] = (t_exp_proc){EXP_DOL, EXP_SKIP, DBL_EXP_RD_MD, TOK_WORD};

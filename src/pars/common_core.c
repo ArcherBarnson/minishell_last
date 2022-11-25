@@ -26,15 +26,15 @@ int	ft_read_prompt(t_shell *shell)
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
-	if (ft_around_lexer(&lex))// || ft_print_debug_content(&lex, &pars, "lex"))
+	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_around_parser(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "pars"))
+	if (ft_around_parser(&lex, &pars) || ft_print_debug_content(&lex, &pars, "pars"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_expander(&pars))// || ft_print_debug_content(&lex, &pars, "exp"))
+	if (ft_expander(&pars) || ft_print_debug_content(&lex, &pars, "exp"))
 	 	return (ft_error_return(&lex, &pars, shell));
-if (ft_around_redirector(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "redir"))
+if (ft_around_redirector(&lex, &pars) || ft_print_debug_content(&lex, &pars, "redir"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_transformer(&pars))// || ft_print_debug_content(&lex, &pars, "trans"))
+	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
 		return (ft_error_return(&lex, &pars, shell));
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
