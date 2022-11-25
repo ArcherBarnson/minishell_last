@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/24 17:11:39 by bgrulois         ###   ########.fr       */
+/*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
+/*   Updated: 2022/11/25 17:38:22 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ typedef int						(*t_lex_func)(t_lex *);
 typedef int						(*t_pars_func)(t_pars *);
 typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
-typedef struct	s_envp_cpy		t_envp_cpy;
+typedef struct s_envp_cpy		t_envp_cpy;
 
-extern int	exit_code;
+extern int						exit_code;
 
-typedef struct	s_shell
+typedef struct s_shell
 {
 	t_hdoc_tab	*hdoc_tab;
-	t_cmd	*cmd;
-	t_cmd	*cmd_head;
+	t_cmd		*cmd;
+	t_cmd		*cmd_head;
 	t_envp_cpy	*envpc;
 	t_envp_cpy	*envpc_head;
-	int		pipefd[2];
-	int		tmp_fd;
-	int		exit_status;
+	int			pipefd[2];
+	int			tmp_fd;
+	int			exit_status;
 	char		*retprompt;
 	char		**ms_env;
 	char		**env_paths;
@@ -148,7 +148,7 @@ enum e_char_types
 	PIPE_CHAR,
 	AMP_CHAR,
 	LT_CHAR,
- 	GT_CHAR,
+	GT_CHAR,
 	DOL_CHAR,
 	END_CHAR,
 	LEN_CHAR_TYPES
@@ -449,6 +449,7 @@ struct s_lex
 	char		*token_types[LEN_TOKEN_TYPES];
 	t_lex_func	ft[LEN_LEX_ACTIONS];
 	int			nb_of_tokens;
+	int			nb_tcmd;
 	t_token		*token;
 };
 
@@ -457,6 +458,7 @@ struct s_pars
 	t_cmd			*cmd;
 	t_cmd			*cmd_head;
 	char			*temp;
+	int				expju;
 	int				nb_taken_char;
 	int				offset_start;
 	int				start_std;
@@ -483,14 +485,17 @@ struct s_pars
 	t_command		*command;
 	int				nb_of_commands;
 	int				nb_of_tokens;
+	t_envp_cpy		*pars_env;
 	t_token			*token;
-	t_token_types		crt_tok_type;
+	t_token_types	crt_tok_type;
 	int				fd_in;
 	int				fd_out;
 	char			*current_filename;
 	char			*new_filename;
 	int				current_fd;
 	int				new_fd;
+	int				dq_opened;
+	int				sq_opened;
 };
 
 struct s_cmd
@@ -543,7 +548,7 @@ struct s_hdoc_tab
 /* ************************************************************************** */
 //int				main(void);
 int				ft_read_prompt(t_shell *shell);
-int     			ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
+int				ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_around_lexer(t_lex *lex);
 int				ft_around_parser(t_lex *lex, t_pars *pars);
 int				ft_around_redirector(t_lex *lex, t_pars *pars);
@@ -647,7 +652,7 @@ t_token			*ft_new_token(char *str);
 t_token			*ft_token_addnext(t_token *current, t_token *next);
 t_token			*ft_token_jumpcurrent(t_token *prev, t_token *next);
 int				ft_free_tokenlist(t_token *token);
-t_token 		*ft_free_one_token(t_token *token);
+t_token			*ft_free_one_token(t_token *token);
 
 /* ************************************************************************** */
 /*                           parser_list.c                                    */
@@ -729,7 +734,7 @@ int				ft_print_debug_redir(t_pars *pars);
 /*                            lexer_actions.c                                 */
 /* ************************************************************************** */
 int				ft_init_lex_actions(t_lex *lex);
-int     			ft_check_forbidden_cmb(char *user_input);
+int				ft_check_forbidden_cmb(char *user_input);
 int				ft_lex_none(t_lex *lex);
 int				ft_lex_catch(t_lex *lex);
 int				ft_lex_keep(t_lex *lex);
@@ -826,156 +831,69 @@ struct	s_envp_cpy
 	t_envp_cpy	*next;
 };
 
-/*
-typedef struct	s_cmd_lst
-{
-	char	*cmd;		// = NULL
-	char	**args;		// = args[0] = CMD, args[...] = ARGS
-	int	fd_in;		// if !infile/here_doc -> = 0 || if 1st cmd & !infile/here_doc-> = -1
-	int	fd_out;		// if !outfile -> = 0 || if last cmd & !outfile-> -1
-	int	len;		// = number of commands (size of the linked list)
-	struct	s_cmd_lst *next;
-	struct	s_cmd_lst *prev;
-}		t_cmd_lst;
+int				ft_strcmp(char *s1, char *s2);
+char			**ft_split(char const *s, char c);
+int				export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
+void			export_no_args(t_envp_cpy *envpc_lst);
+int				export_error(char *str, int i, int error_type);
+int				ft_strccmp(char *s1, char *s2, char c);
+int				is_env_var(char *str);
+int				is_valid_identifier(char c);
+int				is_valid_string(char *str);
+t_envp_cpy		*unset(int ac, char **av, t_envp_cpy *envpc_lst);
+char			*ft_strjoin(char const *s1, char const *s2);
+char			**dup_tab(char **tab);
+void			free_tab(char **tab);
+int				get_tab_size(char **tab);
+int				cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst);
+int				pwd(int ac, char **av);
+void			write_arg(char *str);
+int				n_flag_present(char *str);
+int				echo(int ac, char **av);
+int				env(int ac, char **av, char **envp, int mode);
+t_envp_cpy		*set_env(t_shell *shell, char **envp);
+int				ft_exit(int ac, char **av);
+int				get_formated_status(char *arg);
+int				is_exit_arg_valid(char *arg);
+int				invalid_exit_arg(char *arg);
+long long		ft_atoll(const char	*str);
+void			child_signals(void);
+void			sigquit_cmd(int sig);
+void			debug_display(t_shell *shell);
+int				ft_wait(int *pid, t_shell *shell);
+void			display_signal_intercept(int sig);
+void			sigquit_ignore(int sig);
+int				check_builtins(t_shell *shell);
+int				exec_builtin(t_shell *shell);
+void			sigint_handler(int sig);
+int				start_shell(t_shell *shell);
+int				is_valid_history(char *str);
+int				command_not_found(t_shell *shell);
+int				cmds_get_n(t_shell *shell);
+int				start_exec(t_shell *shell, char **envp);
+int				continue_exec(t_shell *shell, char **envp);
+int				end_exec(t_shell *shell, char **envp);
+int				pipeline(t_shell *shell, char **envp);
+int				exit_pipeline(t_shell *shell, char **envp);
+int				pipexec(t_shell *shell, int tbc, char **envp);
+int				*make_pid_tab(int size);
+int				set_fds(t_shell *shell);
+int				exec(t_shell *shell, char **envp);
+int				check_for_invalid_cmd(t_shell *shell);
+int				simple_exec(t_shell *shell, char **envp);
+int				prep_exec(t_shell *shell, char **envp);
+void			free_cmd_lst(t_cmd *cmd);
+void			free_cmd_link(t_cmd *cmd);
+void			free_all(t_shell *shell);
+char			**build_minimal_env(void);
+char			**lst_to_envp(t_envp_cpy *envpc_lst);
+t_envp_cpy		*envp_to_lst(char **envp);
+int				get_envp_lst_size(t_envp_cpy *envpc_lst);
+void			clear_envpc_lst(t_envp_cpy *envpc_lst);
+void			ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new);
+t_envp_cpy		*ft_envpcnew(char *var);
+char			*find_path(char *cmd, char **env_paths);
+char			**get_env_paths(char **envp);
+t_shell			*minishell_init(char **envp);
 
-//int	ft_strlen(char *str);
-int	ft_strcmp(char *s1, char *s2);
-//int	ft_strncmp(const char *s1, const char *s2, size_t size);
-char	**ft_split(char const *s, char c);
-//char	**envp_update(char **envp, int mode, char *var);
-int	**export(char **envp, char *var);
-t_envp_cpy	*unset(char **envp, char *var);
-char	*ft_strjoin(char const *s1, char const *s2);
-int	get_tab_size(char **tab);
-//char	*ft_strdup(char *src);
-void    write_arg(char *str);
-int     n_flag_present(char *str);
-int	echo(int ac, char **av);
-//void	command_interpreter(char **envp, t_cmd *cmd, int fds[3], int pipefd[2]);
-void	sigint_handler(int sig);
-void    debug_display(t_shell *shell);
-void	sigquit_ignore(int sig);
-//int     check_builtins(char *cmd);
-//int     exec_builtin(t_cmd *cmd, char **envp);
-void	sigint_handler(int sig);
-//void    free_cmd_set(t_cmd **cmds);
-int	start_shell(t_shell *shell, char **envp);
-int     command_not_found(t_shell *shell);
-int     cmds_get_n(t_shell *shell);
-int     start_exec(t_shell *shell, char **envp);
-int     continue_exec(t_shell *shell, char **envp);
-int     end_exec(t_shell *shell, char **envp);
-int	pipeline(t_shell *shell, char **envp);
-int	set_fds(t_shell *shell);
-int	exec(t_shell *shell, char **envp);
-int	simple_exec(t_shell *shell, char **envp);
-int	prep_exec(t_shell *shell, char **envp);
-void    free_cmd_lst(t_cmd *cmd);
-void    free_cmd_link(t_cmd *cmd);
-void	free_all(t_shell *shell);
-//void	ft_lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
-char	*find_path(char *cmd, char **env_paths);
-char	**get_env_paths(char **envp);
-//t_cmd_lst	*parse_args(char *str);
-//t_cmd_lst	*ft_lstnew(void);
-t_shell		*minishell_init(char **envp);
-//void	ft_lstadd_back(t_envp_cpy **lst, t_envp_cpy *new);
-//t_envp_cpy	*ft_lstnew(void *content);
-*/
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-/* ************************************************************************** */
-/*                                 EXEC PART                                  */
-/* ************************************************************************** */
-/*struct	s_envp_cpy
-{
-	char		*var;
-	void	*next;
-};
-
-typedef struct	s_cmd_lst
-{
-	char	*cmd;		// = NULL
-	char	**args;		// = args[0] = CMD, args[...] = ARGS
-	int	fd_in;		// if !infile/here_doc -> = 0 || if 1st cmd & !infile/here_doc-> = -1
-	int	fd_out;		// if !outfile -> = 0 || if last cmd & !outfile-> -1
-	int	len;		// = number of commands (size of the linked list)
-	struct	s_cmd_lst *next;
-	struct	s_cmd_lst *prev;
-}		t_cmd_lst;*/
-
-//int	ft_strlen(char *str);
-int	ft_strcmp(char *s1, char *s2);
-//int	ft_strncmp(const char *s1, const char *s2, size_t size);
-char	**ft_split(char const *s, char c);
-//char	**envp_update(char **envp, int mode, char *var);
-int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
-void	export_no_args(t_envp_cpy *envpc_lst);
-int	export_error(char *str, int i, int error_type);
-int	ft_strccmp(char *s1, char *s2, char c);
-int	is_env_var(char *str);
-int	is_valid_identifier(char c);
-int	is_valid_string(char *str);
-t_envp_cpy	*unset(int ac, char **av, t_envp_cpy *envpc_lst);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	**dup_tab(char **tab);
-void	free_tab(char **tab);
-int	get_tab_size(char **tab);
-//char	*ft_strdup(char *src);
-int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst);
-int	pwd(int ac, char **av);
-void    write_arg(char *str);
-int     n_flag_present(char *str);
-int	echo(int ac, char **av);
-int	env(int ac, char **av, char **envp, int mode);
-t_envp_cpy	*set_env(t_shell *shell, char **envp);
-int	ft_exit(int ac, char **av);
-int	get_formated_status(char *arg);
-int	is_exit_arg_valid(char *arg);
-int	invalid_exit_arg(char *arg);
-long long	ft_atoll(const char	*str);		//maybe put that in libft
-//void	command_interpreter(char **envp, t_cmd *cmd, int fds[3], int pipefd[2]);
-void	child_signals(void);
-void	sigquit_cmd(int sig);
-void    debug_display(t_shell *shell);
-int	ft_wait(int *pid, t_shell *shell);
-void    display_signal_intercept(int sig);
-void	sigquit_ignore(int sig);
-int     check_builtins(t_shell *shell);
-int     exec_builtin(t_shell *shell);
-void	sigint_handler(int sig);
-//void    free_cmd_set(t_cmd **cmds);
-int	start_shell(t_shell *shell);
-int     is_valid_history(char *str);
-int     command_not_found(t_shell *shell);
-int     cmds_get_n(t_shell *shell);
-int     start_exec(t_shell *shell, char **envp);
-int     continue_exec(t_shell *shell, char **envp);
-int     end_exec(t_shell *shell, char **envp);
-int	pipeline(t_shell *shell, char **envp);
-int     exit_pipeline(t_shell *shell, char **envp);
-int	pipexec(t_shell *shell, int tbc, char **envp);
-int	*make_pid_tab(int size);
-int	set_fds(t_shell *shell);
-int	exec(t_shell *shell, char **envp);
-int	check_for_invalid_cmd(t_shell *shell);
-int	simple_exec(t_shell *shell, char **envp);
-int	prep_exec(t_shell *shell, char **envp);
-void    free_cmd_lst(t_cmd *cmd);
-void    free_cmd_link(t_cmd *cmd);
-void	free_all(t_shell *shell);
-char	**build_minimal_env(void);
-char	**lst_to_envp(t_envp_cpy *envpc_lst);
-t_envp_cpy	*envp_to_lst(char **envp);
-int	get_envp_lst_size(t_envp_cpy *envpc_lst);
-void	clear_envpc_lst(t_envp_cpy *envpc_lst);
-void	ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new);
-t_envp_cpy	*ft_envpcnew(char *var);
-char	*find_path(char *cmd, char **env_paths);
-char	**get_env_paths(char **envp);
-//t_cmd_lst	*parse_args(char *str);
-t_shell		*minishell_init(char **envp);
-//void	ft_lstadd_back(t_envp_cpy **lst, t_envp_cpy *new);
-//t_envp_cpy	*ft_lstnew(void *content);
-
-# endif
+#endif

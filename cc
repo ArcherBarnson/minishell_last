@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/25 18:15:42 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:20:32 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,22 @@ int	ft_read_prompt(t_shell *shell)
 
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
-	pars.pars_env = shell->envpc;
 	ft_general_initialize(&lex, &pars);
 	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
-	if (ft_around_lexer(&lex))// || ft_print_debug_content(&lex, &pars, "lex"))
+	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_around_parser(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "pars"))
+	if (ft_around_parser(&lex, &pars) || ft_print_debug_content(&lex, &pars, "pars"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_expander(&pars))// || ft_print_debug_content(&lex, &pars, "exp"))
-	 	return (ft_error_return(&lex, &pars, shell));
-	if (ft_around_redirector(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "redir"))
-		return (ft_error_return(&lex, &pars, shell));
-	if (ft_transformer(&pars))// || ft_print_debug_content(&lex, &pars, "trans"))
-		return (ft_error_return(&lex, &pars, shell));
+	if (ft_expander(&pars) || ft_print_debug_content(&lex, &pars, "exp"))
+		ft_error_return(&lex, &pars, shell);
+	if (ft_around_redirector(&lex, &pars) || ft_print_debug_content(&lex, &pars, "redir"))
+		ft_error_return(&lex, &pars, shell);
+	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
+		ft_error_return(&lex, &pars, shell);
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
 	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);
@@ -102,28 +101,10 @@ int	ft_around_redirector(t_lex *lex, t_pars *pars)
 	return (0);
 }
 
-int	ft_real_pars(char *str)
-{
-	int	i;
-	int	c;
-
-	i = 0;
-	c = 0;
-	printf("str = %s\n", str);
-	while (str[i])
-	{
-		if (str[i] == '|')
-			c++;
-		i++;
-	}
-	return (c);
-}
-
 int	ft_lexer(t_lex *lex)
 {
 	int	ret;
 
-	lex->nb_tcmd = ft_real_pars(lex->user_input);
 	ret = ft_check_forbidden_cmb(lex->user_input);
 	while (*lex->user_input && *lex->user_input != '\n'
 		&& ret == 0)
@@ -153,7 +134,7 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 	pars->crt_tok_type = pars->token->type;
 	while (i++ < pars->nb_of_tokens && ret == 0)
 	{
-		//ret = ft_pars_apply_decision(pars);
+		ret = ft_pars_apply_decision(pars);
 		pars->token = pars->token->next;
 		pars->crt_tok_type = pars->token->type;
 	}
@@ -162,185 +143,22 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 		pars->crt_tok_type = TOK_END_OF_INPUT;
 		ret = ft_pars_apply_decision(pars);
 	}
-	if (pars->command)
-	{
-		pars->command->token = pars->command->token->next;
-		pars->command = pars->command->next;
-	}
+	pars->command->token = pars->command->token->next;
+	pars->command = pars->command->next;
 	if (ret)
 		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
 				(ret - 1)));
 	return (0);
 }
 
-char	*ft_strjoin4(char *s1, char *s2, char *res)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	while (s1[++i])
-	{
-		res[j] = s1[i];
-		j++;
-	}
-	i = -1;
-	while (s2[++i])
-	{
-		res[j] = s2[i];
-		j++;
-	}
-	res[j] = '\0';
-	return (res);
-}
-
-char	*ft_strjoin3(char *s1, char *s2)
-{
-	char	*res;
-
-	if (!s1)
-	{
-		s1 = malloc(1);
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	res = malloc(sizeof(char) * ((ft_strlen((char *)s1)
-					+ ft_strlen((char *)s2)) + 1));
-	if (!res)
-		return (0);
-	res = ft_strjoin4(s1, s2, res);
-	free(s1);
-	return (res);
-}
-char	*ft_small_check_exp(t_pars *pars, char *str)
-{
-	char	**recup;
-	int	i;
-
-	i = 0;
-	(void)pars;
-	recup = ft_split(str, ' ');
-	while (recup[i])
-	{
-		if (ft_strcmp(recup[i], "$?"))
-		{
-			free(recup[i]);
-			recup[i] = ft_itoa(exit_code);
-		}
-		i++;
-	}
-	free(str);
-	str = ft_strdup("");
-	i = 0;
-	while (recup[i])
-	{
-		str = ft_strjoin3(str, recup[i]);
-		free(recup[i]);
-		i++;
-	}
-	free(recup);
-	return (str);
-}
-
-void	ft_remake_parsing(t_pars *pars);
-
-int	check_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i + 1);
-		i++;
-	}
-	return (i);
-}
-
-char	*new_str_space(char *str)
-{
-	char	*res;
-
-	int	i;
-	int	c;
-	int	j;
-
-	i = 0;
-	c = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			c++;
-		i++;
-	}
-	res = malloc(sizeof(char) * (ft_strlen(str) + c + 1));
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			res[j] = ' ';
-			j++;
-		}
-		res[j] = str[i];
-		i++;
-		j++;
-	}
-	res[j] = 0;
-	free(str);
-	return (res);
-}
-
-char	*ft_big_exp(t_pars *pars, char *str)
-{
-	t_envp_cpy *tmp;
-	char	**recup;
-	int	i = 0;
-
-	str = new_str_space(str);
-	recup = ft_split(str, ' ');
-
-	while (recup[i])
-	{
-		tmp = pars->pars_env;
-		while (tmp->next)
-		{
-			if (ft_strncmp(recup[i] + 1, tmp->var, ft_strlen(recup[i] + 1)) == 0 && ft_strlen(recup[i]) > 1)
-			{
-				free(recup[i]);
-				recup[i] = ft_strdup(tmp->var + check_equal(tmp->var));
-			}
-			tmp = tmp->next;
-		}
-		i++;
-	}
-	free(str);
-	str = ft_strdup("");
-	i = 0;
-	while (recup[i])
-	{
-		str = ft_strjoin3(str, recup[i]);
-		free(recup[i]);
-		i++;
-	}
-	free(recup);
-	return (str);
-}
-
 int	ft_expander(t_pars *pars)
 {
 	int		i;
 	int		j;
-	int		ret;
 	char	*temp;
 
 	i = 0;
 	j = 0;
-	ret = 0;
 	while (i++ < pars->nb_of_commands)
 	{
 		while (j++ < pars->command->nb_of_tokens)
@@ -350,12 +168,8 @@ int	ft_expander(t_pars *pars)
 			pars->before_dol_mode = 0;
 			pars->parser_text = ft_strndup(pars->token->id, 0);
 			temp = pars->parser_text;
-			ret = ft_inner_loop_expander(pars);
-			pars->command->token->id = ft_small_check_exp(pars, pars->command->token->id);
-			pars->command->token->id = ft_big_exp(pars, pars->command->token->id);
+			ft_inner_loop_expander(pars);
 			free(temp);
-			if (ret)
-				return (ret);
 			pars->command->token = pars->command->token->next;
 			ft_init_expander(pars);
 		}
@@ -365,90 +179,18 @@ int	ft_expander(t_pars *pars)
 	return (0);
 }
 
-void	check_sq_dq(t_pars *pars, char c)
-{
-	if (c == '\'' && pars->dq_opened == 0)
-	{
-		if (pars->sq_opened == 0)
-			pars->sq_opened = 1;
-		else
-			pars->sq_opened = 0;
-	}
-	if (c == '"' && pars->sq_opened == 0)
-	{
-		if (pars->dq_opened == 0)
-			pars->dq_opened = 1;
-		else
-			pars->dq_opened = 0;
-	}
-}
-
-static char	*cut_sds(char *str, t_pars *pars, int i, int c)
-{
-	int	j;
-
-	j = i - 1;
-	if (c == 1)
-	{
-		if (pars->sq_opened)
-			pars->sq_opened = 0;
-		else
-			pars->sq_opened = 1;
-		while (str[++j])
-			str[j] = str[j + 1];
-	}
-	if (c == 2)
-	{
-		if (pars->dq_opened)
-			pars->dq_opened = 0;
-		else
-			pars->dq_opened = 1;
-		while (str[++j])
-			str[j] = str[j + 1];
-	}
-	str[j] = 0;
-	return (str);
-}
-
-void	ft_remake_parsing(t_pars *pars)
-{
-	int	i;
-
-	i = -1;
-	while (pars->command->token->id[++i])
-	{
-		if (pars->command->token->id[i] == '\'' && pars->dq_opened == 0)
-		{
-			pars->command->token->id = cut_sds(pars->command->token->id, pars, i, 1);
-			i--;
-		}
-		else if (pars->command->token->id[i] == '"' && pars->sq_opened == 0)
-		{
-			pars->command->token->id = cut_sds(pars->command->token->id, pars, i, 2);
-			i--;
-		}
-	}
-}
-
 int	ft_inner_loop_expander(t_pars *pars)
 {
-	int	ret;
-
-	ret = 0;
 	while (1)
 	{
 		//printf("checking token->type : %d\n", pars->token->type);
-		ft_remake_parsing(pars);
-		//if (pars->token->type == TOK_WORD)
-		//	ret = ft_exp_apply_decision(pars);
+		if (pars->token->type == TOK_WORD)
+			ft_exp_apply_decision(pars);
 		if (pars->parser_text[0] == '\0')
 			break ;
 		pars->parser_text++;
 		pars->offset_start++;
 	}
-	if (ret)
-		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
-				(ret - 1)));
 	return (0);
 }
 
@@ -458,12 +200,10 @@ int	ft_redirector(t_pars *pars)
 	int		j;
 	int		k;
 	int		count;
-	int		ret;
 
 	i = 0;
 	j = 0;
 	count = 0;
-	ret = 0;
 	ft_init_redir_decisions(pars);
 	ft_init_redir_actions(pars);
 	while (i++ < pars->nb_of_commands)
@@ -472,9 +212,8 @@ int	ft_redirector(t_pars *pars)
 		while (j++ < k)
 		{
 			pars->token = pars->command->token;
-			ret = ft_redir_apply_decision(pars);
-			if (ret)
-				return (ret);
+			if (ft_redir_apply_decision(pars))
+				return (1);
 			pars->command->token = pars->command->token->next;
 		}
 		pars->command = pars->command->next;

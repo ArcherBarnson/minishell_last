@@ -17,7 +17,7 @@ extern	int exit_code;
 
 void	dup_fds(t_shell *shell)
 {
-	if (shell->cmd->prev || shell->cmd->fd_in != 0)
+	if (shell->cmd->prev || shell->cmd->fd_in > 0)
 	{
 		dup2(shell->cmd->fd_in, 0);
 		close(shell->cmd->fd_in);
@@ -35,7 +35,7 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	dup_fds(shell);
 	if (mode == 1)
 		exit(exec_builtin(shell));
-	else
+	else if (shell->cmd->cmd != NULL)
 		execve(shell->cmd->cmd, shell->cmd->token, envp);
 	return ;
 }
