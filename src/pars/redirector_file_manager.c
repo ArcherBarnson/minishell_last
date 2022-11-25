@@ -23,7 +23,7 @@ int	ft_open_infile(t_pars *pars, char *file)
 int	ft_open_outfile(t_pars *pars, char *file)
 {
 	pars->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0664);
-	printf("opening : %s fd<%d>", file, pars->fd_out);
+	printf("opening : %s fd<%d>\n", file, pars->fd_out);
 	if (pars->fd_out < 0)
 	{
 		ft_msgerr(ERR_FILEOUT);

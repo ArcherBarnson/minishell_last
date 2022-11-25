@@ -14,6 +14,7 @@
 
 int	ft_pars_apply_decision(t_pars *pars)
 {
+        //printf("TOKEN : %s\n", ft_getlabel_token_types(pars->crt_tok_type));
 	pars->prev_pars_decision = pars->new_pars_decision;
 	pars->new_pars_decision = pars->pars_decision[pars
 		->prev_pars_decision.pars_read_mode][pars->crt_tok_type];

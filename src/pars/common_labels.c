@@ -125,7 +125,7 @@ char	*ft_getlabel_pars_read_modes(const t_pars_read_modes index)
 char	*ft_getlabel_exp_read_modes(const t_exp_read_modes index)
 {
 	static const char	*label[LEN_EXP_RD_MDS] = {
-		"ERR_EXP_RD_MD", "NEW_EXP_RD_MD", "STD_EXP_RD_MD", "SPL_EXP_RD_MD",
+		"CMB_ERR_EXP_RD_MD", "NEW_EXP_RD_MD", "STD_EXP_RD_MD", "SPL_EXP_RD_MD",
 		"DBL_EXP_RD_MD", "ESCP_EXP_RD_MD", "PIPE_EXP_RD_MD", "AMP_EXP_RD_MD",
 		"LT_EXP_RD_MD", "GT_EXP_RD_MD", "OR_EXP_RD_MD", "AND_EXP_RD_MD",
 		"HDOC_EXP_RD_MD", "GGRT_EXP_RD_MD", "DOL_EXP_RD_MD"

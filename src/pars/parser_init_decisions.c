@@ -43,30 +43,54 @@ int	ft_init_pars_decision_2(t_pars *pars)
 
 int	ft_init_pars_decision_3(t_pars *pars)
 {
-	(void)pars;
 	pars->pars_decision[LT_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
-	pars->pars_decision[GT_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
+	pars->pars_decision[LT_PARS_RD_MD][TOK_LSS] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[LT_PARS_RD_MD][TOK_GRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[LT_PARS_RD_MD][TOK_HDOC] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[LT_PARS_RD_MD][TOK_GGRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[LT_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
 	return (0);
 }
 
 int	ft_init_pars_decision_4(t_pars *pars)
 {
-	(void)pars;
-	pars->pars_decision[HDOC_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
-	pars->pars_decision[GGRT_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_LSS] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_GRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_HDOC] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_GGRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GT_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
 	return (0);
 }
 
 int	ft_init_pars_decision_5(t_pars *pars)
 {
-	(void)pars;
-	pars->pars_decision[PIPE_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_CATCH, STD_PARS_RD_MD};
-	pars->pars_decision[PIPE_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_LSS] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_GRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_HDOC] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_GGRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[HDOC_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
 	return (0);
 }
 
 int	ft_init_pars_decision_6(t_pars *pars)
 {
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_KEEP, STD_PARS_RD_MD};
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_LSS] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_GRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_HDOC] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_GGRT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	pars->pars_decision[GGRT_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
+	return (0);
+}
+
+int	ft_init_pars_decision_7(t_pars *pars)
+{
 	(void)pars;
+	pars->pars_decision[PIPE_PARS_RD_MD][TOK_WORD] = (t_pars_proc){PARS_TAKE, PARS_TAKE, STD_PARS_RD_MD};
+	pars->pars_decision[PIPE_PARS_RD_MD][TOK_LSS] = (t_pars_proc){PARS_TAKE, PARS_TAKE, LT_PARS_RD_MD};
+	pars->pars_decision[PIPE_PARS_RD_MD][TOK_HDOC] = (t_pars_proc){PARS_TAKE, PARS_TAKE, HDOC_PARS_RD_MD};
+	pars->pars_decision[PIPE_PARS_RD_MD][TOK_END_OF_INPUT] = (t_pars_proc){PARS_NONE, PARS_ERR, SYN_ERR_PARS_RD_MD};
 	return (0);
 }

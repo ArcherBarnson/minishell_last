@@ -180,7 +180,7 @@ int	ft_redir_out_append(t_pars *pars)
 
 int	ft_redir_del_two(t_pars *pars)
 {
-	printf("token : %s\n", pars->token->id);
+	//printf("token : %s\n", pars->token->id);
 	pars->token = ft_free_one_token(pars->token);
 	pars->command->nb_of_tokens--;
 	pars->token = ft_free_one_token(pars->token);
@@ -198,6 +198,5 @@ int	ft_redir_end(t_pars *pars)
 
 int	ft_redir_err(t_pars *pars)
 {
-	(void)pars;
-	return (ft_msgerr(ERR_SYNTAX), 0);
+        return(1 + pars->new_redir_decision.redir_read_mode);
 }

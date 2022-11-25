@@ -22,17 +22,11 @@ PARSRCS		=	common_core.c common_initializations.c common_memory.c \
 				redirector_init_decisions.c redirector_apply_decisions.c redirector_actions.c \
 				redirector_file_manager.c redirector_heredoc.c \
 				transformer_list.c \
-				#tests_main.c
-<<<<<<< HEAD
-EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c \
-			exec_utils.c wait.c cd.c echo.c pwd.c env.c export.c unset.c\
-				builtins_ctl.c envpc_lst_ops.c env_handler.c \
-=======
-EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c exec_utils.c\
+				tests_main.c
+#EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c exec_utils.c\
 		       		exit.c wait.c export_utils.c cd.c echo.c pwd.c env.c\
 				export_no_args.c export.c unset.c builtins_ctl.c \
 				envpc_lst_ops.c env_handler.c \
->>>>>>> 69a495c995df74b5b5257a1cb0776bd49e134e52
 				signals.c exec.c ../../shell.c #../../builtins/*.c\
 
 PARSRCDIR	=	src/pars

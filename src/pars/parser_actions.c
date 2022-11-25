@@ -110,6 +110,5 @@ int	ft_pars_end(t_pars *pars)
 
 int	ft_pars_err(t_pars *pars)
 {
-	(void)pars;
 	return(1 + pars->new_pars_decision.pars_read_mode);
 }
