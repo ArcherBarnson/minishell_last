@@ -29,7 +29,6 @@ t_shell	*minishell_init(char **envp)
 	//shell->pipefd = NULL;
 	//pipe(shell->pipefd);
 	shell->ms_env = NULL;
-	shell->env_paths = NULL;
 	shell->envpc = NULL;
 	shell->pars = NULL;
 	minishell_assign(shell, envp);

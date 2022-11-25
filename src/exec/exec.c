@@ -50,10 +50,10 @@ int	simple_exec(t_shell *shell, char **envp)
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1 && shell->cmd->fd_out == 1)
-		return (exec_builtin(shell));
+		return (free(pid), exec_builtin(shell));
 	err_code = check_for_invalid_cmd(shell);
 	if (err_code)
-		return (err_code);
+		return (free(pid), err_code);
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{

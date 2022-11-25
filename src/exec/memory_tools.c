@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/21 11:22:26 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:09:18 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,10 @@
 
 void	free_cmd_link(t_cmd *cmd)
 {
-	int	i;
-
-	i = -1;
 	if (cmd->cmd)
 		free(cmd->cmd);
 	if (cmd->token)
-	{
-		while (cmd->token[++i])
-			free(cmd->token[i]);
-		free(cmd->token);
-	}
+		free_tab(cmd->token);
 	//free(cmd);
 	return ;
 }
@@ -41,6 +34,12 @@ void	free_cmd_lst(t_cmd *cmd)
 				free_cmd_link(cmd->prev);
 			cmd = cmd->next;
 		}
+		if (cmd->prev)
+			free_cmd_link(cmd->prev);
+		if (cmd)
+			free_cmd_link(cmd);
+		//free_cmd_link(cmd);
+		//free(cmd);
 		cmd = NULL;
 	}
 	return ;
@@ -63,8 +62,6 @@ void	free_all(t_shell *shell)
 {
 	if (shell)
 	{
-		if (shell->cmd != NULL)
-			free_cmd_lst(shell->cmd);
 		if (shell->retprompt)
 			free(shell->retprompt);
 		if (shell->env_paths)
