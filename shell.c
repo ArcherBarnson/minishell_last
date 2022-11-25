@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 11:45:23 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:55:52 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	reset_shell_values(t_shell *shell)
 	free_cmd_lst(shell->cmd);
 	//ft_execfree_freeall(shell->pars);
 	//ft_pars_freeall(shell->pars);
+	//free(shell->pars);
+	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
 	clear_envpc_lst(shell->envpc_head);
 	shell->retprompt = NULL;
-	free(shell->env_paths);
+	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
 	return ;
@@ -99,7 +101,7 @@ void	minishell_loop(t_shell *shell)
 				exit_code = simple_exec(shell, shell->ms_env);
 			else
 				exit_code = pipeline(shell, shell->ms_env);
-			printf("---exit_code = %i---\n", exit_code);
+		//	printf("---exit_code = %i---\n", exit_code);
 			if (shell->retprompt)
 				bzero(shell->retprompt,
 					ft_strlen(shell->retprompt));
@@ -112,9 +114,9 @@ void	minishell_loop(t_shell *shell)
 int	start_shell(t_shell *shell)
 {
 	minishell_loop(shell);
-	free_tab(shell->env_paths);
+	//free_tab(shell->env_paths);
 	//free(shell->cmd->cmd);
-	shell->env_paths = get_env_paths(shell->ms_env);
+	//shell->env_paths = get_env_paths(shell->ms_env);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 09:28:37 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:57:26 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	get_envp_lst_size(t_envp_cpy *envpc_lst)
 		n++;
 		envpc_lst = envpc_lst->next;
 	}
-	printf("lst_size_debug +++> %i\n", n);
+	//printf("lst_size_debug +++> %i\n", n);
 	return (n);
 }
 
