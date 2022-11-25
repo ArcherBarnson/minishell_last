@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/24 09:32:54 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 17:11:39 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -817,7 +817,6 @@ int				ft_free_tokentab(char **token, int len);
 /* ************************************************************************** */
 //int				main(void);
 int				ft_tests(void);
-
 /* ************************************************************************** */
 /*                                 EXEC PART                                  */
 /* ************************************************************************** */
@@ -884,6 +883,7 @@ t_shell		*minishell_init(char **envp);
 //t_envp_cpy	*ft_lstnew(void *content);
 */
 ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                 EXEC PART                                  */
 /* ************************************************************************** */
@@ -922,7 +922,7 @@ char	**dup_tab(char **tab);
 void	free_tab(char **tab);
 int	get_tab_size(char **tab);
 //char	*ft_strdup(char *src);
-int	cd(int ac, char **path, char **envp);
+int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst);
 int	pwd(int ac, char **av);
 void    write_arg(char *str);
 int     n_flag_present(char *str);

@@ -6,7 +6,7 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/11/23 13:39:18 by bgrulois         ###   ########.fr        #
+#    Updated: 2022/11/24 17:15:58 by bgrulois         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,13 @@ PARSRCS		=	common_core.c common_initializations.c common_memory.c \
 				redirector_init_decisions.c redirector_apply_decisions.c redirector_actions.c \
 				redirector_file_manager.c redirector_heredoc.c \
 				transformer_list.c \
+<<<<<<< HEAD
 				tests_main.c
 #EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c exec_utils.c\
+=======
+				#tests_main.c
+EXSRCS		=	init.c  memory_tools.c  misc.c  pathfinding.c exec_utils.c\
+>>>>>>> 0751ae54c1bf2880c5542d3b189a8c53b75048a1
 		       		exit.c wait.c export_utils.c cd.c echo.c pwd.c env.c\
 				export_no_args.c export.c unset.c builtins_ctl.c \
 				envpc_lst_ops.c env_handler.c \

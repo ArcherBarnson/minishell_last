@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 09:59:37 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:45:23 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,11 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	if (!isatty(1) || !isatty(0) || !isatty(2))
+	{
+		write(2, "This shell doesn't handle non-interactive mode, exiting...\n", 60);
+		return (-1);
+	}
 	shell = minishell_init(envp);
 	if (!shell)
 	{
