@@ -60,7 +60,7 @@ int	ft_print_debug_pars(t_pars *pars)
 		printf("\033[31;2m\n<- ERROR in PARSER -> \n\033[0m");
 		printf("[1] : %s\n", ft_getlabel_pars_read_modes
 			(pars->prev_pars_decision.pars_read_mode));
-		printf("[2] : %s\n", ft_getlabel_token_types(pars->token->type));
+		printf("[2] : %s\n", ft_getlabel_token_types(pars->crt_tok_type));
 	}
 	printf("\033[33;2m");
 	printf("\033[0m");

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/25 10:19:11 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:55:52 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	minishell_loop(t_shell *shell)
 				exit_code = simple_exec(shell, shell->ms_env);
 			else
 				exit_code = pipeline(shell, shell->ms_env);
-			printf("---exit_code = %i---\n", exit_code);
+		//	printf("---exit_code = %i---\n", exit_code);
 			if (shell->retprompt)
 				bzero(shell->retprompt,
 					ft_strlen(shell->retprompt));

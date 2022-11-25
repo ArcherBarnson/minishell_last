@@ -38,7 +38,7 @@ int	ft_init_lex_decision_2(t_lex *lex)
 	lex->decision[STD_LEX_RD_MD][LT_CHAR] = (t_lex_proc){LEX_CATCH, LEX_TAKE, LT_LEX_RD_MD, TOK_LSS};
 	lex->decision[STD_LEX_RD_MD][GT_CHAR] = (t_lex_proc){LEX_CATCH, LEX_TAKE, GT_LEX_RD_MD, TOK_GRT};
 	lex->decision[STD_LEX_RD_MD][DOL_CHAR] = (t_lex_proc){LEX_KEEP, LEX_TAKE, STD_LEX_RD_MD, TOK_WORD};
-	lex->decision[STD_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_END, LEX_TAKE, NEW_LEX_RD_MD, TOK_WORD};
+	lex->decision[STD_LEX_RD_MD][END_CHAR] = (t_lex_proc){LEX_END, LEX_SKIP, NEW_LEX_RD_MD, TOK_WORD};
 	return (0);
 }
 

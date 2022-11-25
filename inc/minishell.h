@@ -51,7 +51,7 @@
 # define ERR_TESTFILE "Error! Reading file parser.test"
 # define ERR_CMB "Error! Combination is unknown"
 # define ERR_SYN "Error! Syntax"
-# define ERR_CHR "Error! Syntax. Character (combination) not handled"
+# define ERR_CHR "Error! Syntax. Character (or combination) not handled"
 # define ERR_SPL "Error! Simple quote is missing"
 # define ERR_DBL "Error! Double quote is missing"
 # define ERR_CASE "Error! Automate did not find current case"
@@ -264,7 +264,7 @@ enum e_pars_read_modes
 
 enum e_exp_read_modes
 {
-	ERR_EXP_RD_MD,
+	CMB_ERR_EXP_RD_MD,
 	NEW_EXP_RD_MD,
 	STD_EXP_RD_MD,
 	SPL_EXP_RD_MD,
@@ -679,6 +679,7 @@ int				ft_init_pars_decision_3(t_pars *pars);
 int				ft_init_pars_decision_4(t_pars *pars);
 int				ft_init_pars_decision_5(t_pars *pars);
 int				ft_init_pars_decision_6(t_pars *pars);
+int				ft_init_pars_decision_7(t_pars *pars);
 
 /* ************************************************************************** */
 /*                       expander_init_decisions.c                            */
@@ -796,18 +797,6 @@ int				ft_redir_out_append(t_pars *pars);
 int				ft_redir_del_two(t_pars *pars);
 int				ft_redir_end(t_pars *pars);
 int				ft_redir_err(t_pars *pars);
-
-/* ************************************************************************** */
-/*                              common_utils.c                                */
-/* ************************************************************************** */
-//size_t			ft_strlen(const char *s);
-//char			*ft_strdup(const char *s);
-//char			*ft_strndup(const char *s, size_t n);
-//int				ft_strncmp(const char *s1, const char *s2, size_t n);
-//char			*ft_strjoin(char const *s1, char const *s2);
-//char			*ft_substr(char const *s, unsigned int start, size_t len);
-//int				ft_getsize(int n);
-//char			*ft_itoa(int n);
 
 /* ************************************************************************** */
 /*                             common_ascii.c                                 */

@@ -215,15 +215,6 @@ int	ft_exp_dol(t_pars *pars)
 	return (0);
 }
 
-int	ft_init_expander(t_pars *pars)
-{
-	pars->offset_start = 0;
-	pars->start_std = 0;
-	pars->start_dol = 0;
-	pars->nb_taken_char = 0;
-	return (0);
-}
-
 int	ft_exp_end(t_pars *pars)
 {
 	(void)pars;
@@ -232,8 +223,7 @@ int	ft_exp_end(t_pars *pars)
 
 int	ft_exp_err(t_pars *pars)
 {
-	(void)pars;
-	return (1);
+	return(1 + pars->new_exp_decision.exp_read_mode);
 	//return (ft_msgerr(ft_getlabel_error_msgs((t_err_msgs)
 	//			pars->new_exp_decision.token_type)), 0);
 }

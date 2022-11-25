@@ -18,9 +18,8 @@ int	ft_redir_apply_decision(t_pars *pars)
 	pars->new_redir_decision = pars->redir_decision[pars
 		->prev_redir_decision.redir_read_mode][pars->token->type];
 	ft_print_debug_redir(pars);
-	if (pars->new_redir_decision.token_action == REDIR_ERR)
-		return (ft_msgerr(ERR_CASE), 1);
+	//if (pars->new_redir_decision.token_action == REDIR_ERR)
+	//	return (ft_msgerr(ERR_CASE), 1);
 	pars->ft_redir[pars->new_redir_decision.token_action](pars);
-	pars->ft_redir[pars->new_redir_decision.redir_list_action](pars);
-	return (0);
+	return (pars->ft_redir[pars->new_redir_decision.redir_list_action](pars));
 }

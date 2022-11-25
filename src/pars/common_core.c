@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/21 13:20:32 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 12:09:14 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ int	ft_read_prompt(t_shell *shell)
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
-	if (ft_around_lexer(&lex) || ft_print_debug_content(&lex, &pars, "lex"))
+	if (ft_around_lexer(&lex))// || ft_print_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_around_parser(&lex, &pars) || ft_print_debug_content(&lex, &pars, "pars"))
+	if (ft_around_parser(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "pars"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_expander(&pars) || ft_print_debug_content(&lex, &pars, "exp"))
-		ft_error_return(&lex, &pars, shell);
-	if (ft_around_redirector(&lex, &pars) || ft_print_debug_content(&lex, &pars, "redir"))
-		ft_error_return(&lex, &pars, shell);
-	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
-		ft_error_return(&lex, &pars, shell);
+	if (ft_expander(&pars))// || ft_print_debug_content(&lex, &pars, "exp"))
+	 	return (ft_error_return(&lex, &pars, shell));
+if (ft_around_redirector(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "redir"))
+		return (ft_error_return(&lex, &pars, shell));
+	if (ft_transformer(&pars))// || ft_print_debug_content(&lex, &pars, "trans"))
+		return (ft_error_return(&lex, &pars, shell));
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
 	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);
@@ -143,8 +143,11 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 		pars->crt_tok_type = TOK_END_OF_INPUT;
 		ret = ft_pars_apply_decision(pars);
 	}
-	pars->command->token = pars->command->token->next;
-	pars->command = pars->command->next;
+	if (pars->command)
+	{
+		pars->command->token = pars->command->token->next;
+		pars->command = pars->command->next;
+	}
 	if (ret)
 		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
 				(ret - 1)));
@@ -155,10 +158,12 @@ int	ft_expander(t_pars *pars)
 {
 	int		i;
 	int		j;
+	int		ret;
 	char	*temp;
 
 	i = 0;
 	j = 0;
+	ret = 0;
 	while (i++ < pars->nb_of_commands)
 	{
 		while (j++ < pars->command->nb_of_tokens)
@@ -168,8 +173,10 @@ int	ft_expander(t_pars *pars)
 			pars->before_dol_mode = 0;
 			pars->parser_text = ft_strndup(pars->token->id, 0);
 			temp = pars->parser_text;
-			ft_inner_loop_expander(pars);
+			ret = ft_inner_loop_expander(pars);
 			free(temp);
+			if (ret)
+				return (ret);
 			pars->command->token = pars->command->token->next;
 			ft_init_expander(pars);
 		}
@@ -181,16 +188,22 @@ int	ft_expander(t_pars *pars)
 
 int	ft_inner_loop_expander(t_pars *pars)
 {
+	int	ret;
+
+	ret = 0;
 	while (1)
 	{
 		//printf("checking token->type : %d\n", pars->token->type);
 		if (pars->token->type == TOK_WORD)
-			ft_exp_apply_decision(pars);
+			ret = ft_exp_apply_decision(pars);
 		if (pars->parser_text[0] == '\0')
 			break ;
 		pars->parser_text++;
 		pars->offset_start++;
 	}
+	if (ret)
+		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
+				(ret - 1)));
 	return (0);
 }
 
@@ -200,10 +213,12 @@ int	ft_redirector(t_pars *pars)
 	int		j;
 	int		k;
 	int		count;
+	int		ret;
 
 	i = 0;
 	j = 0;
 	count = 0;
+	ret = 0;
 	ft_init_redir_decisions(pars);
 	ft_init_redir_actions(pars);
 	while (i++ < pars->nb_of_commands)
@@ -212,8 +227,9 @@ int	ft_redirector(t_pars *pars)
 		while (j++ < k)
 		{
 			pars->token = pars->command->token;
-			if (ft_redir_apply_decision(pars))
-				return (1);
+			ret = ft_redir_apply_decision(pars);
+			if (ret)
+				return (ret);
 			pars->command->token = pars->command->token->next;
 		}
 		pars->command = pars->command->next;

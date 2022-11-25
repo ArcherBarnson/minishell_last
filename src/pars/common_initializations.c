@@ -34,6 +34,7 @@ int	ft_init_pars_decisions(t_pars *pars)
 	ft_init_pars_decision_4(pars);
 	ft_init_pars_decision_5(pars);
 	ft_init_pars_decision_6(pars);
+	ft_init_pars_decision_7(pars);
 	return (0);
 }
 
@@ -97,4 +98,13 @@ int	ft_general_initialize(t_lex *lex, t_pars *pars)
 	ft_init_exp_actions(pars);
 	ft_init_redir_actions(pars);
 	return (0);
+}
+
+int     ft_init_expander(t_pars *pars)
+{
+        pars->offset_start = 0;
+        pars->start_std = 0;
+        pars->start_dol = 0;
+        pars->nb_taken_char = 0;
+        return (0);
 }
