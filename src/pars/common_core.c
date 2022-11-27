@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/25 18:15:42 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/26 17:45:53 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_read_prompt(t_shell *shell)
 	ft_general_initialize(&lex, &pars);
 	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
+	lex.user_input_2 = shell->retprompt;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
@@ -46,7 +47,7 @@ int	ft_read_prompt(t_shell *shell)
 	ft_tklist_freeall(&lex);
 	shell->pars = &pars;
 	//ft_execfree_freeall(&pars);
-	//ft_pars_freeall(&pars);
+	ft_pars_freeall(&pars);
 	return (0);
 }
 
@@ -109,7 +110,6 @@ int	ft_real_pars(char *str)
 
 	i = 0;
 	c = 0;
-	printf("str = %s\n", str);
 	while (str[i])
 	{
 		if (str[i] == '|')
@@ -123,7 +123,7 @@ int	ft_lexer(t_lex *lex)
 {
 	int	ret;
 
-	lex->nb_tcmd = ft_real_pars(lex->user_input);
+	//lex->nb_tcmd = ft_real_pars(lex->user_input);
 	ret = ft_check_forbidden_cmb(lex->user_input);
 	while (*lex->user_input && *lex->user_input != '\n'
 		&& ret == 0)
@@ -142,6 +142,47 @@ int	ft_lexer(t_lex *lex)
 		return (0);
 }
 
+void	check_file_for_segv(t_pars *pars, char *str)
+{
+	if (open(str, O_RDONLY) == -1)
+	{
+		write(2, "File: ", 6);
+		write(2, str, ft_strlen(str));
+		write(2, " does not exit\n", 15);
+	}
+	pars->cmdsts = 1;
+}
+
+void	ft_check_2(t_pars *pars, char **res)
+{
+	if (ft_strlen(res[0]) == 1 && res[0][0] == '<')
+		check_file_for_segv(pars, res[1]);
+}
+	
+
+void	ft_checker_anti_segv(t_pars *pars, char *str)
+{
+	int	i;
+	char	**res;
+
+	res = ft_split(str, ' ');
+	i = 0;
+	while (res[i])
+		i++;
+	if (i == 2)
+	{
+		free(str);
+		ft_check_2(pars, res);
+	}
+	i = 0;
+	while (res[i])
+	{
+		free(res[i]);
+		i++;
+	}
+	free(res);
+}
+
 int	ft_parser(t_lex *lex, t_pars *pars)
 {
 	int	i;
@@ -149,11 +190,13 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 
 	i = 0;
 	ret = 0;
+	pars->cmdsts = 0;
 	pars->token = lex->token;
 	pars->crt_tok_type = pars->token->type;
-	while (i++ < pars->nb_of_tokens && ret == 0)
+	ft_checker_anti_segv(pars, lex->user_input_2);
+	while (i++ < pars->nb_of_tokens && ret == 0 && !pars->cmdsts)
 	{
-		//ret = ft_pars_apply_decision(pars);
+		ret = ft_pars_apply_decision(pars);
 		pars->token = pars->token->next;
 		pars->crt_tok_type = pars->token->type;
 	}

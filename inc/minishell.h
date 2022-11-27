@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/25 17:38:22 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/26 17:33:19 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,6 +442,7 @@ struct s_lex
 	char		*temp;
 	int			nb_taken_char;
 	char		*user_input;
+	char		*user_input_2;
 	char		forbidden[NB_FORBIDDEN];
 	t_lex_proc	prev_decision;
 	t_lex_proc	new_decision;
@@ -485,6 +486,7 @@ struct s_pars
 	t_command		*command;
 	int				nb_of_commands;
 	int				nb_of_tokens;
+	int				cmdsts;
 	t_envp_cpy		*pars_env;
 	t_token			*token;
 	t_token_types	crt_tok_type;
