@@ -1,23 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
+/*   Updated: 2022/11/28 14:49:37 by bgrulois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-/*void	debug_exec(t_shell *shell)
-{
-	if (!shell->cmd)
-		printf("oh no thats not good \n");
-	else
-		printf("in +++> %i\nout +++> %i\n\n", shell->cmd->fd_in, shell->cmd->fd_out);
-	if (shell->cmd->prev)
-		printf("prev_out +++> %i\n", shell->cmd->prev->fd_out);
-	if (shell->cmd->next)
-		printf("next_in +++> %i\n\n", shell->cmd->next->fd_in);
-	return ;
-}*/
-
-extern	int exit_code;
+extern int	exit_code;
 
 void	dup_fds(t_shell *shell)
 {
-	if (shell->cmd->prev || shell->cmd->fd_in != 0)
+	if (shell->cmd->prev || shell->cmd->fd_in > 0)
 	{
 		dup2(shell->cmd->fd_in, 0);
 		close(shell->cmd->fd_in);
@@ -35,9 +34,8 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	dup_fds(shell);
 	if (mode == 1)
 		exit(exec_builtin(shell));
-	else
-		if(execve(shell->cmd->cmd, shell->cmd->token, envp) == -1)
-			clear_envpc_lst(shell->envpc);
+	else if (shell->cmd->cmd != NULL)
+		execve(shell->cmd->cmd, shell->cmd->token, envp);
 	return ;
 }
 
@@ -88,6 +86,11 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 		if (tbc >= 0)
 			close(tbc);
 		execute_command(shell, envp, is_builtin);
+	}
+	if (shell->cmd->cmd)
+	{
+		free(shell->cmd->cmd);
+		shell->cmd->cmd = NULL;
 	}
 	return (pid);
 }

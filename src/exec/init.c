@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/28 14:36:27 by bgrulois          #+#    #+#             */
+/*   Updated: 2022/11/28 14:37:15 by bgrulois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	minishell_assign(t_shell *shell, char **envp)
@@ -26,22 +38,9 @@ t_shell	*minishell_init(char **envp)
 	shell->retprompt = NULL;
 	shell->envpc = NULL;
 	shell->envpc_head = NULL;
-	//shell->pipefd = NULL;
-	//pipe(shell->pipefd);
 	shell->ms_env = NULL;
 	shell->envpc = NULL;
 	shell->pars = NULL;
 	minishell_assign(shell, envp);
-	/*if (!shell->envpc)
-	{
-		free(shell);
-		return (NULL);
-	}*/
-	/*if (pipe(shell->pipefd) == -1)
-	{
-		//free_lst(shell->envp);		//fct doesnt exist
-		free(shell);
-		return (NULL);
-	}*/
 	return (shell);
 }
