@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 12:42:22 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:50:42 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ft_read_prompt(t_shell *shell)
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_transformer(&pars))// || ft_print_debug_content(&lex, &pars, "trans"))
 		return (ft_error_return(&lex, &pars, shell));
+	printf("test = %s\n", pars.cmd->token[0]);
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
 	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);

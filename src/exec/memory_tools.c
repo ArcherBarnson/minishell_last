@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 12:39:52 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:11:19 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,31 @@ void	del(void *data)
 	free(data);
 }
 
+int	tablen(char **tab)
+{
+	int	i;
+	
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
 void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
 {
+	(void)del;
 	if (!lst || !del)
 		return ;
 	if (lst->cmd)
-		(*del)(lst->cmd);
+	{
+		//free(lst->cmd);
+		lst->cmd = NULL;
+	}
 	if (lst->token)
-		free_tab(lst->token);
+	{
+		ft_free_tokentab(lst->token, tablen(lst->token));
+		lst->token = NULL;
+	}
 	free(lst);
 }
 
@@ -86,7 +103,10 @@ void	free_tab(char **tab)
 		return ;
 	i = -1;
 	while (tab[++i])
-		free(tab[i]);
+	{
+		if (tab[i])
+			free(tab[i]);
+	}
 	free(tab);
 	return ;
 }
