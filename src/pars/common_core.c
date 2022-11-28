@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 15:53:48 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:59:15 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,7 +402,9 @@ char	*ft_big_exp(t_pars *pars, char *str)
 	t_envp_cpy *tmp;
 	char	**recup;
 	int	i = 0;
+	int	c;
 
+	c = 0;
 	str = new_str_space(str);
 	recup = ft_split(str, ' ');
 
@@ -415,8 +417,15 @@ char	*ft_big_exp(t_pars *pars, char *str)
 			{
 				free(recup[i]);
 				recup[i] = ft_strdup(tmp->var + check_equal(tmp->var));
+				c = 1;
+				(void)c;
 			}
 			tmp = tmp->next;
+		}
+		if (c == 0 && recup[i][0] == '$')
+		{
+			free(recup[i]);
+			recup[i] = ft_strdup("");
 		}
 		i++;
 	}
