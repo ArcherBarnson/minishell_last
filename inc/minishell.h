@@ -775,6 +775,7 @@ int				ft_exp_record_dol(t_pars *pars);
 int				ft_exp_dol(t_pars *pars);
 int				ft_exp_eq(t_pars *pars);
 int				ft_exp_end(t_pars *pars);
+int     			ft_exp_excd(t_pars *pars);
 int				ft_exp_err(t_pars *pars);
 
 /* ************************************************************************** */

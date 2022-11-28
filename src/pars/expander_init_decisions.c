@@ -19,7 +19,7 @@ int	ft_init_exp_decision_1(t_pars *pars)
 	pars->exp_decision[NEW_EXP_RD_MD][SPL_CHAR] = (t_exp_proc){EXP_KEEP, EXP_SKIP, SPL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[NEW_EXP_RD_MD][DBL_CHAR] = (t_exp_proc){EXP_KEEP, EXP_SKIP, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[NEW_EXP_RD_MD][DOL_CHAR] = (t_exp_proc){EXP_DOL, EXP_SKIP, DOL_EXP_RD_MD, TOK_WORD};
-	pars->exp_decision[NEW_EXP_RD_MD][END_CHAR] = (t_exp_proc){EXP_NONE, EXP_SKIP, NEW_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[NEW_EXP_RD_MD][END_CHAR] = (t_exp_proc){EXP_CATCH, EXP_SKIP, NEW_EXP_RD_MD, TOK_WORD};
 	return (0);
 }
 

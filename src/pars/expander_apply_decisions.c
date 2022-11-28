@@ -14,9 +14,9 @@
 
 int	ft_exp_apply_decision(t_pars *pars)
 {
-	printf("char : %c\n", pars->parser_text[0]);
-	printf("type : %s\n", ft_getlabel_char_types(ft_char_type(pars->parser_text[0])));
-	printf("type : %s\n", ft_getlabel_exp_read_modes(pars->new_exp_decision.exp_read_mode));
+	//printf("char : %c\n", pars->parser_text[0]);
+	//printf("type : %s\n", ft_getlabel_char_types(ft_char_type(pars->parser_text[0])));
+	//printf("type : %s\n", ft_getlabel_exp_read_modes(pars->new_exp_decision.exp_read_mode));
 	pars->prev_exp_decision = pars->new_exp_decision;
 	pars->new_exp_decision = pars->exp_decision[pars
 		->prev_exp_decision.exp_read_mode][ft_char_type(pars->parser_text[0])];

@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	exit_code;
+
 int	ft_init_exp_actions(t_pars *pars)
 {
 	pars->ft_exp[EXP_NONE] = ft_exp_none;
@@ -82,8 +84,8 @@ int	ft_exp_catch(t_pars *pars)
 
 int	ft_exp_keep(t_pars *pars)
 {
-//	(void)pars;
-	printf("********temp : %s\n", pars->temp);
+	(void)pars;
+	//printf("********KEEP temp : %s\n", pars->temp);
 	return (0);
 }
 
@@ -95,9 +97,25 @@ int	ft_exp_drop(t_pars *pars)
 
 int	ft_exp_take(t_pars *pars)
 {
-	if (!pars->nb_taken_char && !pars->before_dol_mode)
+	//if (!pars->nb_taken_char && !pars->before_dol_mode)
+	//printf("TAAAAAAAAAAAAAAAAAAAAAAAAAKING\n");
+	if (!pars->nb_taken_char)
 		pars->start_std = pars->offset_start;
 	pars->nb_taken_char++;
+	//printf("text = %s\n", pars->parser_text);
+	//printf("nb_char = %d\n", pars->nb_taken_char);
+	//printf("test = %d\n", ft_strncmp(pars->parser_text, "?", 1));
+	//printf("char : %c\n", pars->parser_text[0]);
+        //printf("type : %s\n", ft_getlabel_char_types(ft_char_type(pars->parser_text[0])));
+        //printf("type : %s\n", ft_getlabel_exp_read_modes(pars->new_exp_decision.exp_read_mode));
+	if (pars->nb_taken_char == 1 && !ft_strncmp(pars->parser_text, "?", 1))
+	{
+		//printf("entering\n");
+		ft_exp_dol(pars);
+	}
+	//printf("start_std = %d\n", pars->start_std);
+	//printf("offset_char = %d\n", pars->offset_start);
+	//printf("nb_taken_char = %d\n", pars->nb_taken_char);
 	return (0);
 }
 
@@ -173,8 +191,10 @@ int	ft_exp_record_dol(t_pars *pars)
 	char	*temp1;
 	char	*temp2;
 
-	if (pars->nb_taken_char)
-	{
+	//printf("''''''''''''' RECORD_DOL\n");
+	//printf("start_std = %d\n", pars->start_std);
+	//printf("offset_char = %d\n", pars->offset_start);
+	//printf("nb_taken_char = %d\n", pars->nb_taken_char);
 		if (!pars->temp)
 		{
 			pars->temp = malloc(sizeof(char));
@@ -184,47 +204,95 @@ int	ft_exp_record_dol(t_pars *pars)
 		else
 		{
 			temp1 = ft_strndup(pars->temp, 0);
-			free(pars->temp);
+			//printf("Here\n");
+			//printf("temp1 = %s\n", temp1);
+			//free(pars->temp);
 		}
+	if (pars->nb_taken_char)
+	{
 		temp = ft_substr(pars->parser_text - pars->offset_start,
 				pars->start_dol, pars->nb_taken_char);
-		temp2 = ft_getenv(temp);
-		pars->temp = ft_tempjoin(temp1, temp2);
-		ft_init_expander(pars);
+		if (ft_strcmp(temp, "?"))
+		{
+			//printf("Here\n");
+			ft_exp_excd(pars);
+			pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
+		}
+		else
+		{
+			temp2 = ft_getenv(temp);
+			//printf("start_dol = %d\n", pars->start_dol);
+			//printf("nb_taken_char = %d\n", pars->nb_taken_char);
+			//printf("text = %s\n", pars->parser_text - pars->offset_start);
+			//printf("temp = %s\n", temp);
+			//printf("temp2 = %s\n", temp2);
+			pars->temp = ft_tempjoin(temp1, temp2);
+		}
 	}
+	else if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
+	{
+		temp2 = ft_strdup("$$");
+		pars->temp = ft_tempjoin(temp1, temp2);
+		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
+	}
+	else
+	{
+		temp2 = ft_strdup("$");
+		pars->temp = ft_tempjoin(temp1, temp2);
+	}
+	ft_init_expander(pars);
 	return (0);
 }
 
 int	ft_exp_dol(t_pars *pars)
 {
+	//printf("enter exp_dol\n");
+	//printf("char : %c\n", pars->parser_text[0]);
+        //printf("type : %s\n", ft_getlabel_char_types(ft_char_type(pars->parser_text[0])));
+        //printf("type : %s\n", ft_getlabel_exp_read_modes(pars->new_exp_decision.exp_read_mode));
 	if (!pars->start_dol)
 	{
-		printf("--------------------START_1\n");
+		if (pars->nb_taken_char)
+			ft_exp_record(pars);
+		//printf("--------------------START_1\n");
 		pars->start_dol = pars->offset_start + 1;
 		pars->before_dol_mode = pars->prev_exp_decision.exp_read_mode;
 	}
 	else
 	{
-		printf("--------------------START_2\n");
+		//printf("--------------------START_2\n");
 		ft_exp_record_dol(pars);
-		printf("temp : %s\n", pars->temp);
+		//printf("temp : %s\n", pars->temp);
 		if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 			pars->start_dol = pars->offset_start + 1;
 		else
 		{
+			//printf("--------------------START_1\n");
+			//printf("before dol_mode : %d \n", pars->before_dol_mode);
 			if (pars->before_dol_mode == DBL_EXP_RD_MD)
 			{
 				if (pars->new_exp_decision.exp_read_mode == DBL_EXP_RD_MD)
 					pars->new_exp_decision.exp_read_mode = STD_EXP_RD_MD;
 				else
-				{
-					printf("--------------------HERE\n");
 					pars->new_exp_decision.exp_read_mode = pars->before_dol_mode;
-				}
 				pars->before_dol_mode = CMB_ERR_EXP_RD_MD;
 			}
+			//else
+			//{
+			//	pars->new_exp_decision.exp_read_mode = CMB_ERR_EXP_RD_MD;
+			//	pars->before_dol_mode = CMB_ERR_EXP_RD_MD;
+			//}
 		}
 	}
+	return (0);
+}
+
+int	ft_exp_excd(t_pars *pars)
+{
+	//int	exit_code;
+
+	//exit_code = 127;
+	pars->temp = ft_strdup(ft_itoa(exit_code));
 	return (0);
 }
 
