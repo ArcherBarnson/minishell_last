@@ -6,47 +6,13 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 12:34:41 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:42:22 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
-
-void	del(void *data)
-{
-	free(data);
-}
-
-void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
-{
-	if (!lst || !del)
-		return ;
-	if (lst->cmd)
-		(*del)(lst->cmd);
-	if (lst->token)
-		free_tab(lst->token);
-	free(lst);
-}
-
-void	ft_lstclear(t_cmd **lst, void (*del)(void *))
-{
-	t_cmd	*list;
-	t_cmd	*tmp;
-
-	if (!lst || !del)
-		return ;
-	list = *lst;
-	while (list)
-	{
-		tmp = list->next;
-		ft_lstdelone(list, del);
-		list = tmp;
-	}
-	*lst = NULL;
-}
-
 
 int	ft_read_prompt(t_shell *shell)
 {
