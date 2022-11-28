@@ -25,7 +25,6 @@ int	cmds_get_n(t_shell *shell)
 	}
 	n++;
 	shell->cmd = shell->cmd_head;
-	//printf("GETSIZE_DEBUG => %i\n", n);
 	return (n);
 }
 

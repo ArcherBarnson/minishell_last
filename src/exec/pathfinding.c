@@ -14,16 +14,17 @@
 
 char	**get_env_paths(char **envp)
 {
-	int	i;
-	char	*path_var;
-	char	**paths;
+	int			i;
+	char		*path_var;
+	char		**paths;
 
 	paths = NULL;
 	path_var = NULL;
 	i = 0;
 	if (!envp || !envp[i])
 		return (NULL);
-	while (envp[i] != NULL && ft_strncmp((const char *)envp[i], "PATH=", 5 )!= 0)
+	while (envp[i] != NULL
+		&& ft_strncmp((const char *)envp[i], "PATH=", 5) != 0)
 		i++;
 	if (envp[i] == NULL)
 		return (NULL);
@@ -37,27 +38,27 @@ char	**get_env_paths(char **envp)
 
 char	*find_path(char *cmd, char **env_paths)
 {
-	int             i;
-        char    *tmp;
-        char    *path;
+	int			i;
+	char		*tmp;
+	char		*path;
 
-        i = -1;
+	i = -1;
 	if (!cmd || cmd[0] == '\0')
 		return (NULL);
-        if (access((const char *)cmd, X_OK) == 0)
+	if (access((const char *)cmd, X_OK) == 0)
 		return (cmd);
 	if (!env_paths || !env_paths[0])
 		return (NULL);
 	while (env_paths[++i])
-        {
+	{
 		path = ft_strjoin(env_paths[i], "/");
 		tmp = ft_strdup(path);
 		free(path);
 		path = ft_strjoin(tmp, cmd);
 		free(tmp);
-	       	if (access((const char *)path, X_OK) == 0)
+		if (access((const char *)path, X_OK) == 0)
 			return (path);
 		free(path);
 	}
-        return (NULL);
+	return (NULL);
 }

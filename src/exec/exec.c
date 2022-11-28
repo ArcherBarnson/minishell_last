@@ -1,19 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
+/*   Updated: 2022/11/28 14:49:37 by bgrulois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-/*void	debug_exec(t_shell *shell)
-{
-	if (!shell->cmd)
-		printf("oh no thats not good \n");
-	else
-		printf("in +++> %i\nout +++> %i\n\n", shell->cmd->fd_in, shell->cmd->fd_out);
-	if (shell->cmd->prev)
-		printf("prev_out +++> %i\n", shell->cmd->prev->fd_out);
-	if (shell->cmd->next)
-		printf("next_in +++> %i\n\n", shell->cmd->next->fd_in);
-	return ;
-}*/
-
-extern	int exit_code;
+extern int	exit_code;
 
 void	dup_fds(t_shell *shell)
 {
@@ -80,7 +79,6 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 		if (err_code)
 			return (err_code);
 	}
-	printf("cmd = %s\n", shell->cmd->cmd);
 	pid = fork();
 	if (pid == 0)
 	{

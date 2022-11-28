@@ -18,7 +18,6 @@ void	free_cmd_link(t_cmd *cmd)
 		free(cmd->cmd);
 	if (cmd->token)
 		free_tab(cmd->token);
-	//free(cmd);
 	return ;
 }
 
@@ -30,7 +29,7 @@ void	del(void *data)
 int	tablen(char **tab)
 {
 	int	i;
-	
+
 	i = 0;
 	while (tab[i])
 		i++;
@@ -43,10 +42,7 @@ void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
 	if (!lst || !del)
 		return ;
 	if (lst->cmd)
-	{
-		//free(lst->cmd);
 		lst->cmd = NULL;
-	}
 	if (lst->token)
 	{
 		ft_free_tokentab(lst->token, tablen(lst->token));
@@ -88,7 +84,6 @@ void	free_cmd_lst(t_cmd *cmd)
 			free_cmd_link(cmd->prev);
 		if (cmd)
 			free_cmd_link(cmd);
-		//free_cmd_link(cmd);
 		free(cmd);
 		cmd = NULL;
 	}
@@ -123,24 +118,7 @@ void	free_all(t_shell *shell)
 			free_tab(shell->ms_env);
 		if (shell->envpc_head)
 			clear_envpc_lst(shell->envpc_head);
-		//if (shell->pars != NULL)
-		//{
-		//	//ft_execfree_freeall(shell->pars);
-		//	ft_pars_freeall(shell->pars);
-		//}
 		free(shell);
 	}
 	return ;
 }
-
-/*void	bzero_i_guess(char *buf)
-{
-	int	i;
-	int	size;
-
-	i = -1;
-	size = ft_strlen(buf);
-	while (++i < size)
-		buf[i] = '\0';
-	return ;
-}*/
