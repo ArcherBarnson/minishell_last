@@ -46,10 +46,10 @@ void	sort_env_args(char **envpc, char *tmp, int i, int j)
 
 void	export_no_args(t_envp_cpy *envpc_lst)
 {
-	char	**envpc;
-	char	*tmp;
-	int	i;
-	int	j;
+	char		**envpc;
+	char		*tmp;
+	int			i;
+	int			j;
 
 	i = 1;
 	j = 0;
@@ -59,8 +59,6 @@ void	export_no_args(t_envp_cpy *envpc_lst)
 		return ;
 	sort_env_args(envpc, tmp, i, j);
 	env(1, NULL, envpc, 1);
-
 	free_tab(envpc);
-	//free(tmp);
 	return ;
 }

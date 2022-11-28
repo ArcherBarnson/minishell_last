@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 16:59:15 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:57:22 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_read_prompt(t_shell *shell)
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "pars"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_expander(&pars))// || ft_print_debug_content(&lex, &pars, "exp"))
+	if (ft_expander(&pars, shell))// || ft_print_debug_content(&lex, &pars, "exp"))
 	 	return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_redirector(&lex, &pars))// || ft_print_debug_content(&lex, &pars, "redir"))
 		return (ft_error_return(&lex, &pars, shell));
@@ -397,7 +397,7 @@ char	*new_str_space(char *str)
 	return (res);
 }
 
-char	*ft_big_exp(t_pars *pars, char *str)
+char	*ft_big_exp(t_pars *pars, char *str, t_shell *shell)
 {
 	t_envp_cpy *tmp;
 	char	**recup;
@@ -407,10 +407,11 @@ char	*ft_big_exp(t_pars *pars, char *str)
 	c = 0;
 	str = new_str_space(str);
 	recup = ft_split(str, ' ');
+	(void)pars;
 
 	while (recup[i])
 	{
-		tmp = pars->pars_env;
+		tmp = shell->envpc;
 		while (tmp->next)
 		{
 			if (ft_strncmp(recup[i] + 1, tmp->var, ft_strlen(recup[i] + 1)) == 0 && ft_strlen(recup[i]) > 1)
@@ -442,7 +443,7 @@ char	*ft_big_exp(t_pars *pars, char *str)
 	return (str);
 }
 
-int	ft_expander(t_pars *pars)
+int	ft_expander(t_pars *pars, t_shell *shell)
 {
 	int		i;
 	int		j;
@@ -463,7 +464,7 @@ int	ft_expander(t_pars *pars)
 			temp = pars->parser_text;
 			ret = ft_inner_loop_expander(pars);
 			pars->command->token->id = ft_small_check_exp(pars, pars->command->token->id);
-			pars->command->token->id = ft_big_exp(pars, pars->command->token->id);
+			pars->command->token->id = ft_big_exp(pars, pars->command->token->id, shell);
 			free(temp);
 			if (ret)
 				return (ret);

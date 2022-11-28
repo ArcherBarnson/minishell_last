@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 17:39:27 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 11:25:24 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:50:47 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*export_format(char *var)
 
 int	env(int ac, char **av, char **envp, int mode)
 {
-	int	i;
+	int		i;
 	char	*export_var;
 
 	i = 0;

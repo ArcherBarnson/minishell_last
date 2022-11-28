@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 16:03:49 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:56:35 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strdup_offset(char *str, int offset)
 {
-	int	size;
+	int		size;
 	char	*returnstr;
 
 	size = 0;
@@ -42,7 +42,7 @@ char	*ft_strdup_offset(char *str, int offset)
 char	*get_home_path(char **envp)
 {
 	char	*home;
-	int	i;
+	int		i;
 
 	i = 0;
 	home = NULL;

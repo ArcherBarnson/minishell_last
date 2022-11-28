@@ -6,12 +6,12 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:56:38 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:31:27 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINISHELL_H
-# define FT_MINISHELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <signal.h>
 # include <sys/types.h>
@@ -556,7 +556,7 @@ int				ft_around_parser(t_lex *lex, t_pars *pars);
 int				ft_around_redirector(t_lex *lex, t_pars *pars);
 int				ft_lexer(t_lex *lex);
 int				ft_parser(t_lex *lex, t_pars *pars);
-int				ft_expander(t_pars *pars);
+int				ft_expander(t_pars *pars, t_shell *shell);
 int				ft_inner_loop_expander(t_pars *pars);
 int				ft_redirector(t_pars *pars);
 int				ft_transformer(t_pars *pars);

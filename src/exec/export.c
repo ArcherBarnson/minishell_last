@@ -32,9 +32,9 @@ int	env_var_exists(char *str, char **envpc, int mode)
 
 char	*save_env_var(char *var)
 {
-	int	i;
-	int	j;
-	char	*save;
+	int			i;
+	int			j;
+	char		*save;
 
 	i = -1;
 	j = 0;
@@ -65,8 +65,6 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 
 	appended_var = NULL;
 	var_buf = NULL;
-	/*while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
-		envpc_lst = envpc_lst->next;*/
 	while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
 		envpc_lst = envpc_lst->next;
 	env_var_buf = ft_strdup(envpc_lst->var);
@@ -79,20 +77,20 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 	{
 		var_buf = save_env_var(var);
 		appended_var = ft_strjoin(env_var_buf, var_buf);
-		free(var_buf);	
+		free(var_buf);
 		free(envpc_lst->var);
 		envpc_lst->var = ft_strdup(appended_var);
-		free(appended_var);	
+		free(appended_var);
 	}
-	free(env_var_buf);	
+	free(env_var_buf);
 	return ;
 }
 
 int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst)
 {
-	int	i;
-	int	mode;
-	char	*tmp;
+	int			i;
+	int			mode;
+	char		*tmp;
 
 	i = 1;
 	if (ac == 1)
