@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 16:24:48 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:39:51 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ int	ft_redirector(t_pars *pars)
 			if (ret)
 				return (ret);
 			pars->command->token = pars->command->token->next;
+			k = pars->command->nb_of_tokens;
 		}
 		pars->command = pars->command->next;
 		count += pars->command->nb_of_tokens;
