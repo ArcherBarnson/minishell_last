@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 04:43:20 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 18:08:02 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:38:17 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	return ; 
+	exit_code = 130;
+	return ;
 }
 
 void	sigquit_ignore(int sig)

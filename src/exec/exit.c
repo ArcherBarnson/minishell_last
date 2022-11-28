@@ -1,19 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/28 14:46:59 by bgrulois          #+#    #+#             */
+/*   Updated: 2022/11/28 14:47:04 by bgrulois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-
-//comment for real test
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <unistd.h>
-//#include <string.h>
-//#####################
-
-//int	exit_code;
 
 long long	ft_atoll(const char	*str)
 {
-	int		i;
-	long long	sign;
-	long long	tot;
+	int					i;
+	long long			sign;
+	long long			tot;
 
 	i = 0;
 	sign = 1;
@@ -48,18 +51,18 @@ int	is_exit_arg_valid(char *arg)
 	int	size;
 
 	i = 0;
-	size = ft_strlen(arg);					//ft_strlen
+	size = ft_strlen(arg);
 	if (arg[i] != '-' && (arg[i] < '0' || arg[i] > '9'))
 		return (invalid_exit_arg(arg));
 	if ((arg[i] == '-' && size > 20) || (arg[i] != '-' && size > 19))
 		return (invalid_exit_arg(arg));
 	while (arg[++i])
 	{
-		if (arg[i] <  '0' || arg[i] > '9')
+		if (arg[i] < '0' || arg[i] > '9')
 			return (invalid_exit_arg(arg));
 	}
-	if ((ft_atoll(arg) > 0 && arg[0] == '-') ||
-		(ft_atoll(arg) < 0 && arg[0] != '-'))
+	if ((ft_atoll(arg) > 0 && arg[0] == '-')
+		|| (ft_atoll(arg) < 0 && arg[0] != '-'))
 		return (invalid_exit_arg(arg));
 	return (1);
 }
@@ -76,7 +79,6 @@ int	get_formated_status(char *arg)
 	else
 		formated_status %= 256;
 	return ((int)formated_status);
-
 }
 
 int	ft_exit(int ac, char **av)
