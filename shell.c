@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/26 16:39:00 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:09:04 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ void	minishell_loop(t_shell *shell)
 			else
 				exit_code = pipeline(shell, shell->ms_env);
 		//	printf("---exit_code = %i---\n", exit_code);
-			if (shell->retprompt)
-				bzero(shell->retprompt,
-					ft_strlen(shell->retprompt));
+			//if (shell->retprompt)
+			//	bzero(shell->retprompt,
+			//		ft_strlen(shell->retprompt));
 		}
 		reset_shell_values(shell);
 	}
