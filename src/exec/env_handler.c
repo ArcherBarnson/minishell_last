@@ -30,7 +30,6 @@ t_envp_cpy	*set_env(t_shell *shell, char **envp)
 {
 	if (shell->ms_env == NULL)
 		shell->envpc = envp_to_lst(envp);
-		//shell->ms_env = dup_tab(envp);
 	else
 		shell->envpc = envp_to_lst(shell->ms_env);
 	return (shell->envpc);
@@ -48,15 +47,14 @@ int	get_envp_lst_size(t_envp_cpy *envpc_lst)
 		n++;
 		envpc_lst = envpc_lst->next;
 	}
-	//printf("lst_size_debug +++> %i\n", n);
 	return (n);
 }
 
 t_envp_cpy	*envp_to_lst(char **envp)
 {
-	int	i;
-	t_envp_cpy	*envpc_lst;
-	t_envp_cpy	*head;
+	int				i;
+	t_envp_cpy		*envpc_lst;
+	t_envp_cpy		*head;
 
 	i = 0;
 	envpc_lst = malloc(sizeof(t_envp_cpy));
@@ -82,15 +80,13 @@ t_envp_cpy	*envp_to_lst(char **envp)
 
 char	**lst_to_envp(t_envp_cpy *envpc_lst)
 {
-	int	i;
-	int	lst_size;
-	char	**envpc;
-	//t_envp_cpy	*envpc_lst_head;
+	int				i;
+	int				lst_size;
+	char			**envpc;
 
 	i = 0;
 	if (!envpc_lst || !envpc_lst->var)
 		return (NULL);
-	//envpc_lst_head = envpc_lst;
 	if (envpc_lst->var == NULL && envpc_lst->next != NULL)
 		envpc_lst = envpc_lst->next;
 	lst_size = get_envp_lst_size(envpc_lst);
@@ -105,6 +101,5 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	}
 	envpc[i] = ft_strdup(envpc_lst->var);
 	envpc[i + 1] = NULL;
-	//clear_envpc_lst(envpc_lst_head);
 	return (envpc);
 }
