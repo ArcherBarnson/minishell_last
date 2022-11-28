@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/25 12:09:14 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:39:51 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell)
 {
 	(void)pars;
 	shell->cmd = NULL;
-	printf("return 1 to exec with shell->cmd = NULL\n");
+	//printf("return 1 to exec with shell->cmd = NULL\n");
 	ft_tklist_freeall(lex);
 //	ft_execfree_freeall(pars);
 //	ft_pars_freeall(pars);
@@ -231,6 +231,7 @@ int	ft_redirector(t_pars *pars)
 			if (ret)
 				return (ret);
 			pars->command->token = pars->command->token->next;
+			k = pars->command->nb_of_tokens;
 		}
 		pars->command = pars->command->next;
 		count += pars->command->nb_of_tokens;
