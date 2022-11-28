@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:46:59 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 14:47:04 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:22:46 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,17 @@ int	ft_exit(int ac, char **av)
 	int	status;
 
 	status = 2;
+	write(1, "exit\n", 5);
 	if (ac == 1 || av == NULL)
-	{
-		write(1, "exit\n", 5);
 		exit(exit_code);
-	}
+	if (!is_exit_arg_valid(av[1]))
+		exit(status);
 	if (ac > 2)
 	{
 		write(2, "Too many arguments\n", 20);
 		return (1);
 	}
 	status = get_formated_status(av[1]);
-	write(1, "exit\n", 5);
 	exit(status);
 	return (0);
 }
-
-/*int	main(int ac, char **av)
-{
-	int test;
-	exit_code = 127;
-	test = ft_exit(ac, av);
-	printf("[-%d-]\n", test);
-	return (0);
-}*/

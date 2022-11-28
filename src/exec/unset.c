@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:38:41 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 14:40:57 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:14:59 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_envp_cpy	*remove_var_if_present(char *var, int len, t_envp_cpy *envpc_lst)
 	head = envpc_lst;
 	while (envpc_lst->next)
 	{
-		if (ft_strncmp(var, envpc_lst->next->var, var) == 0)
+		if (ft_strncmp(var, envpc_lst->next->var, len) == 0)
 		{
 			to_remove = envpc_lst->next;
 			if (envpc_lst->next->next)
