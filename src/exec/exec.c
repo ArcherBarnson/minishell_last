@@ -36,7 +36,8 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	if (mode == 1)
 		exit(exec_builtin(shell));
 	else
-		execve(shell->cmd->cmd, shell->cmd->token, envp);
+		if(execve(shell->cmd->cmd, shell->cmd->token, envp) == -1)
+			clear_envpc_lst(shell->envpc);
 	return ;
 }
 

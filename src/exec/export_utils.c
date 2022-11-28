@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 08:53:58 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 16:04:22 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:39:54 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,19 @@ int	is_valid_string(char *str)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (str[0] == '=')
 		return (export_error(str, 0, 0));
 	if ((str[0] < 'A' || str[0] > 'Z') &&
 		(str[0] < 'a' || str[i] > 'z') && str[0] != '_')
 		return (export_error(str, 0, 1));
-	while (str[++i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		if (str[i + 1] == '=' && str[i] == '+')
 			return (2);
 		if (!is_valid_identifier(str[i]))
 			return (export_error(str, i, 1));
+		i++;
 	}
 	return (1);
 }
