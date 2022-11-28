@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/25 14:35:20 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:24:51 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**debug_lst(void)
 }
 //#################################################################
 
-int	exit_code;
+extern int	exit_code;
 
 int	is_valid_history(char *str)
 {
@@ -69,12 +69,19 @@ int	is_valid_history(char *str)
 void	reset_shell_values(t_shell *shell)
 {
 	free_cmd_lst(shell->cmd);
+	if (shell->cmd->cmd)
+	{
+		free(shell->cmd->cmd);
+		shell->cmd->cmd = NULL;
+	}
+	//ft_lstclear(&shell->cmd, del);
 	//ft_execfree_freeall(shell->pars);
 	//ft_pars_freeall(shell->pars);
 	//free(shell->pars);
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
-	clear_envpc_lst(shell->envpc_head);
+	//ft_envpc_clear(&shell->envpc_head, del);
+	clear_envpc_lst(shell->envpc);
 	shell->retprompt = NULL;
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
@@ -102,10 +109,12 @@ void	minishell_loop(t_shell *shell)
 			else
 				exit_code = pipeline(shell, shell->ms_env);
 		//	printf("---exit_code = %i---\n", exit_code);
-			if (shell->retprompt)
-				bzero(shell->retprompt,
-					ft_strlen(shell->retprompt));
+			//if (shell->retprompt)
+			//	bzero(shell->retprompt,
+			//		ft_strlen(shell->retprompt));
 		}
+		if (shell->retprompt)
+			free(shell->retprompt);
 		reset_shell_values(shell);
 	}
 	return ;
