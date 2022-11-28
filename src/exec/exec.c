@@ -80,6 +80,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 		if (err_code)
 			return (err_code);
 	}
+	printf("cmd = %s\n", shell->cmd->cmd);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -87,6 +88,11 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 		if (tbc >= 0)
 			close(tbc);
 		execute_command(shell, envp, is_builtin);
+	}
+	if (shell->cmd->cmd)
+	{
+		free(shell->cmd->cmd);
+		shell->cmd->cmd = NULL;
 	}
 	return (pid);
 }
