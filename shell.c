@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 16:31:55 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:02:01 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**debug_lst(void)
 }
 //#################################################################
 
-extern int	exit_code;
+int	exit_code;
 
 int	is_valid_history(char *str)
 {
