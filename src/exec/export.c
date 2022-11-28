@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:26:22 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 14:02:27 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:54:36 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	env_var_exists(char *str, char **envpc, int mode)
 		return (0);
 	while (envpc[i] != NULL)
 	{
-		if (mode == 1 && ft_strccmp(str, envpc[i], '=') == 0)
+		if (strcmp(str, envpc[i]) == 0)
 			return (1);
-		if (mode == 2 && ft_strccmp(str, envpc[i], '=') == 0)
+		if ((mode == 1 || mode == 2) && ft_strccmp(str, envpc[i], '=') == 0)
 			return (1);
 		i++;
 	}
@@ -65,6 +65,8 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 
 	appended_var = NULL;
 	var_buf = NULL;
+	/*while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
+		envpc_lst = envpc_lst->next;*/
 	while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
 		envpc_lst = envpc_lst->next;
 	env_var_buf = ft_strdup(envpc_lst->var);

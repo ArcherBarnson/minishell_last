@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 12:38:42 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:32:54 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	reset_shell_values(t_shell *shell)
 	//free(shell->pars);
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
-	clear_envpc_lst(shell->envpc_head);
+	//ft_envpc_clear(&shell->envpc_head, del);
+	clear_envpc_lst(shell->envpc);
 	shell->retprompt = NULL;
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/25 10:57:26 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:31:40 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	get_envp_lst_size(t_envp_cpy *envpc_lst)
 {
 	int	n;
 
-	n = 0;
+	n = 1;
 	if (!envpc_lst)
-		return (n);
+		return (0);
 	while (envpc_lst->next != NULL)
 	{
 		n++;
@@ -94,7 +94,7 @@ char	**lst_to_envp(t_envp_cpy *envpc_lst)
 	if (envpc_lst->var == NULL && envpc_lst->next != NULL)
 		envpc_lst = envpc_lst->next;
 	lst_size = get_envp_lst_size(envpc_lst);
-	envpc = malloc(sizeof(char *) * (lst_size + 2));
+	envpc = malloc(sizeof(char *) * (lst_size + 1));
 	if (!envpc)
 		return (NULL);
 	while (envpc_lst->next != NULL)

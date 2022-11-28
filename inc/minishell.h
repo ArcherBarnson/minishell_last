@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:38:59 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:56:38 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -835,6 +835,9 @@ struct	s_envp_cpy
 	t_envp_cpy	*next;
 };
 
+
+void			ft_envpc_clear(t_envp_cpy **lst, void (*del)(void *));
+void			ft_lstdel_envpc(t_envp_cpy *lst, void (*del)(void *));
 int				ft_strcmp(char *s1, char *s2);
 char			**ft_split(char const *s, char c);
 int				export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
