@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 12:09:04 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:38:42 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	is_valid_history(char *str)
 
 void	reset_shell_values(t_shell *shell)
 {
-	free_cmd_lst(shell->cmd);
+	//free_cmd_lst(shell->cmd);
+	ft_lstclear(&shell->cmd, del);
 	//ft_execfree_freeall(shell->pars);
 	//ft_pars_freeall(shell->pars);
 	//free(shell->pars);
@@ -106,6 +107,8 @@ void	minishell_loop(t_shell *shell)
 			//	bzero(shell->retprompt,
 			//		ft_strlen(shell->retprompt));
 		}
+		if (shell->retprompt)
+			free(shell->retprompt);
 		reset_shell_values(shell);
 	}
 	return ;

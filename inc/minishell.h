@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/26 17:33:19 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:38:59 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,6 +560,8 @@ int				ft_expander(t_pars *pars);
 int				ft_inner_loop_expander(t_pars *pars);
 int				ft_redirector(t_pars *pars);
 int				ft_transformer(t_pars *pars);
+void				ft_lstclear(t_cmd **lst, void (*del)(void *));
+void				del(void *data);
 
 /* ************************************************************************** */
 /*                             common_initializations.c                       */

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 11:58:00 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:39:52 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,39 @@ void	free_cmd_link(t_cmd *cmd)
 		free_tab(cmd->token);
 	//free(cmd);
 	return ;
+}
+
+void	del(void *data)
+{
+	free(data);
+}
+
+void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	if (lst->cmd)
+		(*del)(lst->cmd);
+	if (lst->token)
+		free_tab(lst->token);
+	free(lst);
+}
+
+void	ft_lstclear(t_cmd **lst, void (*del)(void *))
+{
+	t_cmd	*list;
+	t_cmd	*tmp;
+
+	if (!lst || !del)
+		return ;
+	list = *lst;
+	while (list)
+	{
+		tmp = list->next;
+		ft_lstdelone(list, del);
+		list = tmp;
+	}
+	*lst = NULL;
 }
 
 void	free_cmd_lst(t_cmd *cmd)
@@ -39,7 +72,7 @@ void	free_cmd_lst(t_cmd *cmd)
 		if (cmd)
 			free_cmd_link(cmd);
 		//free_cmd_link(cmd);
-		//free(cmd);
+		free(cmd);
 		cmd = NULL;
 	}
 	return ;
