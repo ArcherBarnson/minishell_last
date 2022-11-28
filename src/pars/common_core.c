@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/26 17:45:53 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:04:26 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,15 @@ void	check_file_for_segv(t_pars *pars, char *str)
 
 void	ft_check_2(t_pars *pars, char **res)
 {
-	if (ft_strlen(res[0]) == 1 && res[0][0] == '<')
-		check_file_for_segv(pars, res[1]);
+	int	i;
+
+	i = 0;
+	while (res[i])
+	{
+		if (ft_strlen(res[i]) == 1 && res[i][0] == '<')
+			check_file_for_segv(pars, res[i + 1]);
+		i++;
+	}
 }
 	
 
@@ -169,7 +176,7 @@ void	ft_checker_anti_segv(t_pars *pars, char *str)
 	i = 0;
 	while (res[i])
 		i++;
-	if (i == 2)
+	if (i >= 2)
 	{
 		free(str);
 		ft_check_2(pars, res);
