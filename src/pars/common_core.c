@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 12:50:42 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:59:15 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,58 @@
 
 //t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
 
+char	*new_retprompt(char *str)
+{
+	int	i;
+	int	j;
+	int	c;
+	char	*res;
+
+	i = 0;
+	c = 0;
+	while (str[i])
+	{
+		if (str[i] == '<' || str[i] == '>' || str[i] == '|')
+			c++;
+		i++;
+	}
+	res = malloc(sizeof(char) * (ft_strlen(str) + c + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '<' || str[i] == '>' || str[i] == '|')
+		{
+			res[j] = str[i];
+			res[++j] = ' ';
+			j++;
+			i++;
+		}
+		res[j] = str[i];
+		i++;
+		j++;
+	}
+	res[j] = 0;
+	return (res);
+}
+
+
 int	ft_read_prompt(t_shell *shell)
 {
 	t_lex		lex;
 	t_pars		pars;
+	char		*tmp;
 
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
 	pars.pars_env = shell->envpc;
 	ft_general_initialize(&lex, &pars);
 	//lex.user_input = user_input;
-	lex.user_input = shell->retprompt;
-	lex.user_input_2 = shell->retprompt;
+	tmp = new_retprompt(shell->retprompt);
+	lex.user_input = tmp;
+	lex.user_input_2 = ft_strdup(tmp);
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
@@ -39,17 +79,23 @@ int	ft_read_prompt(t_shell *shell)
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_transformer(&pars))// || ft_print_debug_content(&lex, &pars, "trans"))
 		return (ft_error_return(&lex, &pars, shell));
-	printf("test = %s\n", pars.cmd->token[0]);
 	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
 	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);
 	//printf("pars.cmd_head : %s\n", pars.cmd_head->cmd);
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
+	free(shell->retprompt);
+	shell->retprompt = lex.user_input_2;
 	ft_tklist_freeall(&lex);
 	shell->pars = &pars;
 	//ft_execfree_freeall(&pars);
 	ft_pars_freeall(&pars);
+	if (tmp)
+	{
+		free(tmp);
+		tmp = NULL;
+	}
 	return (0);
 }
 
@@ -164,7 +210,11 @@ void	ft_check_2(t_pars *pars, char **res, char *str)
 	{
 		if (ft_strlen(res[i]) == 1 && res[i][0] == '<')
 		{
-			free(str);
+			if (str)
+			{
+				//free(str);
+				str = NULL;
+			}
 			check_file_for_segv(pars, res[i + 1]);
 		}
 		i++;
@@ -352,7 +402,9 @@ char	*ft_big_exp(t_pars *pars, char *str)
 	t_envp_cpy *tmp;
 	char	**recup;
 	int	i = 0;
+	int	c;
 
+	c = 0;
 	str = new_str_space(str);
 	recup = ft_split(str, ' ');
 
@@ -365,8 +417,15 @@ char	*ft_big_exp(t_pars *pars, char *str)
 			{
 				free(recup[i]);
 				recup[i] = ft_strdup(tmp->var + check_equal(tmp->var));
+				c = 1;
+				(void)c;
 			}
 			tmp = tmp->next;
+		}
+		if (c == 0 && recup[i][0] == '$')
+		{
+			free(recup[i]);
+			recup[i] = ft_strdup("");
 		}
 		i++;
 	}

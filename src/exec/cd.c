@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/24 13:02:40 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:03:49 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	update_oldpwd(char **envp, t_envp_cpy *envpc_lst)
 	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
 	export_cwd[2] = NULL;
 	export(2, export_cwd, envp, envpc_lst);
-	free_tab(export_cwd);
+	free(export_cwd[1]);
+	free(export_cwd);
 }
 
 int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst)
