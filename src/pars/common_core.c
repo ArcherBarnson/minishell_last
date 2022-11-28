@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/25 12:09:14 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:24:48 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell)
 {
 	(void)pars;
 	shell->cmd = NULL;
-	printf("return 1 to exec with shell->cmd = NULL\n");
+	//printf("return 1 to exec with shell->cmd = NULL\n");
 	ft_tklist_freeall(lex);
 //	ft_execfree_freeall(pars);
 //	ft_pars_freeall(pars);

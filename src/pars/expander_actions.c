@@ -6,13 +6,13 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 19:14:04 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:23:30 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_code;
+//int	exit_code;
 
 int	ft_init_exp_actions(t_pars *pars)
 {
