@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:20:11 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 09:50:33 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:07:04 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*find_path(char *cmd, char **env_paths)
 		return (cmd);
 	if (!env_paths || !env_paths[0])
 		return (NULL);
-	if (cmd[0] == '.' && cmd[1] == '/' && cmd[2] != '\0')
+	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 		return (NULL);
 	while (env_paths[++i])
 	{
