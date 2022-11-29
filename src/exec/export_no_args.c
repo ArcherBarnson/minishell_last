@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:58:17 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 14:05:18 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:37:48 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	export_no_args(t_envp_cpy *envpc_lst)
 	if (!envpc)
 		return ;
 	sort_env_args(envpc, tmp, i, j);
-	env(1, NULL, envpc, 1);
+	env(NULL, envpc, 1);
 	free_tab(envpc);
 	return ;
 }

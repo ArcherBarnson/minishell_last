@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:10:39 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:35:18 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -857,11 +857,11 @@ char			**dup_tab(char **tab);
 void			free_tab(char **tab);
 int				get_tab_size(char **tab);
 int				cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst);
-int				pwd(int ac, char **av);
-void			write_arg(char *str);
+int				pwd(int ac, char **av, int fd);
+void			write_arg(char *str, int fd);
 int				n_flag_present(char *str);
-int				echo(int ac, char **av);
-int				env(int ac, char **av, char **envp, int mode);
+int				echo(int ac, char **av, int fd);
+int				env(t_shell *shell, char **envp, int mode);
 t_envp_cpy		*set_env(t_shell *shell, char **envp);
 int				ft_exit(int ac, char **av, t_shell *shell);
 int				get_formated_status(char *arg);

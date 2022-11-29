@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 17:56:35 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:19:49 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst)
 	if (ac > 2)
 	{
 		free(home);
-		write(1, "Wrong number of arguments\n", 27);
+		write(2, "Wrong number of arguments\n", 27);
 		return (1);
 	}
 	free(home);

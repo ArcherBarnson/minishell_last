@@ -6,17 +6,17 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:42:06 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/23 15:19:36 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:17:23 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h" 
 
-void	write_arg(char *str)
+void	write_arg(char *str, int fd)
 {
 	if (!str)
 		return ;
-	write(1, str, ft_strlen(str));
+	write(fd, str, ft_strlen(str));
 	return ;
 }
 
@@ -39,26 +39,26 @@ int	n_flag_present(char *str)
 	return (0);
 }
 
-int	echo(int ac, char **av)
+int	echo(int ac, char **av, int fd)
 {
 	int	i;
 
 	i = 1;
 	if (!av[1])
 	{
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 		return (0);
 	}
 	while (n_flag_present(av[i]) == 1)
 		i++;
 	while (av[i] && i < ac)
 	{
-		write_arg(av[i]);
+		write_arg(av[i], fd);
 		if (av[i + 1] != NULL)
-			write(1, " ", 1);
+			write(fd, " ", 1);
 		i++;
 	}
 	if (n_flag_present(av[1]) != 1)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:44:46 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 17:56:43 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:41:15 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	exec_builtin(t_shell *shell)
 		return (unset_case(shell));
 	if (ft_strcmp(shell->cmd->token[0], PWD) == 1)
 		return (pwd(get_tab_size(shell->cmd->token),
-				shell->cmd->token));
+				shell->cmd->token, shell->cmd->fd_out));
 	if (ft_strcmp(shell->cmd->token[0], ECHO) == 1)
 		return (echo(get_tab_size(shell->cmd->token),
-				shell->cmd->token));
+				shell->cmd->token, shell->cmd->fd_out));
 	if (ft_strcmp(shell->cmd->token[0], CD) == 1)
 		return (cd(get_tab_size(shell->cmd->token),
 				shell->cmd->token, shell->ms_env, shell->envpc));
@@ -37,8 +37,7 @@ int	exec_builtin(t_shell *shell)
 		return (export(get_tab_size(shell->cmd->token),
 				shell->cmd->token, shell->ms_env, shell->envpc));
 	if (ft_strcmp(shell->cmd->token[0], ENV) == 1)
-		return (env(get_tab_size(shell->cmd->token),
-				shell->cmd->token, shell->ms_env, 0));
+		return (env(shell, shell->ms_env, 0));
 	if (ft_strcmp(shell->cmd->token[0], EXIT) == 1)
 		return (ft_exit(get_tab_size(shell->cmd->token),
 				shell->cmd->token, shell));
