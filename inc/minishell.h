@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/29 07:48:42 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:10:39 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -486,7 +486,6 @@ struct s_pars
 	int				nb_of_commands;
 	int				nb_of_tokens;
 	int				cmdsts;
-	t_envp_cpy		*pars_env;
 	t_token			*token;
 	t_token_types	crt_tok_type;
 	int				fd_in;
@@ -642,6 +641,9 @@ int				ft_mallocator(void *ptr, size_t size);
 int				ft_tklist_freeall(t_lex *lex);
 int				ft_execfree_freeall(t_pars *pars);
 int				ft_pars_freeall(t_pars *pars);
+void			ft_lstclear(t_cmd **lst, void (*del)(void *));
+void			ft_lstdelone(t_cmd *lst, void (*del)(void *));
+void			del(void *data);
 
 /* ************************************************************************** */
 /*                            common_error.c                                  */
@@ -654,7 +656,7 @@ int				ft_msgerr(char	*str);
 t_token			*ft_new_token(char *str);
 t_token			*ft_token_addnext(t_token *current, t_token *next);
 t_token			*ft_token_jumpcurrent(t_token *prev, t_token *next);
-int				ft_free_tokenlist(t_token *token);
+int				ft_free_tokenlist(t_token **token);
 t_token			*ft_free_one_token(t_token *token);
 
 /* ************************************************************************** */
@@ -777,7 +779,7 @@ int				ft_exp_take(t_pars *pars);
 int				ft_exp_skip(t_pars *pars);
 int				ft_exp_record(t_pars *pars);
 char			*ft_init_exp_temp(t_pars *pars);
-char			*ft_tempjoin(char *temp1, char *temp2);
+char			*ft_tempjoin(char **temp1, char **temp2);
 char			*ft_getenv(char *temp2, t_pars *pars);
 int				ft_exp_record_dol(t_pars *pars);
 int				ft_exp_dol(t_pars *pars);
@@ -861,7 +863,7 @@ int				n_flag_present(char *str);
 int				echo(int ac, char **av);
 int				env(int ac, char **av, char **envp, int mode);
 t_envp_cpy		*set_env(t_shell *shell, char **envp);
-int				ft_exit(int ac, char **av);
+int				ft_exit(int ac, char **av, t_shell *shell);
 int				get_formated_status(char *arg);
 int				is_exit_arg_valid(char *arg);
 int				invalid_exit_arg(char *arg);
@@ -884,7 +886,7 @@ int				continue_exec(t_shell *shell, char **envp);
 int				end_exec(t_shell *shell, char **envp);
 int				pipeline(t_shell *shell, char **envp);
 int				exit_pipeline(t_shell *shell, char **envp);
-int				pipexec(t_shell *shell, int tbc, char **envp);
+int				pipexec(t_shell *shell, int tbc, char **envp, int *pids);
 int				*make_pid_tab(int size);
 int				set_fds(t_shell *shell);
 int				exec(t_shell *shell, char **envp);

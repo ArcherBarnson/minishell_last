@@ -43,6 +43,7 @@ char	**ft_token_list_to_tab(t_command *command)
 {
 	int		i;
 	char	**temp;
+	t_token	*token_temp;
 
 	i = 0;
 	temp = malloc((command->nb_of_tokens + 1) * sizeof(char *));
@@ -51,7 +52,10 @@ char	**ft_token_list_to_tab(t_command *command)
 	while (i++ < command->nb_of_tokens)
 	{
 		temp[i - 1] = ft_strndup(command->token->id, 0);
+		free(command->token->id);
+		token_temp = command->token;
 		command->token = command->token->next;
+		free(token_temp);
 	}
 	temp[i - 1] = 0;
 	return (temp);

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/25 08:48:12 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:04:21 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_tklist_freeall(t_lex *lex)
 		free(lex->temp);
 		lex->temp = NULL;
 	}
-	ft_free_tokenlist(lex->token);
+	ft_free_tokenlist(&(lex->token)); //VERIF
 	*(&(lex->token)) = NULL;
 	ft_bzero(lex, sizeof(t_lex));
 	ft_init_lex_decisions(lex);

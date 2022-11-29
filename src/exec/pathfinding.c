@@ -46,7 +46,7 @@ char	*find_path(char *cmd, char **env_paths)
 	if (!cmd || cmd[0] == '\0')
 		return (NULL);
 	if (access((const char *)cmd, X_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	if (!env_paths || !env_paths[0])
 		return (NULL);
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))

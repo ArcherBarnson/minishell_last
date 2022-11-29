@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 08:53:58 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 16:04:54 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:43:25 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_env_var(char *str)
 	i = 0;
 	while (str && str[i] && str[i] != '=')
 		i++;
-	if (str[i] == '=')
+	if (str[i] == '=' && str[i + 1] != '\0')
 		return (1);
 	return (0);
 }

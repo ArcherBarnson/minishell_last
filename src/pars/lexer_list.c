@@ -51,14 +51,14 @@ t_token	*ft_token_jumpcurrent(t_token *prev, t_token *next)
 	return (next);
 }
 
-int	ft_free_tokenlist(t_token *token)
+int	ft_free_tokenlist(t_token **token)
 {
 	t_token	*temp;
 	t_token	*current;
 
-	if (!token)
+	if (!(*token))
 		return (1);
-	current = token;
+	current = *token;
 	while (1)
 	{
 		temp = current;
@@ -71,7 +71,7 @@ int	ft_free_tokenlist(t_token *token)
 		temp = NULL;
 	}
 	temp = NULL;
-	token = NULL;
+	*token = NULL;
 	return (0);
 }
 

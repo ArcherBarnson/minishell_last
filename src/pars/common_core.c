@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 09:31:42 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:28:12 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_read_prompt(t_shell *shell)
 	ft_tklist_freeall(&lex);
 	shell->pars = &pars;
 	//ft_execfree_freeall(&pars);
-	//ft_pars_freeall(&pars);
+	ft_pars_freeall(&pars);
 	return (0);
 }
 
@@ -65,7 +65,7 @@ int	ft_around_lexer(t_lex *lex)
 {
 	if (ft_lexer(lex))
 	{
-		ft_free_tokenlist(lex->token);
+		ft_free_tokenlist(&(lex->token)); //VERIF
 		lex->token = NULL;
 		lex->temp = ft_strndup("", 0);
 		lex->token = ft_token_addnext(lex->token, ft_new_token(lex->temp));
@@ -232,8 +232,9 @@ int	ft_redirector(t_pars *pars)
 			ret = ft_redir_apply_decision(pars);
 			if (ret)
 				return (ret);
-			pars->command->token = pars->command->token->next;
 			k = pars->command->nb_of_tokens;
+			if (k != 0)
+				pars->command->token = pars->command->token->next;
 		}
 		pars->command = pars->command->next;
 		count += pars->command->nb_of_tokens;

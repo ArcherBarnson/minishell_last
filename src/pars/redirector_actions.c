@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 18:20:31 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:14:49 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ int	ft_redir_del_two(t_pars *pars)
 	pars->command->nb_of_tokens--;
 	pars->token = ft_free_one_token(pars->token);
 	pars->command->nb_of_tokens--;
-	pars->token = pars->token->prev->prev;
+	if (pars->command->nb_of_tokens != 0)			//mod here
+		pars->token = pars->token->prev->prev;
 	pars->command->token = pars->token;
 	return (0);
 }

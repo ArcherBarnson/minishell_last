@@ -41,7 +41,7 @@ int	exec_builtin(t_shell *shell)
 				shell->cmd->token, shell->ms_env, 0));
 	if (ft_strcmp(shell->cmd->token[0], EXIT) == 1)
 		return (ft_exit(get_tab_size(shell->cmd->token),
-				shell->cmd->token));
+				shell->cmd->token, shell));
 	return (-1);
 }
 

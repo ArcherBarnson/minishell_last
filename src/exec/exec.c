@@ -31,12 +31,24 @@ void	dup_fds(t_shell *shell)
 
 void	execute_command(t_shell *shell, char **envp, int mode)
 {
+	int	status;
+
 	dup_fds(shell);
 	if (mode == 1)
-		exit(exec_builtin(shell));
+	{
+		status = exec_builtin(shell);
+		free(shell->cmd->cmd);
+		ft_lstclear(&shell->cmd_head, del);
+		shell->cmd = NULL;
+		free_all(shell);
+		exit(status);
+	}
 	else if (shell->cmd->cmd != NULL)
 		execve(shell->cmd->cmd, shell->cmd->token, envp);
-	return ;
+	free(shell->cmd->cmd);
+	ft_lstclear(&shell->cmd_head, del);
+	shell->cmd = NULL;
+	free_all(shell);
 }
 
 int	simple_exec(t_shell *shell, char **envp)
@@ -56,13 +68,15 @@ int	simple_exec(t_shell *shell, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
+		free(pid);
 		child_signals();
 		execute_command(shell, envp, is_builtin);
+		exit(1);
 	}
 	return (ft_wait(pid, shell));
 }
 
-int	pipexec(t_shell *shell, int tbc, char **envp)
+int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 {
 	int	pid;
 	int	is_builtin;
@@ -82,6 +96,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp)
 	pid = fork();
 	if (pid == 0)
 	{
+		free(pids);
 		child_signals();
 		if (tbc >= 0)
 			close(tbc);
@@ -108,7 +123,7 @@ int	pipeline(t_shell *shell, char **envp)
 		pipe(shell->pipefd);
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
-		pids[i] = pipexec(shell, shell->pipefd[0], envp);
+		pids[i] = pipexec(shell, shell->pipefd[0], envp, pids);
 		if (shell->cmd->fd_in != 0)
 			close(shell->cmd->fd_in);
 		close(shell->pipefd[1]);
@@ -116,7 +131,7 @@ int	pipeline(t_shell *shell, char **envp)
 		if (shell->cmd->fd_in == 0)
 			shell->cmd->fd_in = shell->pipefd[0];
 	}
-	pids[i] = pipexec(shell, -1, envp);
+	pids[i] = pipexec(shell, -1, envp, pids);
 	close(shell->cmd->fd_in);
 	return (ft_wait(pids, shell));
 }

@@ -6,11 +6,23 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:26:22 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 16:07:01 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:59:24 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_var_set(char *var)
+{
+	int	i;
+
+	i = 0;
+	while (var[i] && var[i] != '=')
+		i++;
+	if (var[i] == '=')
+		return (1);
+	return (0);
+}
 
 int	env_var_exists(char *str, char **envpc, int mode)
 {
@@ -19,13 +31,23 @@ int	env_var_exists(char *str, char **envpc, int mode)
 	i = 0;
 	if (!str || !envpc)
 		return (0);
-	while (envpc[i] != NULL)
+	if (is_var_set(str))
 	{
-		if (strcmp(str, envpc[i]) == 0)
-			return (1);
-		if ((mode == 1 || mode == 2) && ft_strccmp(str, envpc[i], '=') == 0)
-			return (1);
-		i++;
+		while (envpc[i] != NULL)
+		{
+			if ((mode == 1 || mode == 2) && ft_strccmp(str, envpc[i], '=') == 0)
+				return (1);
+			i++;
+		}
+	}
+	else
+	{
+		while (envpc[i] != NULL)
+		{
+			if (strcmp(str, envpc[i]) == 0)
+				return (2);
+			i++;
+		}
 	}
 	return (0);
 }

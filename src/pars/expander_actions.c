@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 07:47:20 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:33:16 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_exp_catch(t_pars *pars)
 	{
 		free(pars->token->id);
 		pars->token->id = NULL;
-		pars->token->id = ft_strndup(pars->temp, 0);
+		pars->token->id = ft_strdup(pars->temp);
 		pars->token->type = pars->prev_exp_decision.token_type;
 		free(pars->temp);
 		pars->temp = NULL;
@@ -142,7 +142,7 @@ int	ft_exp_record(t_pars *pars)
 			temp1 = ft_strndup("", 0);
 		temp2 = ft_substr(pars->parser_text - pars->offset_start,
 				pars->start_std, pars->nb_taken_char);
-		pars->temp = ft_tempjoin(temp1, temp2);
+		pars->temp = ft_tempjoin(&temp1, &temp2);
 		ft_init_expander(pars);
 	}
 	return (0);
@@ -157,15 +157,15 @@ int	ft_exp_record(t_pars *pars)
 	return (pars->temp);
 }*/
 
-char	*ft_tempjoin(char *temp1, char *temp2)
+char	*ft_tempjoin(char **temp1, char **temp2)
 {
 	char	*temp;
 
-	temp = ft_strjoin(temp1, temp2);
-	free(temp1);
-	free(temp2);
-	temp1 = NULL;
-	temp2 = NULL;
+	temp = ft_strjoin(*temp1, *temp2);
+	free(*temp1);
+	free(*temp2);
+	*temp1 = NULL;
+	*temp2 = NULL;
 	return (temp);
 }
 
@@ -223,26 +223,30 @@ int	ft_exp_record_dol(t_pars *pars)
 		else
 		{
 			temp2 = ft_getenv(temp, pars);
+			temp = NULL;
 			//printf("start_dol = %d\n", pars->start_dol);
 			//printf("nb_taken_char = %d\n", pars->nb_taken_char);
 			//printf("text = %s\n", pars->parser_text - pars->offset_start);
 			//printf("temp = %s\n", temp);
 			//printf("temp2 = %s\n", temp2);
-			pars->temp = ft_tempjoin(temp1, temp2);
+			pars->temp = ft_tempjoin(&temp1, &temp2);
 		}
 	}
 	else if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 	{
 		temp2 = ft_strdup("");
-		pars->temp = ft_tempjoin(temp1, temp2);
+		pars->temp = ft_tempjoin(&temp1, &temp2);
 		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 	}
 	else
 	{
 		temp2 = ft_strdup("$");
-		pars->temp = ft_tempjoin(temp1, temp2);
+		pars->temp = ft_tempjoin(&temp1, &temp2);
 	}
 	ft_init_expander(pars);
+	////////////////////////////
+	free(temp);
+	free(temp1);
 	return (0);
 }
 
@@ -291,10 +295,11 @@ int	ft_exp_dol(t_pars *pars)
 
 int	ft_exp_excd(t_pars *pars)
 {
-	//int	exit_code;
+	char	*exit_char_code;
 
-	//exit_code = 127;
-	pars->temp = ft_strdup(ft_itoa(exit_code));
+	exit_char_code = ft_itoa(exit_code);
+	pars->temp = ft_strdup(exit_char_code);
+	free(exit_char_code);
 	return (0);
 }
 
@@ -314,6 +319,7 @@ char	*ft_find_envstr(char *str, t_pars *pars)
 			free(comp_str);
 			return (pars->ms_env[i] + k + 2);
 		}
+		free(comp_str);
 		i++;
 	}
 	return (NULL);

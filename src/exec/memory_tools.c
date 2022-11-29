@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 18:34:49 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:24:49 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,40 @@ void	free_cmd_link(t_cmd *cmd)
 	return ;
 }
 
-void	free_cmd_lst(t_cmd *cmd)
+void	del(void *data)
+{
+	free(data);
+}
+
+void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	//if (lst->cmd)
+	//	(*del)(lst->cmd);
+	if (lst->token)
+		free_tab(lst->token);
+	free(lst);
+}
+
+void	ft_lstclear(t_cmd **lst, void (*del)(void *))
+{
+	t_cmd	*list;
+	t_cmd	*tmp;
+
+	if (!lst || !del)
+		return ;
+	list = *lst;
+	while (list)
+	{
+		tmp = list->next;
+		ft_lstdelone(list, del);
+		list = tmp;
+	}
+	*lst = NULL;
+}
+
+/*void	free_cmd_lst(t_cmd *cmd)
 {
 	if (cmd)
 	{
@@ -41,7 +74,7 @@ void	free_cmd_lst(t_cmd *cmd)
 		cmd = NULL;
 	}
 	return ;
-}
+}*/
 
 void	free_tab(char **tab)
 {
@@ -63,6 +96,8 @@ void	free_all(t_shell *shell)
 {
 	if (shell)
 	{
+		if (shell->cmd)
+			free(shell->cmd);
 		if (shell->retprompt)
 			free(shell->retprompt);
 		if (shell->env_paths)

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 10:12:18 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:24:56 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,15 @@ int	is_valid_history(char *str)
 
 void	reset_shell_values(t_shell *shell)
 {
-	free_cmd_lst(shell->cmd);
+	//free_cmd_lst(&shell->cmd);
+	if (shell->cmd && shell->cmd->cmd)
+		free(shell->cmd->cmd);
+	shell->cmd->cmd = NULL;							
+	ft_lstclear(&shell->cmd, del);
 	//ft_free_cmdlist(shell->pars->cmd);
+	//free(shell->pars->command);
+	//free_cmd_lst(shell->pars->cmd);
+	//ft_free_commandlist(shell->pars->command);
 	//**if (shell->cmd->cmd)
 	//if (shell->cmd && shell->cmd->cmd)
 	//{
@@ -80,6 +87,7 @@ void	reset_shell_values(t_shell *shell)
 	//ft_pars_freeall(shell->pars);
 	//ft_execfree_freeall(shell->pars);
 	//free(shell->pars);
+	//free_tab(shell->pars->ms_env);
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
 	//ft_envpc_clear(&shell->envpc_head, del);
@@ -88,14 +96,17 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
-	ft_unlink_allhdoc(shell->hdoc_tab);
+	
+	//ft_unlink_allhdoc(shell->hdoc_tab);
 	return ;
 }
 
 void	minishell_loop(t_shell *shell)
 {
+	static int i;
 	while (1)
 	{
+		printf("loop tour n %d\n", ++i);
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
 		shell->retprompt = readline("$>");
@@ -105,7 +116,7 @@ void	minishell_loop(t_shell *shell)
 			add_history(shell->retprompt);
 		ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
-		if (shell->cmd_head != NULL)
+		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
 			if (!shell->cmd->next)
 				exit_code = simple_exec(shell, shell->ms_env);
@@ -150,7 +161,6 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	}
 	start_shell(shell);
-	free_all(shell);
-	ft_exit(1, NULL);
+	ft_exit(1, NULL, shell);
 	return (0);
 }

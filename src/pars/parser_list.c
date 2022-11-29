@@ -60,7 +60,7 @@ int	ft_free_commandlist(t_command *command)
 	{
 		temp = command;
 		command = ft_command_jumpcurrent(command->prev, command->next);
-		ft_free_tokenlist(temp->token);
+		//ft_free_tokenlist(&(temp->token)); //VERIF
 		free(temp);
 		if (command == temp)
 			break ;

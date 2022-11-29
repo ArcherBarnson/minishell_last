@@ -81,22 +81,34 @@ int	get_formated_status(char *arg)
 	return ((int)formated_status);
 }
 
-int	ft_exit(int ac, char **av)
+int	ft_exit(int ac, char **av, t_shell *shell)
 {
 	int	status;
 
 	status = 2;
 	write(1, "exit\n", 5);
 	if (ac == 1 || av == NULL)
+	{
+		free_tab(av);
+		free_all(shell);
 		exit(exit_code);
+	}
 	if (!is_exit_arg_valid(av[1]))
+	{
+		free_tab(av);
+		free_all(shell);
 		exit(status);
+	}
 	if (ac > 2)
 	{
 		write(2, "Too many arguments\n", 20);
+		free_tab(av);
+		free_all(shell);
 		return (1);
 	}
 	status = get_formated_status(av[1]);
+	free_tab(av);
+	free_all(shell);
 	exit(status);
 	return (0);
 }
