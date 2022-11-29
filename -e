@@ -1,0 +1,32 @@
+src/pars/redirector_heredoc.c:395:			printf("\033[33;2m<%d> %s\033[0m\n", hdoc->fd, hdoc->file_name);
+src/pars/common_debug.c:17:	printf("\033[37;1mHello World!\033[0m\n");
+src/pars/common_debug.c:41:	printf("\033[33;2m");
+src/pars/common_debug.c:44:		printf("\033[31;2m\n<- ERROR in LEXER -> \n\033[0m");
+src/pars/common_debug.c:50:	printf("\033[33;2m");
+src/pars/common_debug.c:51:	printf("\033[0m");
+src/pars/common_debug.c:57:	printf("\033[33;2m");
+src/pars/common_debug.c:60:		printf("\033[31;2m\n<- ERROR in PARSER -> \n\033[0m");
+src/pars/common_debug.c:65:	printf("\033[33;2m");
+src/pars/common_debug.c:66:	printf("\033[0m");
+src/pars/common_debug.c:72:	printf("\033[33;2m");
+src/pars/common_debug.c:75:		printf("\033[31;2m\n<- ERROR in EXPANDER -> \n\033[0m");
+src/pars/common_debug.c:82:	printf("\033[33;2m");
+src/pars/common_debug.c:83:	printf("\033[0m");
+src/pars/common_debug.c:89:	printf("\033[33;2m");
+src/pars/common_debug.c:92:		printf("\033[31;2m\n<- ERROR in REDIRECTOR -> \n\033[0m");
+src/pars/common_debug.c:97:	printf("\033[33;2m");
+src/pars/common_debug.c:98:	printf("\033[0m");
+src/pars/common_debug.c:106:	printf("\033[33;2m");
+src/pars/common_debug.c:118:	printf("\033[0m");
+src/pars/common_debug.c:134:	printf("\033[0m");
+src/pars/common_debug.c:159:	printf("\033[0m");
+src/pars/common_debug.c:174:		printf("------> starting command id <\033[0m%d\033[0m>\n", pars->command->id);
+src/pars/common_debug.c:177:			printf("\033[0m%s \033[0m<%s>\n", pars->command->token->id,
+src/pars/common_debug.c:198:		printf("------> starting command id <\033[0;31m%d\033[0m> <in \033[0;32m%d\033[0m> <out \033[0;32m%d\033[0m>\n", pars->command->id,
+src/pars/common_debug.c:202:			printf("\033[0;31m%s \033[0m<%s>\n", pars->command->token->id,
+src/pars/common_debug.c:209:	printf("\033[0m");
+src/pars/common_debug.c:222:		printf("------> starting command id <\033[0;31m%d\033[0m> <in \033[0;32m%d\033[0m> <out \033[0;32m%d\033[0m>\n", cmd->id,
+src/pars/common_debug.c:226:			printf("\033[0;31m%s\033[0m\n", cmd->token[i - 1]);
+src/pars/common_debug.c:231:	printf("\033[0m");
+src/pars/common_error.c:23:	return (printf("\033[0;31m%s\n\033[0m", str), 1);
+src/pars/common_core.c:29:	//printf("\033[0;32m%s\033[0m", lex.user_input);

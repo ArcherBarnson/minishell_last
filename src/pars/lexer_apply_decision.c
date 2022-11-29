@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/11 23:25:25 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 00:03:06 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_lex_apply_decision(t_lex *lex)
 	//	printf("next char is END_CHAR\n");
 	//
 	//if (ft_char_type(lex->user_input[0]) == ERR_CHAR)
-	//	printf("%s\n", ERR_NOT_HANDLED);
 	lex->prev_decision = lex->new_decision;
 	lex->new_decision = lex->decision[lex->prev_decision.lex_read_mode]
 	[ft_char_type(lex->user_input[0])];

@@ -6,13 +6,13 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 22:04:39 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/10/08 22:09:47 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/11/29 04:49:16 by mbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	= ft_isalpha.c ft_isdigit.c ft_strlen.c ft_strdup.c ft_strndup.c \
-	  ft_strncmp.c ft_strjoin.c ft_substr.c ft_getsize.c ft_itoa.c \
-	  ft_split.c ft_strcmp.c ft_strnstr.c
+		ft_strncmp.c ft_strjoin.c ft_substr.c ft_getsize.c ft_itoa.c \
+		ft_split.c ft_strcmp.c ft_strnstr.c ft_strkchr.c
 SRCDIR	=	src
 LB_PATH	=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJDIR	=	obj
@@ -40,7 +40,7 @@ $(OBJDIR):
 			@${MK} $@
 
 clean:
-			${RM} ${OBJS}
+			${RM} ${OBJDIR}
 
 fclean:		clean
 			${RM} ${NAME}

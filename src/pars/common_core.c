@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 18:39:51 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 09:31:42 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_read_prompt(t_shell *shell)
 	ft_general_initialize(&lex, &pars);
 	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
+	pars.ms_env = shell->ms_env;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	//printf("\n--------------------------\n");
 	//printf("\033[0;32m%s\033[0m", lex.user_input);
@@ -117,8 +118,9 @@ int	ft_lexer(t_lex *lex)
 	if (lex->token)
 		lex->token = lex->token->next;
 	if (ret)
-		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt
-				(ret - 1)));
+	{
+		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt(ret - 1)));
+	}
 	else
 		return (0);
 }
