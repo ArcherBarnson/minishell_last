@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 19:51:01 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 00:19:28 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_init_lex_actions(t_lex *lex)
 
 int	ft_check_forbidden_cmb(char *user_input)
 {
-	char 	*forbidden[] = { "&", NULL };
+	char 	*forbidden[] = { "&", "\\", "*",  NULL };
 	int	i;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:30 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 07:47:20 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int	ft_init_exp_actions(t_pars *pars)
 {
 	pars->ft_exp[EXP_NONE] = ft_exp_none;
+	pars->ft_exp[EXP_NEW] = ft_exp_new;
 	pars->ft_exp[EXP_ANALYSIS] = ft_exp_analysis;
 	pars->ft_exp[EXP_CATCH] = ft_exp_catch;
 	pars->ft_exp[EXP_KEEP] = ft_exp_keep;
@@ -168,18 +169,19 @@ char	*ft_tempjoin(char *temp1, char *temp2)
 	return (temp);
 }
 
-char	*ft_getenv(char *temp)
+char	*ft_getenv(char *temp, t_pars *pars)
 {
 	char	*temp2;
 
-	if (!getenv(temp))
+	//if (!getenv(temp))
+	if (!ft_find_envstr(temp, pars))
 	{
 		free(temp);
 		temp2 = ft_strndup("", 0);
 	}
 	else
 	{
-		temp2 = ft_strndup(getenv(temp), 0);
+		temp2 = ft_strndup(ft_find_envstr(temp, pars), 0);
 		free(temp);
 	}
 	return (temp2);
@@ -220,7 +222,7 @@ int	ft_exp_record_dol(t_pars *pars)
 		}
 		else
 		{
-			temp2 = ft_getenv(temp);
+			temp2 = ft_getenv(temp, pars);
 			//printf("start_dol = %d\n", pars->start_dol);
 			//printf("nb_taken_char = %d\n", pars->nb_taken_char);
 			//printf("text = %s\n", pars->parser_text - pars->offset_start);
@@ -231,7 +233,7 @@ int	ft_exp_record_dol(t_pars *pars)
 	}
 	else if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 	{
-		temp2 = ft_strdup("$$");
+		temp2 = ft_strdup("");
 		pars->temp = ft_tempjoin(temp1, temp2);
 		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 	}
@@ -294,6 +296,39 @@ int	ft_exp_excd(t_pars *pars)
 	//exit_code = 127;
 	pars->temp = ft_strdup(ft_itoa(exit_code));
 	return (0);
+}
+
+char	*ft_find_envstr(char *str, t_pars *pars)
+{
+	int		i;
+	int		k;
+	char	*comp_str;
+
+	i = 0;
+	while (pars->ms_env[i])
+	{
+		k = ft_find_eq(pars->ms_env[i]) - 1;
+		comp_str = ft_substr(pars->ms_env[i], 0, k + 1);
+		if (!ft_strncmp(str, comp_str, k + 1))
+		{
+			free(comp_str);
+			return (pars->ms_env[i] + k + 2);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+int	ft_find_eq(char *env_str)
+{
+	int	start;
+
+	start = 0;
+	//printf("env i = %s\n", env_str);
+	start = ft_strkchr(env_str, '=');
+	if (start == -1)
+		return (ft_msgerr(ERR_EQNOTFOUND));
+	return (start);
 }
 
 int	ft_exp_end(t_pars *pars)

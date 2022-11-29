@@ -34,7 +34,7 @@ ${NAME}:	$(OBJS)
 			${AR} ${NAME} ${OBJS}
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c | $(OBJDIR)
-				${CC} -I${HDDIR} ${CFLAGS} ${DEBUG} -c $< -o $@
+				${CC} -I$(HDDIR) ${CFLAGS} ${DEBUG} -c $< -o $@
 
 $(OBJDIR):
 			@${MK} $@

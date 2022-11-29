@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/11/28 19:23:55 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 07:48:42 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@
 # define BUS_ERR 135
 # define SIG_SEGV 139
 # define NB_FORBIDDEN 2
-# define ERR_NOT_HANDLED "Error! Syntax. Character not handled"
 # define ERR_MALLOC "Error! Malloc"
 # define ERR_NULLTKN "Error! New TOKEN is NULL in list"
 # define ERR_NULLCMD "Error! New CMD is NULL in list"
 # define ERR_NULLHDOC "Error! New HDOC is NULL"
 # define ERR_NAMEHDOC "Error! Filename not found in HDOC_LIST"
-# define ERR_SYNTAX "Error! Syntax"
+# define ERR_EQNOTFOUND "Error! no equal sign in env"
 # define ERR_STRNULL "Error! String is NULL"
 # define ERR_TESTFILE "Error! Reading file parser.test"
 # define ERR_CMB "Error! Combination is unknown"
@@ -54,7 +53,6 @@
 # define ERR_CHR "Error! Syntax. Character (or combination) not handled"
 # define ERR_SPL "Error! Simple quote is missing"
 # define ERR_DBL "Error! Double quote is missing"
-# define ERR_CASE "Error! Automate did not find current case"
 # define ERR_FILEHDOC "Error! Opening file for heredoc"
 # define ERR_FILEIN "Error! infile does not exist"
 # define ERR_FILEOUT "Error! Opening outfile for redirection"
@@ -465,6 +463,7 @@ struct s_pars
 	int				start_std;
 	int				start_dol;
 	int				before_dol_mode;
+	char			**ms_env;
 	int				hdoc_i;
 	t_hdoc			*hdoc_list;
 	t_hdoc_tab		*hdoc_tab;
@@ -779,12 +778,14 @@ int				ft_exp_skip(t_pars *pars);
 int				ft_exp_record(t_pars *pars);
 char			*ft_init_exp_temp(t_pars *pars);
 char			*ft_tempjoin(char *temp1, char *temp2);
-char			*ft_getenv(char *temp2);
+char			*ft_getenv(char *temp2, t_pars *pars);
 int				ft_exp_record_dol(t_pars *pars);
 int				ft_exp_dol(t_pars *pars);
 int				ft_exp_eq(t_pars *pars);
-int				ft_exp_end(t_pars *pars);
 int				ft_exp_excd(t_pars *pars);
+char			*ft_find_envstr(char *str, t_pars *pars);
+int				ft_find_eq(char *env_str);
+int				ft_exp_end(t_pars *pars);
 int				ft_exp_err(t_pars *pars);
 
 /* ************************************************************************** */
@@ -836,7 +837,6 @@ struct	s_envp_cpy
 	char		*var;
 	t_envp_cpy	*next;
 };
-
 
 void			ft_envpc_clear(t_envp_cpy **lst, void (*del)(void *));
 void			ft_lstdel_envpc(t_envp_cpy *lst, void (*del)(void *));

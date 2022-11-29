@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 18:06:20 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 00:51:02 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,20 @@ int	ft_init_exp_decision_3(t_pars *pars)
 	pars->exp_decision[SPL_EXP_RD_MD][STD_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[SPL_EXP_RD_MD][SPL_CHAR] = (t_exp_proc){EXP_REC, EXP_SKIP, STD_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[SPL_EXP_RD_MD][DBL_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[SPL_EXP_RD_MD][PIPE_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[SPL_EXP_RD_MD][AMP_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[SPL_EXP_RD_MD][LT_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[SPL_EXP_RD_MD][GT_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[SPL_EXP_RD_MD][DOL_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
 	//pars->exp_decision[SPL_EXP_RD_MD][END_CHAR] = (t_exp_proc){EXP_NONE, EXP_SKIP, ERR_EXP_RD_MD, TOK_ERR_SPL};
 	pars->exp_decision[DBL_EXP_RD_MD][SEP_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DBL_EXP_RD_MD][STD_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DBL_EXP_RD_MD][SPL_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DBL_EXP_RD_MD][DBL_CHAR] = (t_exp_proc){EXP_REC, EXP_SKIP, STD_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DBL_EXP_RD_MD][PIPE_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DBL_EXP_RD_MD][AMP_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DBL_EXP_RD_MD][LT_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DBL_EXP_RD_MD][GT_CHAR] = (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DBL_EXP_RD_MD][DOL_CHAR] = (t_exp_proc){EXP_DOL, EXP_SKIP, DOL_EXP_RD_MD, TOK_WORD};
 	//pars->exp_decision[DBL_EXP_RD_MD][END_CHAR] = (t_exp_proc){EXP_ERR_DBL, EXP_SKIP, ERR_EXP_RD_MD, TOK_ERR_DBL};
 	return (0);
