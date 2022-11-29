@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 00:04:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:49:46 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 int	ft_redir_apply_decision(t_pars *pars)
 {
-	//printf("[1] : %s\n", ft_getlabel_redir_read_modes
-	//	(pars->prev_redir_decision.redir_read_mode));
-	//printf("[2] : %d\n", pars->token->type);
-	//printf("[2] : %s\n", ft_getlabel_token_types(pars->token->type));
 	pars->prev_redir_decision = pars->new_redir_decision;
 	pars->new_redir_decision = pars->redir_decision[pars
 		->prev_redir_decision.redir_read_mode][pars->token->type];
-	//ft_print_debug_redir(pars);
 	pars->ft_redir[pars->new_redir_decision.token_action](pars);
 	return (pars->ft_redir[pars->new_redir_decision.redir_list_action](pars));
 }

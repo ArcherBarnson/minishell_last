@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 00:19:28 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:44:21 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	ft_init_lex_actions(t_lex *lex)
 
 int	ft_check_forbidden_cmb(char *user_input)
 {
-	char 	*forbidden[] = { "&", "\\", "*",  NULL };
-	int	i;
+	char	*forbidden[] = {"&", "\\", "*", NULL};
+	int		i;
 
 	i = 0;
-	while(forbidden[i])
+	while (forbidden[i])
 	{
 		if (ft_strnstr(user_input, forbidden[i], ft_strlen(user_input)))
 			return (1 + ERR_CD_CHR);
@@ -123,7 +123,6 @@ int	ft_lex_end(t_lex *lex)
 	}
 	else
 	{
-		//ft_lex_take(lex);
 		lex->prev_decision.token_type = lex->new_decision.token_type;
 		ft_lex_catch(lex);
 	}
@@ -132,5 +131,5 @@ int	ft_lex_end(t_lex *lex)
 
 int	ft_lex_err(t_lex *lex)
 {
-	return(1 + lex->new_decision.lex_read_mode);
+	return (1 + lex->new_decision.lex_read_mode);
 }

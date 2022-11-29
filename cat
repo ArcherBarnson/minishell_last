@@ -1,0 +1,26 @@
+total 572
+-rwxr-xr-x 1 mbourgeo 2021_paris  15762 Nov 29 20:17 a
+-rwxr-xr-x 1 mbourgeo 2021_paris  15960 Nov 29 20:17 a.out
+-rwxr-xr-x 1 mbourgeo 2021_paris      0 Nov 29 20:17 b
+-rw-r--r-- 1 mbourgeo 2021_paris      0 Nov 29 21:47 cat
+drwxr-xr-x 2 mbourgeo 2021_paris   4096 Nov 28 16:19 dbg
+drwxr-xr-x 2 mbourgeo 2021_paris   4096 Nov 29 21:47 dep
+-rw-r--r-- 1 mbourgeo 2021_paris   2238 Nov 29 01:55 -e
+-rw-r--r-- 1 mbourgeo 2021_paris      6 Nov 28 18:50 file
+-rw-r--r-- 1 mbourgeo 2021_paris    271 Nov 28 16:19 generate_reference.sh
+drwxr-xr-x 2 mbourgeo 2021_paris   4096 Nov 29 20:17 inc
+drwxr-xr-x 4 mbourgeo 2021_paris   4096 Nov 29 04:55 lib
+-rw-r--r-- 1 mbourgeo 2021_paris   3696 Nov 29 20:17 lol
+-rw-r--r-- 1 mbourgeo 2021_paris   3696 Nov 29 20:26 Makefile
+-rwxr-xr-x 1 mbourgeo 2021_paris 467160 Nov 29 21:47 minishell
+drwxr-xr-x 2 mbourgeo 2021_paris   4096 Nov 29 21:47 obj
+-rw-r--r-- 1 mbourgeo 2021_paris   1431 Nov 29 21:35 out
+-rw-r--r-- 1 mbourgeo 2021_paris    149 Nov 29 21:22 out2
+-rw-r--r-- 1 mbourgeo 2021_paris    141 Nov 29 21:17 outls
+-rw-r--r-- 1 mbourgeo 2021_paris   3696 Nov 29 21:17 outmake
+-rw-r--r-- 1 mbourgeo 2021_paris      9 Nov 29 20:17 parser.test
+-rw-r--r-- 1 mbourgeo 2021_paris    356 Nov 28 16:19 rl_ign
+-rw-r--r-- 1 mbourgeo 2021_paris   4294 Nov 29 20:17 shell.c
+drwxr-xr-x 4 mbourgeo 2021_paris   4096 Nov 28 16:19 src
+-rw-r--r-- 1 mbourgeo 2021_paris      0 Nov 29 20:17 test
+-rw-r--r-- 1 mbourgeo 2021_paris     53 Nov 29 20:17 test.c

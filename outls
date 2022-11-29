@@ -15,7 +15,6 @@ obj
 out
 out2
 outls
-outmake
 parser.test
 rl_ign
 shell.c

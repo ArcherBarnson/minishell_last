@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 15:28:12 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:24:22 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_read_prompt(t_shell *shell)
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_redirector(&lex, &pars)) // || ft_print_debug_content(&lex, &pars, "redir"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
+	if (ft_transformer(&pars)) // || ft_print_debug_content(&lex, &pars, "trans"))
 		return (ft_error_return(&lex, &pars, shell));
 	shell->hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
@@ -219,9 +219,13 @@ int	ft_redirector(t_pars *pars)
 		{
 			pars->token = pars->command->token;
 			ret = ft_redir_apply_decision(pars);
+			//printf("ici\n");
+			//printf("\033[0;31m%s <%s>\n\033[0m", pars->command->token->id,
+			//	ft_getlabel_token_types(pars->command->token->type));
 			if (ret)
 				return (ret);
 			k = pars->command->nb_of_tokens;
+			//printf("k = %d\n", k);
 			if (k != 0)
 				pars->command->token = pars->command->token->next;
 		}
@@ -229,6 +233,8 @@ int	ft_redirector(t_pars *pars)
 		count += pars->command->nb_of_tokens;
 		j = 0;
 	}
+	//printf("\033[0;31m%s <%s>\n\033[0m", pars->command->token->id,
+	//	ft_getlabel_token_types(pars->command->token->type));
 	return (0);
 }
 
