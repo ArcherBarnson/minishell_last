@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-//t_cmd	*ft_read_prompt(char *user_input, t_hdoc_tab **hdoc_tab)
 int	ft_read_prompt(t_shell *shell)
 {
 	t_lex		lex;
@@ -21,26 +20,20 @@ int	ft_read_prompt(t_shell *shell)
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
 	ft_general_initialize(&lex, &pars);
-	//lex.user_input = user_input;
 	lex.user_input = shell->retprompt;
 	pars.ms_env = shell->ms_env;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
-	//printf("\n--------------------------\n");
-	//printf("\033[0;32m%s\033[0m", lex.user_input);
 	if (ft_around_lexer(&lex)) // || ft_print_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars)) // || ft_print_debug_content(&lex, &pars, "pars"))
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_expander(&pars)) // || ft_print_debug_content(&lex, &pars, "exp"))
-	 	return (ft_error_return(&lex, &pars, shell));
+		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_redirector(&lex, &pars)) // || ft_print_debug_content(&lex, &pars, "redir"))
 		return (ft_error_return(&lex, &pars, shell));
-	if (ft_transformer(&pars)) // || ft_print_debug_content(&lex, &pars, "trans"))
+	if (ft_transformer(&pars) || ft_print_debug_content(&lex, &pars, "trans"))
 		return (ft_error_return(&lex, &pars, shell));
-	//*hdoc_tab = pars.hdoc_tab;
 	shell->hdoc_tab = pars.hdoc_tab;
-	//printf("pars.cmd_head : %s\n", pars.cmd_head->token[0]);
-	//printf("pars.cmd_head : %s\n", pars.cmd_head->cmd);
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_tklist_freeall(&lex);
@@ -54,10 +47,7 @@ int	ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell)
 {
 	(void)pars;
 	shell->cmd = NULL;
-	//printf("return 1 to exec with shell->cmd = NULL\n");
 	ft_tklist_freeall(lex);
-//	ft_execfree_freeall(pars);
-//	ft_pars_freeall(pars);
 	return (1);
 }
 
@@ -195,7 +185,6 @@ int	ft_inner_loop_expander(t_pars *pars)
 	ret = 0;
 	while (1)
 	{
-		//printf("checking token->type : %d\n", pars->token->type);
 		if (pars->token->type == TOK_WORD)
 			ret = ft_exp_apply_decision(pars);
 		if (pars->parser_text[0] == '\0')
