@@ -14,7 +14,7 @@
 
 int	pwd(int ac, char **av)
 {
-	char cwd[4096];
+	char	cwd[4096];
 
 	(void)av;
 	(void)ac;

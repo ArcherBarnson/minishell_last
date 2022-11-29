@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 23:24:43 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/29 10:12:18 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,17 @@ int	is_valid_history(char *str)
 
 void	reset_shell_values(t_shell *shell)
 {
-	//free_cmd_lst(shell->cmd);
+	free_cmd_lst(shell->cmd);
+	//ft_free_cmdlist(shell->pars->cmd);
 	//**if (shell->cmd->cmd)
-	if (shell->cmd)
-	{
-		free(shell->cmd->cmd);
-		shell->cmd->cmd = NULL;
-	}
-	ft_lstclear(&shell->cmd, del);
-	//ft_execfree_freeall(shell->pars);
+	//if (shell->cmd && shell->cmd->cmd)
+	//{
+	//	free(shell->cmd->cmd);
+	//	shell->cmd->cmd = NULL;
+	//}
+	//ft_lstclear(&shell->cmd, del);
 	//ft_pars_freeall(shell->pars);
+	//ft_execfree_freeall(shell->pars);
 	//free(shell->pars);
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
@@ -87,6 +88,7 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
+	ft_unlink_allhdoc(shell->hdoc_tab);
 	return ;
 }
 
