@@ -6,7 +6,11 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/29 21:53:53 by mbourgeo         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/29 21:16:01 by bgrulois         ###   ########.fr       */
+>>>>>>> 7f6f80a4170491d52272adb027bcedab75bf0bd0
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -844,8 +848,9 @@ void			ft_envpc_clear(t_envp_cpy **lst, void (*del)(void *));
 void			ft_lstdel_envpc(t_envp_cpy *lst, void (*del)(void *));
 int				ft_strcmp(char *s1, char *s2);
 char			**ft_split(char const *s, char c);
-int				export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst);
-void			export_no_args(t_envp_cpy *envpc_lst);
+int				export(t_shell *shell, char **av,
+					char **envpc, t_envp_cpy *envpc_lst);
+void			export_no_args(t_shell *shell, t_envp_cpy *envpc_lst);
 int				export_error(char *str, int i, int error_type);
 int				ft_strccmp(char *s1, char *s2, char c);
 int				is_env_var(char *str);
@@ -856,12 +861,12 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			**dup_tab(char **tab);
 void			free_tab(char **tab);
 int				get_tab_size(char **tab);
-int				cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst);
-int				pwd(int ac, char **av);
-void			write_arg(char *str);
+int				cd(t_shell *shell, char **path, char **envp, t_envp_cpy *envpc_lst);
+int				pwd(int ac, char **av, int fd);
+void			write_arg(char *str, int fd);
 int				n_flag_present(char *str);
-int				echo(int ac, char **av);
-int				env(int ac, char **av, char **envp, int mode);
+int				echo(int ac, char **av, int fd);
+int				env(t_shell *shell, char **envp, int mode);
 t_envp_cpy		*set_env(t_shell *shell, char **envp);
 int				ft_exit(int ac, char **av, t_shell *shell);
 int				get_formated_status(char *arg);

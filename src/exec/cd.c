@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 17:56:35 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:16:30 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-void	update_oldpwd(char **envp, t_envp_cpy *envpc_lst)
+void	update_oldpwd(t_shell *shell, char **envp, t_envp_cpy *envpc_lst)
 {
 	char	cwd[4096];
 	char	**export_cwd;
@@ -65,36 +65,36 @@ void	update_oldpwd(char **envp, t_envp_cpy *envpc_lst)
 	export_cwd[0] = NULL;
 	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
 	export_cwd[2] = NULL;
-	export(2, export_cwd, envp, envpc_lst);
+	export(shell, export_cwd, envp, envpc_lst);
 	free(export_cwd[1]);
 	free(export_cwd);
 }
 
-int	cd(int ac, char **path, char **envp, t_envp_cpy *envpc_lst)
+int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy *envpc_lst)
 {
 	char	*home;
 
 	home = get_home_path(envp);
-	if (ac == 1)
+	if (get_tab_size(shell->cmd->token) == 1)
 	{
 		if (home == NULL)
 		{
 			write(2, "cd : HOME not set\n", 19);
 			return (1);
 		}
-		update_oldpwd(envp, envpc_lst);
+		update_oldpwd(shell, envp, envpc_lst);
 		chdir(home);
 		free(home);
 		return (0);
 	}
-	if (ac > 2)
+	if (get_tab_size(shell->cmd->token) > 2)
 	{
 		free(home);
-		write(1, "Wrong number of arguments\n", 27);
+		write(2, "Wrong number of arguments\n", 27);
 		return (1);
 	}
 	free(home);
-	update_oldpwd(envp, envpc_lst);
+	update_oldpwd(shell, envp, envpc_lst);
 	chdir(path[1]);
 	return (0);
 }

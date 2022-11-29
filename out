@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 total 1052
 drwxr-xr-x  9 mbourgeo 2021_paris   4096 Nov 29 21:51 .
 drwxr-xr-x 14 mbourgeo 2021_paris   4096 Nov 29 20:26 ..
@@ -30,3 +31,5 @@ drwxr-xr-x  2 mbourgeo 2021_paris   4096 Nov 29 21:51 obj
 drwxr-xr-x  4 mbourgeo 2021_paris   4096 Nov 28 16:19 src
 -rw-r--r--  1 mbourgeo 2021_paris      0 Nov 29 20:17 test
 -rw-r--r--  1 mbourgeo 2021_paris     53 Nov 29 20:17 test.c
+=======
+>>>>>>> 7f6f80a4170491d52272adb027bcedab75bf0bd0

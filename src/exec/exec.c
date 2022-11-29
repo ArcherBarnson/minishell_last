@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 14:49:37 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:13:08 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
-	if (is_builtin == 1 && shell->cmd->fd_out == 1)
+	if (is_builtin == 1)
 		return (free(pid), exec_builtin(shell));
 	err_code = check_for_invalid_cmd(shell);
 	if (err_code)

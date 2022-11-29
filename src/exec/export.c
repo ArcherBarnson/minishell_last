@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:26:22 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 14:59:24 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:14:57 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,19 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 	return ;
 }
 
-int	export(int ac, char **av, char **envpc, t_envp_cpy *envpc_lst)
+int	export(t_shell *shell, char **av, char **envpc, t_envp_cpy *envpc_lst)
 {
 	int			i;
 	int			mode;
 	char		*tmp;
 
 	i = 1;
-	if (ac == 1)
+	if (get_tab_size(av) == 1)
 	{
-		export_no_args(envpc_lst);
+		export_no_args(shell, envpc_lst);
 		return (1);
 	}
-	while (i < ac)
+	while (i < get_tab_size(av))
 	{
 		mode = is_valid_string(av[i]);
 		if (mode == 1 || mode == 2)
