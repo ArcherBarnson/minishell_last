@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 18:59:42 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:03:14 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	is_valid_history(char *str)
 
 void	reset_shell_values(t_shell *shell)
 {
-	//free_cmd_lst(shell->cmd);
-	if (shell->cmd->cmd)
+	free_cmd_lst(shell->cmd);
+	if (shell->cmd && shell->cmd->cmd)
 	{
 		free(shell->cmd->cmd);
 		shell->cmd->cmd = NULL;
 	}
-	ft_lstclear(&shell->cmd, del);
+	//ft_lstclear(&shell->cmd, del);
 	//ft_execfree_freeall(shell->pars);
 	//ft_pars_freeall(shell->pars);
 	//free(shell->pars);
