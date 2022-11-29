@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 16:24:56 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:56:06 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	reset_shell_values(t_shell *shell)
 {
 	//free_cmd_lst(&shell->cmd);
 	if (shell->cmd && shell->cmd->cmd)
+	{
 		free(shell->cmd->cmd);
-	shell->cmd->cmd = NULL;							
+		shell->cmd->cmd = NULL;
+	}		
 	ft_lstclear(&shell->cmd, del);
 	//ft_free_cmdlist(shell->pars->cmd);
 	//free(shell->pars->command);
