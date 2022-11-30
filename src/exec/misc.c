@@ -12,6 +12,23 @@
 
 #include "../../inc/minishell.h"
 
+void	prep_pipexec(int *pids, int tbc)
+{
+	free(pids);
+	child_signals();
+	if (tbc >= 0)
+		close(tbc);
+}
+
+void	free_cmd_if(t_shell *shell)
+{
+	if (shell->cmd && shell->cmd->cmd)
+	{
+		free(shell->cmd->cmd);
+		shell->cmd->cmd = NULL;
+	}	
+}
+
 int	get_tab_size(char **tab)
 {
 	int	i;

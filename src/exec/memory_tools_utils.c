@@ -6,16 +6,11 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:33:54 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 18:34:18 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:49:38 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	del(void *data)
-{
-	free(data);
-}
 
 int	tablen(char **tab)
 {
@@ -27,18 +22,17 @@ int	tablen(char **tab)
 	return (i);
 }
 
+void	del(void *data)
+{
+	free(data);
+}
+
 void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
 {
-	(void)del;
 	if (!lst || !del)
 		return ;
-	if (lst->cmd)
-		lst->cmd = NULL;
 	if (lst->token)
-	{
-		ft_free_tokentab(lst->token, tablen(lst->token));
-		lst->token = NULL;
-	}
+		free_tab(lst->token);
 	free(lst);
 }
 

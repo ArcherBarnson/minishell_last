@@ -20,6 +20,22 @@ char	*export_format(char *var)
 	return (formated_var);
 }
 
+int	env_var_exists(char *str, char **envpc, int mode)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !envpc)
+		return (0);
+	while (envpc[i] != NULL)
+	{
+		if ((mode == 1 || mode == 2) && ft_exportcmp(str, envpc[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	env(t_shell *shell, char **envp, int mode)
 {
 	int		i;

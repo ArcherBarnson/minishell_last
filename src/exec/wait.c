@@ -18,7 +18,6 @@ int	ft_wait(int *pid, t_shell *shell)
 	int	i;
 	int	ncmds;
 
-	printf("SUPPR - DEBUT WAIT\n");
 	i = 0;
 	exit_code = 0;
 	ncmds = cmds_get_n(shell);
@@ -36,7 +35,6 @@ int	ft_wait(int *pid, t_shell *shell)
 		i++;
 	}
 	free(pid);
-	printf("SUPPR - FIN WAIT\n");
 	ft_lstclear(&shell->cmd_head, del);
 	shell->cmd_head = NULL;
 	return (exit_code);

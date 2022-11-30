@@ -97,24 +97,8 @@ void	reset_shell_values(t_shell *shell)
 		shell->cmd->cmd = NULL;
 	}		
 	ft_lstclear(&shell->cmd, del);
-	//ft_free_cmdlist(shell->pars->cmd);
-	//free(shell->pars->command);
-	//free_cmd_lst(shell->pars->cmd);
-	//ft_free_commandlist(shell->pars->command);
-	//**if (shell->cmd->cmd)
-	//if (shell->cmd && shell->cmd->cmd)
-	//{
-	//	free(shell->cmd->cmd);
-	//	shell->cmd->cmd = NULL;
-	//}
-	//ft_lstclear(&shell->cmd, del);
-	//ft_pars_freeall(shell->pars);
-	//ft_execfree_freeall(shell->pars);
-	//free(shell->pars);
-	//free_tab(shell->pars->ms_env);
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
-	//ft_envpc_clear(&shell->envpc_head, del);
 	clear_envpc_lst(shell->envpc);
 	shell->retprompt = NULL;
 	free_tab(shell->env_paths);
