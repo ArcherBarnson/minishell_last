@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 14:30:22 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:09:23 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -770,6 +770,7 @@ int				ft_pars_err(t_pars *pars);
 /* ************************************************************************** */
 /*                           expander_actions.c                               */
 /* ************************************************************************** */
+char			*ft_initial_expansion(t_lex *lex, t_pars *pars);
 int				ft_init_exp_actions(t_pars *pars);
 int				ft_exp_none(t_pars *pars);
 int				ft_exp_analysis(t_pars *pars);
