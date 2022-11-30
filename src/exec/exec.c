@@ -74,10 +74,17 @@ int	simple_exec(t_shell *shell, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
+		close_cmd_fds(shell->cmd);
 		free(pid);
 		child_signals();
 		execute_command(shell, envp, is_builtin);
 		exit(1);
+	}
+	close_cmd_fds(shell->cmd);
+	if (shell->cmd && shell->cmd->cmd)
+	{
+		free(shell->cmd->cmd);
+		shell->cmd->cmd = NULL;
 	}
 	return (ft_wait(pid, shell));
 }
@@ -134,6 +141,8 @@ int	pipeline(t_shell *shell, char **envp)
 		printf("apres exec\n");
 		if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
+		if (shell->cmd->fd_out > 1)
+			close(shell->cmd->fd_out);
 		close(shell->pipefd[1]);
 		shell->cmd = shell->cmd->next;
 		if (shell->cmd->fd_in == 0)
@@ -142,5 +151,7 @@ int	pipeline(t_shell *shell, char **envp)
 	pids[i] = pipexec(shell, -1, envp, pids);
 	if (shell->cmd->fd_in > 0)
 		close(shell->cmd->fd_in);
+	if (shell->cmd->fd_out > 1)
+		close(shell->cmd->fd_out);
 	return (ft_wait(pids, shell));
 }
