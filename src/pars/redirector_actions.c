@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 12:17:01 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:40:52 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	ft_redir_heredoc(t_pars *pars)
 	if (pars->prev_redir_decision.redir_read_mode == HDOC_REDIR_RD_MD)
 	{
 		printf("consecutive heredocs\n");
+		close(pars->hdoc_list->fd);
 		unlink(pars->hdoc_list->file_name);
 		hdoc_current = pars->hdoc_list->prev;
 		pars->hdoc_list = ft_hdoc_list_freeone(pars->hdoc_list);

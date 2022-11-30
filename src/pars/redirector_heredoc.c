@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:18:49 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:20:22 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:45:50 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	ft_open_heredoc(t_pars *pars, char *delim)
 	if (pars->fd_in < 0)
 		return (ft_msgerr(ERR_FILEHDOC));
 	ft_inner_loop_heredoc(pars, delim);
+	close(pars->fd_in);
+	pars->fd_in = open(file_name, O_RDWR);
 	pars->hdoc_list = ft_hdoc_addnext(pars->hdoc_list,
 			ft_new_hdoc(file_name, pars->fd_in));
 	free(file_name);

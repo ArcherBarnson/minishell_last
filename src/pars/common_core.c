@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:16:21 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:30:25 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_read_prompt(t_shell *shell)
 {
 	t_lex		lex;
 	t_pars		pars;
+	//char		*temp;
 
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
@@ -23,6 +24,19 @@ int	ft_read_prompt(t_shell *shell)
 	lex.user_input = shell->retprompt;
 	pars.ms_env = shell->ms_env;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
+	//temp = lex.user_input;
+	//lex.user_input = ft_strdup(ft_initial_expansion(&lex, &pars));
+	//free(temp);
+	//printf("expansion : %s\n", lex.user_input);
+	//free(lex.user_input);
+	//lex.user_input = NULL;
+	//free(pars.parser_text);
+	//printf("HELLO\n");
+	//pars.parser_text = NULL;
+	//free(pars.token->id);
+	//pars.token->id = NULL;
+	//free(pars.token);
+	//pars.token = NULL;
 	if (ft_around_lexer(&lex) || ft_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars) || ft_debug_content(&lex, &pars, "pars"))
@@ -187,7 +201,7 @@ int	ft_inner_loop_expander(t_pars *pars)
 	{
 		if (pars->token->type == TOK_WORD)
 			ret = ft_exp_apply_decision(pars);
-		if (pars->parser_text[0] == '\0')
+		if (pars->parser_text[0] == '\0' || pars->parser_text[0] == '\n')
 			break ;
 		pars->parser_text++;
 		pars->offset_start++;
@@ -225,7 +239,7 @@ int	ft_redirector(t_pars *pars)
 			if (ret)
 				return (ret);
 			//k = pars->command->nb_of_tokens;
-			if (k != 0)
+			if (pars->command->nb_of_tokens)
 				pars->command->token = pars->command->token->next;
 		}
 		pars->command = pars->command->next;

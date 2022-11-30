@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:22:22 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/11 23:40:31 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 18:37:46 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*ft_new_token(char *str)
 
 	if (ft_mallocator(&new, sizeof(t_token)))
 		return (0);
-	new->id = ft_strndup(str, 0);
+	new->id = ft_strdup(str);
 	new->type = TOK_WORD;
 	new->prev = new;
 	new->next = new;

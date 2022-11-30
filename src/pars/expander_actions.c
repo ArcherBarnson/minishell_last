@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 16:19:03 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:11:47 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,23 @@ int	ft_init_exp_actions(t_pars *pars)
 	return (0);
 }
 
-//int	ft_initial_expansion()
-//{
-//}
+char	*ft_initial_expansion(t_lex *lex, t_pars *pars)
+{
+	int		ret;
+
+	ft_init_expander(pars);
+	pars->parser_text = ft_strdup(lex->user_input);
+	pars->token = ft_token_addnext(pars->token, ft_new_token(pars->parser_text));
+	pars->token->type = TOK_WORD;
+	pars->nb_of_tokens++;
+	//pars->token->type = lex->prev_decision.token_type;
+	pars->before_dol_mode = 0;
+	ret = ft_inner_loop_expander(pars);
+	if (ret)
+		return (NULL);
+	ft_init_expander(pars);
+	return (pars->token->id);
+}
 
 int	ft_exp_none(t_pars *pars)
 {
