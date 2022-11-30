@@ -35,7 +35,7 @@ int	is_env_var(char *str)
 	i = 0;
 	while (str && str[i] && str[i] != '=')
 		i++;
-	if (str[i] == '=' && str[i + 1] != '\0')
+	if (str[i] == '=')
 		return (1);
 	return (0);
 }

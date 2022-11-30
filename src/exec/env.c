@@ -30,7 +30,7 @@ int	env(t_shell *shell, char **envp, int mode)
 		return (0);
 	while (envp[i] != NULL)
 	{
-		if (is_env_var(envp[i]) && mode == 0)
+		if (mode == 0 && is_env_var(envp[i]))
 		{
 			write(shell->cmd->fd_out, envp[i], ft_strlen(envp[i]));
 			write(shell->cmd->fd_out, "\n", 1);

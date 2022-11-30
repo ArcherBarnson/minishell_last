@@ -24,6 +24,26 @@ int	is_var_set(char *var)
 	return (0);
 }
 
+int	ft_exportcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] == '=' || s2[i] == '=')
+			break;
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	if (s1[i] == '=' && !(s2[i]))
+		return (1);
+	if (s2[i] == '=' && !(s1[i]))
+		return (1);
+	return (s1[i] - s2[i]);
+}
+
 int	env_var_exists(char *str, char **envpc, int mode)
 {
 	int	i;
@@ -31,23 +51,11 @@ int	env_var_exists(char *str, char **envpc, int mode)
 	i = 0;
 	if (!str || !envpc)
 		return (0);
-	if (is_var_set(str))
+	while (envpc[i] != NULL)
 	{
-		while (envpc[i] != NULL)
-		{
-			if ((mode == 1 || mode == 2) && ft_strccmp(str, envpc[i], '=') == 0)
-				return (1);
-			i++;
-		}
-	}
-	else
-	{
-		while (envpc[i] != NULL)
-		{
-			if (strcmp(str, envpc[i]) == 0)
-				return (2);
-			i++;
-		}
+		if ((mode == 1 || mode == 2) && ft_exportcmp(str, envpc[i]))
+			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -87,7 +95,9 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 
 	appended_var = NULL;
 	var_buf = NULL;
-	while (envpc_lst->next && ft_strccmp(var, envpc_lst->var, '=') != 0)
+	while (envpc_lst->next && (ft_strccmp(var, envpc_lst->var, '=') != 0
+		|| ft_strncmp(var, envpc_lst->var, ft_strlen(envpc_lst->var)
+		&& var[ft_strlen(envpc_lst->var) - 1])))
 		envpc_lst = envpc_lst->next;
 	env_var_buf = ft_strdup(envpc_lst->var);
 	if (mode == 1)
@@ -126,9 +136,13 @@ int	export(t_shell *shell, char **av, char **envpc, t_envp_cpy *envpc_lst)
 		if (mode == 1 || mode == 2)
 		{
 			if (env_var_exists(av[i], envpc, mode))
+			{
+				printf("var existe oui\n");
 				mod_env_var(av[i], envpc_lst, mode);
+			}
 			else
 			{
+				printf("var existe non\n");
 				tmp = ft_strdup(av[i]);
 				ft_env_varadd_back(envpc_lst,
 					ft_envpcnew(tmp));
