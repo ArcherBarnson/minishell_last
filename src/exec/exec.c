@@ -33,12 +33,6 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 {
 	int	status;
 
-	printf("in %d  out %d    | mode = %d\n", shell->cmd->fd_in, shell->cmd->fd_out, mode);
-	//char buf[10];
-	//buf[9] = 0;
-	//buf[0] = 0;
-	//printf("%ld, %s|\n", read(shell->cmd->fd_in, buf, 9), buf);
-
 	if (shell->cmd->fd_in != -1 && shell->cmd->fd_out != -1)
 	{
 		if (mode == 1)
@@ -69,10 +63,6 @@ int	simple_exec(t_shell *shell, char **envp)
 	int	is_builtin;
 
 	signal(SIGINT, SIG_IGN);
-	char buf[10];
-	buf[9] = 0;
-	buf[0] = 0;
-	printf("%ld, %s|\n", read(shell->cmd->fd_in, buf, 9), buf);
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1)
@@ -83,18 +73,18 @@ int	simple_exec(t_shell *shell, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
-		printf("simple\n");
 		free(pid);
 		child_signals();
 		execute_command(shell, envp, is_builtin);
 		exit(1);
 	}
 	close_cmd_fds(shell->cmd);
-	if (shell->cmd && shell->cmd->cmd)
+	free_cmd_if(shell);
+	/*if (shell->cmd && shell->cmd->cmd)
 	{
 		free(shell->cmd->cmd);
 		shell->cmd->cmd = NULL;
-	}
+	}*/
 	return (ft_wait(pid, shell));
 }
 
@@ -118,18 +108,15 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 	pid = fork();
 	if (pid == 0)
 	{
-		free(pids);
+		prep_pipexec(pids, tbc);
+		/*free(pids);
 		child_signals();
 		if (tbc >= 0)
-			close(tbc);
+			close(tbc);*/
 		execute_command(shell, envp, is_builtin);
 		exit(1);
 	}
-	if (shell->cmd && shell->cmd->cmd)
-	{
-		free(shell->cmd->cmd);
-		shell->cmd->cmd = NULL;
-	}
+	free_cmd_if(shell);
 	return (pid);
 }
 
@@ -147,7 +134,6 @@ int	pipeline(t_shell *shell, char **envp)
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
 		pids[i] = pipexec(shell, shell->pipefd[0], envp, pids);
-		printf("apres exec\n");
 		if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
 		if (shell->cmd->fd_out > 1)
@@ -158,9 +144,10 @@ int	pipeline(t_shell *shell, char **envp)
 			shell->cmd->fd_in = shell->pipefd[0];
 	}
 	pids[i] = pipexec(shell, -1, envp, pids);
-	if (shell->cmd->fd_in > 0)
+	close_cmd_fds(shell->cmd);
+	/*if (shell->cmd->fd_in > 0)
 		close(shell->cmd->fd_in);
 	if (shell->cmd->fd_out > 1)
-		close(shell->cmd->fd_out);
+		close(shell->cmd->fd_out);*/
 	return (ft_wait(pids, shell));
 }

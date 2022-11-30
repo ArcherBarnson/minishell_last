@@ -12,32 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-long long	ft_atoll(const char	*str)
-{
-	int					i;
-	long long			sign;
-	long long			tot;
-
-	i = 0;
-	sign = 1;
-	tot = 0;
-	while (str[i] == '\f' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\r' || str[i] == '\t' || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -sign;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		tot = tot * 10 + (str[i] - '0');
-		i++;
-	}
-	return (tot * sign);
-}
-
 int	invalid_exit_arg(char *arg)
 {
 	(void)arg;
@@ -88,27 +62,16 @@ int	ft_exit(int ac, char **av, t_shell *shell)
 	status = 2;
 	write(1, "exit\n", 5);
 	if (ac == 1 || av == NULL)
-	{
-		free_tab(av);
-		free_all(shell);
-		exit(exit_code);
-	}
+		clean_exit(exit_code, shell, av);
 	if (!is_exit_arg_valid(av[1]))
-	{
-		free_tab(av);
-		free_all(shell);
-		exit(status);
-	}
+		clean_exit(status, shell, av);
 	if (ac > 2)
 	{
 		write(2, "Too many arguments\n", 20);
-		free_tab(av);
-		free_all(shell);
+		clean_exit(status, shell, av);
 		return (1);
 	}
 	status = get_formated_status(av[1]);
-	free_tab(av);
-	free_all(shell);
-	exit(status);
+	clean_exit(status, shell, av);
 	return (0);
 }

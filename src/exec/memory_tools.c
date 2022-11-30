@@ -21,61 +21,6 @@ void	free_cmd_link(t_cmd *cmd)
 	return ;
 }
 
-void	del(void *data)
-{
-	free(data);
-}
-
-void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
-{
-	if (!lst || !del)
-		return ;
-	//if (lst->cmd)
-	//	(*del)(lst->cmd);
-	if (lst->token)
-		free_tab(lst->token);
-	free(lst);
-}
-
-void	ft_lstclear(t_cmd **lst, void (*del)(void *))
-{
-	t_cmd	*list;
-	t_cmd	*tmp;
-
-	if (!lst || !del)
-		return ;
-	list = *lst;
-	while (list)
-	{
-		tmp = list->next;
-		ft_lstdelone(list, del);
-		list = tmp;
-	}
-	*lst = NULL;
-}
-
-/*void	free_cmd_lst(t_cmd *cmd)
-{
-	if (cmd)
-	{
-		while (cmd->prev != NULL)
-			cmd = cmd->prev;
-		while (cmd->next != NULL)
-		{
-			if (cmd->prev)
-				free_cmd_link(cmd->prev);
-			cmd = cmd->next;
-		}
-		if (cmd->prev)
-			free_cmd_link(cmd->prev);
-		if (cmd)
-			free_cmd_link(cmd);
-		free(cmd);
-		cmd = NULL;
-	}
-	return ;
-}*/
-
 void	free_tab(char **tab)
 {
 	int	i;

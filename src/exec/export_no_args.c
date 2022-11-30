@@ -44,7 +44,7 @@ void	sort_env_args(char **envpc, char *tmp, int i, int j)
 	return ;
 }
 
-void	export_no_args(t_shell *shell, t_envp_cpy *envpc_lst)
+int	export_no_args(t_shell *shell, t_envp_cpy *envpc_lst)
 {
 	char		**envpc;
 	char		*tmp;
@@ -56,9 +56,9 @@ void	export_no_args(t_shell *shell, t_envp_cpy *envpc_lst)
 	envpc = lst_to_envp(envpc_lst);
 	tmp = NULL;
 	if (!envpc)
-		return ;
+		return (0);
 	sort_env_args(envpc, tmp, i, j);
 	env(shell, envpc, 1);
 	free_tab(envpc);
-	return ;
+	return (1);
 }
