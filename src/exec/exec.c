@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 20:13:08 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:30:54 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,25 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 {
 	int	status;
 
-	dup_fds(shell);
-	if (mode == 1)
+	printf("in %d  out %d    | mode = %d\n", shell->cmd->fd_in, shell->cmd->fd_out, mode);
+	if (shell->cmd->fd_in != -1 && shell->cmd->fd_out != -1)
 	{
-		status = exec_builtin(shell);
-		free(shell->cmd->cmd);
-		ft_lstclear(&shell->cmd_head, del);
-		shell->cmd = NULL;
-		free_all(shell);
-		exit(status);
+		if (mode == 1)
+		{
+			status = exec_builtin(shell);
+			close_cmd_fds(shell->cmd);
+			free(shell->cmd->cmd);
+			ft_lstclear(&shell->cmd_head, del);
+			shell->cmd = NULL;
+			free_all(shell);
+			exit(status);
+		}
+		dup_fds(shell);
+		if (shell->cmd->cmd != NULL)
+			execve(shell->cmd->cmd, shell->cmd->token, envp);
 	}
-	else if (shell->cmd->cmd != NULL)
-		execve(shell->cmd->cmd, shell->cmd->token, envp);
 	free(shell->cmd->cmd);
+	shell->cmd->cmd = NULL;
 	ft_lstclear(&shell->cmd_head, del);
 	shell->cmd = NULL;
 	free_all(shell);
@@ -101,8 +107,9 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 		if (tbc >= 0)
 			close(tbc);
 		execute_command(shell, envp, is_builtin);
+		exit(1);
 	}
-	if (shell->cmd->cmd)
+	if (shell->cmd && shell->cmd->cmd)
 	{
 		free(shell->cmd->cmd);
 		shell->cmd->cmd = NULL;
@@ -124,7 +131,8 @@ int	pipeline(t_shell *shell, char **envp)
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
 		pids[i] = pipexec(shell, shell->pipefd[0], envp, pids);
-		if (shell->cmd->fd_in != 0)
+		printf("apres exec\n");
+		if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
 		close(shell->pipefd[1]);
 		shell->cmd = shell->cmd->next;
@@ -132,6 +140,7 @@ int	pipeline(t_shell *shell, char **envp)
 			shell->cmd->fd_in = shell->pipefd[0];
 	}
 	pids[i] = pipexec(shell, -1, envp, pids);
-	close(shell->cmd->fd_in);
+	if (shell->cmd->fd_in > 0)
+		close(shell->cmd->fd_in);
 	return (ft_wait(pids, shell));
 }

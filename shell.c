@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 20:56:06 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:42:39 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,31 @@ int	is_valid_history(char *str)
 	return (1);
 }
 
+void	fd_closer(t_shell *shell)
+{
+	shell->cmd = shell->cmd_head;
+	while (shell->cmd && shell->cmd->next)
+	{
+		if (shell->cmd->fd_in > 0)
+			close(shell->cmd->fd_in);
+		if (shell->cmd->fd_out > 1)
+			close(shell->cmd->fd_out);
+		shell->cmd = shell->cmd->next;
+	}
+	if (shell->cmd)
+	{
+		if (shell->cmd->fd_in > 0)
+			close(shell->cmd->fd_in);
+		if (shell->cmd->fd_out > 1)
+			close(shell->cmd->fd_out);
+	}
+	return ;
+}
+
 void	reset_shell_values(t_shell *shell)
 {
 	//free_cmd_lst(&shell->cmd);
+	fd_closer(shell);
 	if (shell->cmd && shell->cmd->cmd)
 	{
 		free(shell->cmd->cmd);
@@ -98,8 +120,7 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
-	
-	//ft_unlink_allhdoc(shell->hdoc_tab);
+	ft_unlink_allhdoc(shell->hdoc_tab);
 	return ;
 }
 
@@ -120,9 +141,9 @@ void	minishell_loop(t_shell *shell)
 		shell->cmd_head = shell->cmd;
 		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
-			if (!shell->cmd->next)
+			if (shell->cmd && !shell->cmd->next)
 				exit_code = simple_exec(shell, shell->ms_env);
-			else
+			else if (shell->cmd)
 				exit_code = pipeline(shell, shell->ms_env);
 		//	printf("---exit_code = %i---\n", exit_code);
 			//if (shell->retprompt)
@@ -134,15 +155,6 @@ void	minishell_loop(t_shell *shell)
 		reset_shell_values(shell);
 	}
 	return ;
-}
-
-int	start_shell(t_shell *shell)
-{
-	minishell_loop(shell);
-	//free_tab(shell->env_paths);
-	//free(shell->cmd->cmd);
-	//shell->env_paths = get_env_paths(shell->ms_env);
-	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -162,7 +174,7 @@ int	main(int ac, char **av, char **envp)
 		write(2, "Init error, exiting\n", 20);
 		return (-1);
 	}
-	start_shell(shell);
+	minishell_loop(shell);
 	ft_exit(1, NULL, shell);
 	return (0);
 }

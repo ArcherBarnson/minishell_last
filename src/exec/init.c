@@ -17,7 +17,7 @@ void	minishell_assign(t_shell *shell, char **envp)
 	shell->ms_env = dup_tab(envp);
 	if (shell->ms_env[0] == NULL)
 		shell->ms_env = build_minimal_env();
-	pipe(shell->pipefd);
+	//pipe(shell->pipefd);
 	shell->env_paths = get_env_paths(envp);
 	shell->envpc_head = set_env(shell, shell->ms_env);
 	return ;
