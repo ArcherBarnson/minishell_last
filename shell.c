@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:19:05 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:42:39 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ void	minishell_loop(t_shell *shell)
 			add_history(shell->retprompt);
 		ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
-		if (shell->cmd && shell->cmd->fd_in == -1)
-			shell->cmd = shell->cmd->next;
 		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
 			if (shell->cmd && !shell->cmd->next)

@@ -37,5 +37,7 @@ int	ft_wait(int *pid, t_shell *shell)
 	}
 	free(pid);
 	printf("SUPPR - FIN WAIT\n");
+	ft_lstclear(&shell->cmd_head, del);
+	shell->cmd_head = NULL;
 	return (exit_code);
 }

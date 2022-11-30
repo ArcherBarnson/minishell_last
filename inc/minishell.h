@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:48:25 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:30:22 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -872,6 +872,7 @@ int				is_exit_arg_valid(char *arg);
 int				invalid_exit_arg(char *arg);
 long long		ft_atoll(const char	*str);
 void			child_signals(void);
+void			close_cmd_fds(t_cmd *cmd);
 void			sigquit_cmd(int sig);
 void			debug_display(t_shell *shell);
 int				ft_wait(int *pid, t_shell *shell);

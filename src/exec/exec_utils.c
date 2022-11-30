@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 12:02:18 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:39:23 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ int	check_for_invalid_cmd(t_shell *shell)
 
 int	command_not_found(t_shell *shell)
 {
+	int	tmp_fd;
+
+	tmp_fd = 0;
 	if (!is_valid_history(shell->retprompt))
 		return (-1);
 	if (shell->cmd->cmd == NULL)
@@ -65,13 +68,16 @@ int	command_not_found(t_shell *shell)
 		shell->exit_status = 127;
 		return (127);
 	}
-	if (open(shell->cmd->cmd, O_RDONLY) == -1 && errno == EACCES)
+	tmp_fd = open(shell->cmd->cmd, O_RDONLY);
+	if (tmp_fd == -1 && errno == EACCES)
 	{
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
 		write(2, " : permission denied\n", 22);
 		shell->exit_status = 126;
 		return (126);
 	}
+	if (tmp_fd > 0)
+		close(tmp_fd);
 	return (0);
 }
 
@@ -89,4 +95,16 @@ int	*make_pid_tab(int size)
 	while (++i <= size)
 		pids[i] = 0;
 	return (pids);
+}
+
+void	close_cmd_fds(t_cmd *cmd)
+{
+	if (cmd)
+	{
+		if (cmd->fd_in > 0)
+			close(cmd->fd_in);
+		if (cmd->fd_out > 1)
+			close(cmd->fd_out);
+	}
+	return ;
 }
