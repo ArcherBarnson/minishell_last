@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 21:32:34 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:20:48 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_tklist_freeall(t_lex *lex)
 int	ft_execfree_freeall(t_pars *pars)
 {
 	ft_free_cmdlist(pars->cmd);
-	ft_print_debug_hdoc_list(pars->hdoc_list);
+	ft_debug_hdoc_list(pars->hdoc_list);
 	ft_free_hdoclist(pars->hdoc_list);
 	ft_unlink_allhdoc(pars->hdoc_tab);
 	ft_free_hdoctab(pars->hdoc_tab);

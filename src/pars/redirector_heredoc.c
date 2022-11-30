@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:18:49 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/21 13:26:20 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:20:22 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +380,7 @@ int	ft_update_command_fds(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_debug_hdoc_list(t_hdoc *hdoc)
+int	ft_debug_hdoc_list(t_hdoc *hdoc)
 {
 	int	count;
 	int	i;

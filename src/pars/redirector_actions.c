@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 21:49:21 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:17:01 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	ft_init_redir_actions(t_pars *pars)
 {
 	pars->ft_redir[REDIR_NONE] = ft_redir_none;
-	pars->ft_redir[REDIR_NEW] = ft_redir_new;
+	//pars->ft_redir[REDIR_NEW] = ft_redir_new;
 	pars->ft_redir[REDIR_CATCH] = ft_redir_catch;
 	pars->ft_redir[REDIR_KEEP] = ft_redir_keep;
 	pars->ft_redir[REDIR_DROP] = ft_redir_drop;
-	pars->ft_redir[REDIR_TAKE] = ft_redir_take;
+	//pars->ft_redir[REDIR_TAKE] = ft_redir_take;
 	pars->ft_redir[REDIR_SKIP] = ft_redir_skip;
 	pars->ft_redir[REDIR_IN] = ft_redir_in;
 	pars->ft_redir[REDIR_HDOC] = ft_redir_heredoc;
@@ -37,7 +37,7 @@ int	ft_redir_none(t_pars *pars)
 	return (0);
 }
 
-int	ft_redir_new(t_pars *pars)
+/*int	ft_redir_new(t_pars *pars)
 {
 	int	id;
 
@@ -54,7 +54,7 @@ int	ft_redir_new(t_pars *pars)
 	pars->command->nb_of_tokens = 1;
 	pars->command->id = id;
 	return (0);
-}
+}*/
 
 int	ft_redir_catch(t_pars *pars)
 {
@@ -74,7 +74,7 @@ int	ft_redir_drop(t_pars *pars)
 	return (0);
 }
 
-int	ft_redir_take(t_pars *pars)
+/*int	ft_redir_take(t_pars *pars)
 {
 	if (!pars->command)
 		ft_redir_new(pars);
@@ -86,7 +86,7 @@ int	ft_redir_take(t_pars *pars)
 	}
 	pars->command->token->type = pars->token->type;
 	return (0);
-}
+}*/
 
 int	ft_redir_skip(t_pars *pars)
 {
@@ -105,16 +105,16 @@ int	ft_redir_in(t_pars *pars)
 {
 	int	ret;
 
+	ret = 0;
 	pars->current_filename = pars->command->token->next->id;
 	if (ft_is_hdoc(pars->current_filename, pars))
 		ft_change_hdoc_filename(pars);
-	ret = 0;
 	ret = ft_open_infile(pars, pars->command->token->next->id);
-	if (!ret)
-		pars->command->fd_in = pars->fd_in;
+	if (!ret && pars->command->fd_in != -1)
+			pars->command->fd_in = pars->fd_in;
 	else
 		pars->command->fd_in = -1;
-	return (ret);
+	return (0);
 }
 
 int	ft_redir_heredoc(t_pars *pars)
@@ -122,6 +122,7 @@ int	ft_redir_heredoc(t_pars *pars)
 	int		ret;
 	t_hdoc	*hdoc_current;
 
+	ret = 0;
 	if (pars->prev_redir_decision.redir_read_mode == HDOC_REDIR_RD_MD)
 	{
 		printf("consecutive heredocs\n");
@@ -132,7 +133,6 @@ int	ft_redir_heredoc(t_pars *pars)
 			pars->hdoc_list = hdoc_current;
 		pars->hdoc_i--;
 	}
-	ret = 0;
 	ret = ft_open_heredoc(pars, pars->command->token->next->id);
 	if (!ret)
 		pars->command->fd_in = pars->fd_in;
@@ -145,6 +145,7 @@ int	ft_redir_out(t_pars *pars)
 {
 	int	ret;
 
+	ret = 0;
 	printf("in redir_out\n");
 	pars->current_filename = pars->command->token->next->id;
 	if (ft_is_hdoc(pars->current_filename, pars))
@@ -153,13 +154,12 @@ int	ft_redir_out(t_pars *pars)
 		printf("will now change name in hdoc\n");
 		ft_change_hdoc_filename(pars);
 	}
-	ret = 0;
 	ret = ft_open_outfile(pars, pars->command->token->next->id);
-	if (!ret)
+	if (!ret && pars->command->fd_out != -1)
 		pars->command->fd_out = pars->fd_out;
 	else
 		pars->command->fd_out = -1;
-	return (ret);
+	return (0);
 }
 
 int	ft_redir_out_append(t_pars *pars)
@@ -184,6 +184,7 @@ int	ft_redir_del_two(t_pars *pars)
 	pars->command->nb_of_tokens--;
 	pars->token = ft_free_one_token(pars->token);
 	pars->command->nb_of_tokens--;
+	pars->redir = 1;
 	if (pars->command->nb_of_tokens != 0)
 		pars->token = pars->token->prev;
 	pars->command->token = pars->token;

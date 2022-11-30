@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 17:31:54 by jtaravel          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/29 21:53:53 by mbourgeo         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/29 21:16:01 by bgrulois         ###   ########.fr       */
->>>>>>> 7f6f80a4170491d52272adb027bcedab75bf0bd0
+/*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
+/*   Updated: 2022/11/30 13:19:31 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,6 +496,8 @@ struct s_pars
 	int				new_fd;
 	int				dq_opened;
 	int				sq_opened;
+	int				ret;
+	int				redir;
 };
 
 struct s_cmd
@@ -581,17 +579,17 @@ int				ft_init_expander(t_pars *pars);
 /*                               common_debug.c                               */
 /* ************************************************************************** */
 void			ft_flag(void);
-int				ft_print_debug_lex(t_lex *lex);
-int				ft_print_debug_pars(t_pars *pars);
-int				ft_print_debug_exp(t_pars *pars);
-int				ft_print_debug_redir(t_pars *pars);
-int				ft_print_debug_cmd_content(t_pars *pars);
-int				ft_print_debug_content(t_lex *lex, t_pars *pars, char *choice);
-int				ft_print_lexer_content(t_lex *lex);
-int				ft_print_parser_content(t_pars *pars);
-int				ft_print_expander_content(t_pars *pars);
-int				ft_print_redirector_content(t_pars *pars);
-int				ft_print_transformer_content(t_cmd *cmd);
+int				ft_debug_lex(t_lex *lex);
+int				ft_debug_pars(t_pars *pars);
+int				ft_debug_exp(t_pars *pars);
+int				ft_debug_redir(t_pars *pars);
+int				ft_debug_cmd_content(t_pars *pars);
+int				ft_debug_content(t_lex *lex, t_pars *pars, char *choice);
+int				ft_debug_lexer_content(t_lex *lex);
+int				ft_debug_parser_content(t_pars *pars);
+int				ft_debug_expander_content(t_pars *pars);
+int				ft_debug_redirector_content(t_pars *pars);
+int				ft_debug_transformer_content(t_cmd *cmd);
 
 /* ************************************************************************** */
 /*                            redirector_heredoc.c                            */
@@ -612,7 +610,7 @@ int				ft_change_hdoc_filename(t_pars *pars);
 int				ft_copy_hdoc_new_name(t_pars *pars);
 int				ft_update_hdoc_list(t_pars *pars);
 int				ft_update_command_fds(t_pars *pars);
-int				ft_print_debug_hdoc_list(t_hdoc *hdoc);
+int				ft_debug_hdoc_list(t_hdoc *hdoc);
 
 /* ************************************************************************** */
 /*                           redirector_file_manager.c                        */
@@ -719,25 +717,25 @@ int				ft_init_redir_decision_3(t_pars *pars);
 /*                         lexer_apply_decision.c                             */
 /* ************************************************************************** */
 int				ft_lex_apply_decision(t_lex *lex);
-int				ft_print_debug_lex(t_lex *lex);
+int				ft_debug_lex(t_lex *lex);
 
 /* ************************************************************************** */
 /*                         parser_apply_decision.c                            */
 /* ************************************************************************** */
 int				ft_pars_apply_decision(t_pars *pars);
-int				ft_print_debug_pars(t_pars *pars);
+int				ft_debug_pars(t_pars *pars);
 
 /* ************************************************************************** */
 /*                        expander_apply_decision.c                           */
 /* ************************************************************************** */
 int				ft_exp_apply_decision(t_pars *pars);
-int				ft_print_debug_exp(t_pars *pars);
+int				ft_debug_exp(t_pars *pars);
 
 /* ************************************************************************** */
 /*                       redirector_apply_decision.c                          */
 /* ************************************************************************** */
 int				ft_redir_apply_decision(t_pars *pars);
-int				ft_print_debug_redir(t_pars *pars);
+int				ft_debug_redir(t_pars *pars);
 
 /* ************************************************************************** */
 /*                            lexer_actions.c                                 */
@@ -800,11 +798,11 @@ int				ft_exp_err(t_pars *pars);
 int				ft_init_redir_actions(t_pars *pars);
 int				ft_inner_loop_heredoc(t_pars *pars, char *delim);
 int				ft_redir_none(t_pars *pars);
-int				ft_redir_new(t_pars *pars);
+//int				ft_redir_new(t_pars *pars);
 int				ft_redir_catch(t_pars *pars);
 int				ft_redir_keep(t_pars *pars);
 int				ft_redir_drop(t_pars *pars);
-int				ft_redir_take(t_pars *pars);
+//int				ft_redir_take(t_pars *pars);
 int				ft_redir_skip(t_pars *pars);
 int				ft_redir_record(t_pars *pars);
 int				ft_redir_in(t_pars *pars);
