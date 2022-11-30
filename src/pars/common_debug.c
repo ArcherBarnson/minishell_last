@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/21 13:27:37 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:15:20 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,22 @@ void	ft_flag(void)
 	printf("\033[37;1mHello World!\033[0m\n");
 }
 
-int	ft_print_debug_content(t_lex *lex, t_pars *pars, char *choice)
+int	ft_debug_content(t_lex *lex, t_pars *pars, char *choice)
 {
-//	(void)lex;
-//	(void)pars;
-//	(void)choice;
-	
 	if (ft_strcmp(choice, "lex"))
-		ft_print_lexer_content(lex);
+		ft_debug_lexer_content(lex);
 	else if (ft_strcmp(choice, "pars"))
-		ft_print_parser_content(pars);
+		ft_debug_parser_content(pars);
 	else if (ft_strcmp(choice, "exp"))
-		ft_print_expander_content(pars);
+		ft_debug_expander_content(pars);
 	else if (ft_strcmp(choice, "redir"))
-		ft_print_redirector_content(pars);
+		ft_debug_redirector_content(pars);
 	else if (ft_strcmp(choice, "trans"))
-		ft_print_transformer_content(pars->cmd);
+		ft_debug_transformer_content(pars->cmd);
 	return (0);
 }
 
-int	ft_print_debug_lex(t_lex *lex)
+int	ft_debug_lex(t_lex *lex)
 {
 	printf("\033[33;2m");
 	if (lex->new_decision.lex_read_mode == CMB_ERR_LEX_RD_MD)
@@ -52,7 +48,7 @@ int	ft_print_debug_lex(t_lex *lex)
 	return (0);
 }
 
-int	ft_print_debug_pars(t_pars *pars)
+int	ft_debug_pars(t_pars *pars)
 {
 	printf("\033[33;2m");
 	if (pars->new_pars_decision.pars_read_mode == CMB_ERR_PARS_RD_MD)
@@ -67,7 +63,7 @@ int	ft_print_debug_pars(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_debug_exp(t_pars *pars)
+int	ft_debug_exp(t_pars *pars)
 {
 	printf("\033[33;2m");
 	if (pars->new_exp_decision.buffer_action == EXP_ERR)
@@ -75,7 +71,6 @@ int	ft_print_debug_exp(t_pars *pars)
 		printf("\033[31;2m\n<- ERROR in EXPANDER -> \n\033[0m");
 		printf("[1] : %s\n", ft_getlabel_exp_read_modes
 			(pars->prev_exp_decision.exp_read_mode));
-		//printf("char : %c\n", pars->parser_text[0]);
 		printf("[2] : %s\n", ft_getlabel_char_types
 			(ft_char_type(pars->parser_text[0])));
 	}
@@ -84,7 +79,7 @@ int	ft_print_debug_exp(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_debug_redir(t_pars *pars)
+int	ft_debug_redir(t_pars *pars)
 {
 	printf("\033[33;2m");
 	if (pars->new_redir_decision.token_action == REDIR_ERR)
@@ -99,7 +94,7 @@ int	ft_print_debug_redir(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_debug_cmd_content(t_pars *pars)
+int	ft_debug_cmd_content(t_pars *pars)
 {
 	int	i;
 
@@ -119,7 +114,7 @@ int	ft_print_debug_cmd_content(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_lexer_content(t_lex *lex)
+int	ft_debug_lexer_content(t_lex *lex)
 {
 	int	i;
 
@@ -136,7 +131,7 @@ int	ft_print_lexer_content(t_lex *lex)
 	return (0);
 }
 
-int	ft_print_parser_content(t_pars *pars)
+int	ft_debug_parser_content(t_pars *pars)
 {
 	int	i;
 	int	j;
@@ -161,7 +156,7 @@ int	ft_print_parser_content(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_expander_content(t_pars *pars)
+int	ft_debug_expander_content(t_pars *pars)
 {
 	int	i;
 	int	j;
@@ -185,7 +180,7 @@ int	ft_print_expander_content(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_redirector_content(t_pars *pars)
+int	ft_debug_redirector_content(t_pars *pars)
 {
 	int	i;
 	int	j;
@@ -211,7 +206,7 @@ int	ft_print_redirector_content(t_pars *pars)
 	return (0);
 }
 
-int	ft_print_transformer_content(t_cmd *cmd)
+int	ft_debug_transformer_content(t_cmd *cmd)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 21:38:10 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:37:23 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	ft_init_exp_actions(t_pars *pars)
 	pars->ft_exp[EXP_ERR] = ft_exp_err;
 	return (0);
 }
+
+//int	ft_initial_expansion()
+//{
+//}
 
 int	ft_exp_none(t_pars *pars)
 {
@@ -78,7 +82,7 @@ int	ft_exp_catch(t_pars *pars)
 	{
 		free(pars->token->id);
 		pars->token->id = NULL;
-		pars->token->id = ft_strndup("", 0);
+		pars->token->id = ft_strdup("");
 		pars->token->type = pars->prev_exp_decision.token_type;
 	}
 	return (0);
@@ -121,11 +125,11 @@ int	ft_exp_record(t_pars *pars)
 	{
 		if (pars->temp)
 		{
-			temp1 = ft_strndup(pars->temp, 0);
+			temp1 = ft_strdup(pars->temp);
 			free(pars->temp);
 		}
 		else
-			temp1 = ft_strndup("", 0);
+			temp1 = ft_strdup("");
 		temp2 = ft_substr(pars->parser_text - pars->offset_start,
 				pars->start_std, pars->nb_taken_char);
 		pars->temp = ft_tempjoin(&temp1, &temp2);
@@ -153,11 +157,11 @@ char	*ft_getenv(char *temp, t_pars *pars)
 	if (!ft_find_envstr(temp, pars))
 	{
 		free(temp);
-		temp2 = ft_strndup("", 0);
+		temp2 = ft_strdup("");
 	}
 	else
 	{
-		temp2 = ft_strndup(ft_find_envstr(temp, pars), 0);
+		temp2 = ft_strdup(ft_find_envstr(temp, pars));
 		free(temp);
 	}
 	return (temp2);
@@ -176,7 +180,7 @@ int	ft_exp_record_dol(t_pars *pars)
 		temp1 = pars->temp;
 	}
 	else
-		temp1 = ft_strndup(pars->temp, 0);
+		temp1 = ft_strdup(pars->temp);
 	if (pars->nb_taken_char)
 	{
 		temp = ft_substr(pars->parser_text - pars->offset_start,
