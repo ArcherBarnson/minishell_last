@@ -60,7 +60,7 @@ t_hdoc	*ft_new_hdoc(char *str, int fd)
 
 	if (ft_mallocator(&new, sizeof(t_hdoc)))
 		return (0);
-	new->file_name = ft_strndup(str, 0);
+	new->file_name = ft_strdup(str);
 	new->fd = fd;
 	new->prev = new;
 	new->next = new;
@@ -185,10 +185,12 @@ t_hdoc_tab	*ft_hdoc_list_to_tab(t_hdoc *hdoc, int count)
 	while (i < count)
 	{
 		tab[i].file_name = ft_strdup(hdoc->file_name);
+		free(hdoc->file_name);
 		tab[i].fd = hdoc->fd;
 		hdoc = hdoc->next;
 		i++;
 	}
+	free(hdoc);
 	tab[i].file_name = NULL;
 	tab[i].fd = 0;
 	return (tab);
@@ -203,6 +205,7 @@ int	ft_unlink_allhdoc(t_hdoc_tab *hdoc_tab)
 	{
 		while (hdoc_tab[i].file_name)
 		{
+			//close(hdoc_tab[i].fd);
 			unlink(hdoc_tab[i].file_name);
 			i++;
 		}
