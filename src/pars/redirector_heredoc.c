@@ -18,7 +18,7 @@ int	ft_open_heredoc(t_pars *pars, char *delim)
 
 	pars->hdoc_i++;
 	file_name = ft_generate_valid_hdoc_name(pars);
-	pars->fd_in = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	pars->fd_in = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (pars->fd_in < 0)
 		return (ft_msgerr(ERR_FILEHDOC));
 	ft_inner_loop_heredoc(pars, delim);
@@ -280,10 +280,10 @@ int	ft_copy_hdoc_new_name(t_pars *pars)
 
 	printf("closing current_fd = %d\n", pars->current_fd);
 	close(pars->current_fd);
-	pars->current_fd = open(pars->current_filename, O_RDONLY, 0664);
+	pars->current_fd = open(pars->current_filename, O_RDWR, 0664);
 	printf("opened current_hdocfile named <%s> with fd : %d\n",
 		pars->current_filename, pars->current_fd);
-	pars->new_fd = open(pars->new_filename, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	pars->new_fd = open(pars->new_filename, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	printf("opened new_hdocfile named <%s> with fd : %d\n",
 		pars->new_filename, pars->new_fd);
 	if (pars->new_fd < 0)

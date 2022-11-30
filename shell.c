@@ -120,7 +120,7 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
-	ft_unlink_allhdoc(shell->hdoc_tab);
+	//ft_unlink_allhdoc(shell->hdoc_tab);
 	return ;
 }
 

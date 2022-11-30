@@ -16,12 +16,12 @@ extern int	exit_code;
 
 void	dup_fds(t_shell *shell)
 {
-	if (shell->cmd->prev || shell->cmd->fd_in > 0)
+	if (shell->cmd->fd_in > 0)
 	{
 		dup2(shell->cmd->fd_in, 0);
 		close(shell->cmd->fd_in);
 	}
-	if (shell->cmd->fd_out != 1)
+	if (shell->cmd->fd_out > 1)
 	{
 		dup2(shell->cmd->fd_out, 1);
 		close(shell->cmd->fd_out);
@@ -34,6 +34,11 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	int	status;
 
 	printf("in %d  out %d    | mode = %d\n", shell->cmd->fd_in, shell->cmd->fd_out, mode);
+	//char buf[10];
+	//buf[9] = 0;
+	//buf[0] = 0;
+	//printf("%ld, %s|\n", read(shell->cmd->fd_in, buf, 9), buf);
+
 	if (shell->cmd->fd_in != -1 && shell->cmd->fd_out != -1)
 	{
 		if (mode == 1)
@@ -64,6 +69,10 @@ int	simple_exec(t_shell *shell, char **envp)
 	int	is_builtin;
 
 	signal(SIGINT, SIG_IGN);
+	char buf[10];
+	buf[9] = 0;
+	buf[0] = 0;
+	printf("%ld, %s|\n", read(shell->cmd->fd_in, buf, 9), buf);
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1)
@@ -74,7 +83,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
-		close_cmd_fds(shell->cmd);
+		printf("simple\n");
 		free(pid);
 		child_signals();
 		execute_command(shell, envp, is_builtin);
