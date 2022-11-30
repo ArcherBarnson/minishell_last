@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:37:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:19:03 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,9 @@ int	ft_exp_record_dol(t_pars *pars)
 				pars->start_dol, pars->nb_taken_char);
 		if (ft_strcmp(temp, "?"))
 		{
-			ft_exp_excd(pars);
+			temp2 = ft_itoa(exit_code);
+			temp = NULL;
+			pars->temp = ft_tempjoin(&temp1, &temp2);
 			pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 		}
 		else
@@ -196,6 +198,7 @@ int	ft_exp_record_dol(t_pars *pars)
 			temp = NULL;
 			pars->temp = ft_tempjoin(&temp1, &temp2);
 		}
+		free(temp);
 	}
 	else if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 	{
@@ -209,7 +212,6 @@ int	ft_exp_record_dol(t_pars *pars)
 		pars->temp = ft_tempjoin(&temp1, &temp2);
 	}
 	ft_init_expander(pars);
-	free(temp);
 	free(temp1);
 	return (0);
 }
@@ -244,15 +246,15 @@ int	ft_exp_dol(t_pars *pars)
 	return (0);
 }
 
-int	ft_exp_excd(t_pars *pars)
+/*char	*ft_exp_excd(t_pars *pars)
 {
 	char	*exit_char_code;
-
+	
 	exit_char_code = ft_itoa(exit_code);
 	pars->temp = ft_strdup(exit_char_code);
 	free(exit_char_code);
 	return (0);
-}
+}*/
 
 char	*ft_find_envstr(char *str, t_pars *pars)
 {
@@ -265,7 +267,7 @@ char	*ft_find_envstr(char *str, t_pars *pars)
 	{
 		k = ft_find_eq(pars->ms_env[i]) - 1;
 		comp_str = ft_substr(pars->ms_env[i], 0, k + 1);
-		if (!ft_strncmp(str, comp_str, k + 1))
+		if (!ft_strncmp(str, comp_str, ft_strlen(str)))
 		{
 			free(comp_str);
 			return (pars->ms_env[i] + k + 2);
