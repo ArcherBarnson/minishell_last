@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 20:56:06 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:02:20 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,13 @@ void	minishell_loop(t_shell *shell)
 			add_history(shell->retprompt);
 		ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
+		if (shell->cmd->fd_in == -1)
+			shell->cmd = shell->cmd->next;
 		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
-			if (!shell->cmd->next)
+			if (shell->cmd && !shell->cmd->next)
 				exit_code = simple_exec(shell, shell->ms_env);
-			else
+			else if (shell->cmd)
 				exit_code = pipeline(shell, shell->ms_env);
 		//	printf("---exit_code = %i---\n", exit_code);
 			//if (shell->retprompt)
