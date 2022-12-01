@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_apply_decision.c                             :+:      :+:    :+:   */
+/*   redirector_heredoc_5.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 23:38:09 by mbourgeo         ###   ########.fr       */
+/*   Created: 2022/12/01 23:33:35 by mbourgeo          #+#    #+#             */
+/*   Updated: 2022/12/01 23:33:47 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_lex_apply_decision(t_lex *lex)
+t_shell	*free_heredoc(t_shell *shell, int mode)
 {
-	lex->prev_decision = lex->new_decision;
-	lex->new_decision = lex->decision[lex->prev_decision.lex_read_mode]
-	[ft_char_type(lex->user_input[0])];
-	ft_debug_lex(lex);
-	lex->ft[lex->new_decision.buffer_action](lex);
-	return (lex->ft[lex->new_decision.char_action](lex));
+	static t_shell	*save_shell;
+
+	if (mode == 0)
+		save_shell = shell;
+	return (save_shell);
+}
+
+void	sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(0, "\0", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	// reste des leaks ???? 
+	free_all(free_heredoc(NULL, 1));
+	exit(130);
+	return ;
 }
