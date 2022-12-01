@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 21:45:52 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:03:57 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ int	ft_read_prompt(t_shell *shell)
 	shell->hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
-<<<<<<< Updated upstream
-	//printf("last_infile_mode = %d\n", pars.last_infile_mode);
-=======
->>>>>>> Stashed changes
 	ft_tklist_freeall(&lex);
 	ft_pars_freeall(&pars);
 	return (0);
