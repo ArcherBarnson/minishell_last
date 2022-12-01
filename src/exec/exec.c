@@ -6,13 +6,13 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:30:54 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:11:38 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	exit_code;
+extern int	g_exit_code;
 
 void	dup_fds(t_shell *shell)
 {
@@ -37,7 +37,7 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	{
 		if (mode == 1)
 		{
-			status = exec_builtin(shell);
+			status = exec_builtin(shell, 1);
 			close_cmd_fds(shell->cmd);
 			free(shell->cmd->cmd);
 			ft_lstclear(&shell->cmd_head, del);
@@ -66,10 +66,12 @@ int	simple_exec(t_shell *shell, char **envp)
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1)
-		return (free(pid), exec_builtin(shell));
+		return (free(pid), exec_builtin(shell, 0));
 	err_code = check_for_invalid_cmd(shell);
-	if (err_code)
+	if (err_code > 1)
 		return (free(pid), err_code);
+	else if (err_code == 1)
+		return (free(pid), 0);
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
@@ -80,11 +82,6 @@ int	simple_exec(t_shell *shell, char **envp)
 	}
 	close_cmd_fds(shell->cmd);
 	free_cmd_if(shell);
-	/*if (shell->cmd && shell->cmd->cmd)
-	{
-		free(shell->cmd->cmd);
-		shell->cmd->cmd = NULL;
-	}*/
 	return (ft_wait(pid, shell));
 }
 
@@ -98,7 +95,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	if (is_builtin == 2)
-		exit(exit_code);
+		exit(g_exit_code);
 	if (is_builtin == 0)
 	{
 		err_code = check_for_invalid_cmd(shell);
@@ -125,7 +122,7 @@ int	pipeline(t_shell *shell, char **envp)
 	int	i;
 	int	*pids;
 
-	i = 0;
+	i = -1;
 	pids = make_pid_tab(cmds_get_n(shell));
 	shell->cmd = shell->cmd_head;
 	while (shell->cmd->next)
@@ -133,7 +130,7 @@ int	pipeline(t_shell *shell, char **envp)
 		pipe(shell->pipefd);
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
-		pids[i] = pipexec(shell, shell->pipefd[0], envp, pids);
+		pids[++i] = pipexec(shell, shell->pipefd[0], envp, pids);
 		if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
 		if (shell->cmd->fd_out > 1)
@@ -143,7 +140,7 @@ int	pipeline(t_shell *shell, char **envp)
 		if (shell->cmd->fd_in == 0)
 			shell->cmd->fd_in = shell->pipefd[0];
 	}
-	pids[i] = pipexec(shell, -1, envp, pids);
+	pids[++i] = pipexec(shell, -1, envp, pids);
 	close_cmd_fds(shell->cmd);
 	/*if (shell->cmd->fd_in > 0)
 		close(shell->cmd->fd_in);

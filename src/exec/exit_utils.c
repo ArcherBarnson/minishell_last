@@ -12,8 +12,17 @@
 
 #include "../../inc/minishell.h"
 
-void	clean_exit(int status, t_shell *shell, char **av)
+void	clean_exit(int status, t_shell *shell, char **av, int fork)
 {
+	if (fork == 1)
+	{
+		close_cmd_fds(shell->cmd);
+		free(shell->cmd->cmd);
+		ft_lstclear(&shell->cmd_head, del);
+		shell->cmd = NULL;
+		free_all(shell);
+		exit(status);
+	}
 	free_tab(av);
 	free_all(shell);
 	exit(status);

@@ -19,6 +19,6 @@ int	ft_msgerr(char *str)
 		|| ft_strcmp(str, ERR_CHR)
 		|| ft_strcmp(str, ERR_SPL)
 		|| ft_strcmp(str, ERR_DBL))
-		exit_code = 2;
+		g_exit_code = 2;
 	return (printf("%s\n", str), 1);
 }

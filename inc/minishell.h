@@ -87,7 +87,7 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct s_envp_cpy		t_envp_cpy;
 
-extern int						exit_code;
+extern int						g_exit_code;
 
 typedef struct s_shell
 {
@@ -861,34 +861,34 @@ void			ft_lstdel_envpc(t_envp_cpy *lst, void (*del)(void *));
 int				ft_strcmp(char *s1, char *s2);
 char			**ft_split(char const *s, char c);
 int				export(t_shell *shell, char **av,
-					char **envpc, t_envp_cpy *envpc_lst);
+					t_envp_cpy **envpc_lst);
 int				ft_exportcmp(char *s1, char *s2);
 int				export_no_args(t_shell *shell, t_envp_cpy *envpc_lst);
 int				export_error(char *str, int i, int error_type);
 int				ft_strccmp(char *s1, char *s2, char c);
 int				is_env_var(char *str);
-int				env_var_exists(char *str, char **envpc, int mode);
+int				env_var_exists(char *str, char **envpc);
 int				is_valid_identifier(char c);
 int				is_valid_string(char *str);
-t_envp_cpy		*unset(int ac, char **av, t_envp_cpy *envpc_lst);
+int				unset(int ac, char **av, t_envp_cpy **envpc_lst);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**dup_tab(char **tab);
 void			free_tab(char **tab);
 int				get_tab_size(char **tab);
 int				cd(t_shell *shell, char **path, char **envp,
-					t_envp_cpy *envpc_lst);
+					t_envp_cpy **envpc_lst);
 int				pwd(int ac, char **av, int fd);
 void			write_arg(char *str, int fd);
 int				n_flag_present(char *str);
 int				echo(int ac, char **av, int fd);
 int				env(t_shell *shell, char **envp, int mode);
 t_envp_cpy		*set_env(t_shell *shell, char **envp);
-int				ft_exit(int ac, char **av, t_shell *shell);
+int				ft_exit(int ac, char **av, t_shell *shell, int fork);
 int				get_formated_status(char *arg);
 int				is_exit_arg_valid(char *arg);
 int				invalid_exit_arg(char *arg);
 long long		ft_atoll(const char	*str);
-void			clean_exit(int status, t_shell *shell, char **av);
+void			clean_exit(int status, t_shell *shell, char **av, int fork);
 void			child_signals(void);
 void			close_cmd_fds(t_cmd *cmd);
 void			sigquit_cmd(int sig);
@@ -897,7 +897,7 @@ int				ft_wait(int *pid, t_shell *shell);
 void			display_signal_intercept(int sig);
 void			sigquit_ignore(int sig);
 int				check_builtins(t_shell *shell);
-int				exec_builtin(t_shell *shell);
+int				exec_builtin(t_shell *shell, int fork);
 void			sigint_handler(int sig);
 int				start_shell(t_shell *shell);
 int				is_valid_history(char *str);
@@ -925,7 +925,7 @@ char			**lst_to_envp(t_envp_cpy *envpc_lst);
 t_envp_cpy		*envp_to_lst(char **envp);
 int				get_envp_lst_size(t_envp_cpy *envpc_lst);
 void			clear_envpc_lst(t_envp_cpy *envpc_lst);
-void			ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new);
+void			ft_env_varadd_back(t_envp_cpy **envpc_lst, t_envp_cpy *new);
 t_envp_cpy		*ft_envpcnew(char *var);
 char			*find_path(char *cmd, char **env_paths);
 char			**get_env_paths(char **envp);

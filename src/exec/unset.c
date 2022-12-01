@@ -6,74 +6,86 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:38:41 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 17:39:28 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:02:03 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_envp_cpy	*remove_var_if_first(int len, char *var, t_envp_cpy *envpc_lst)
+int	ft_unsetcmp(char *s1_lst, char*s2)
 {
-	t_envp_cpy	*tmp;
+	int	i;
 
-	tmp = NULL;
-	if (ft_strncmp(var, envpc_lst->var, len) == 0)
+	i = 0;
+	while (s1_lst[i] && s2[i])
 	{
-		tmp = envpc_lst;
-		if (envpc_lst->next)
-			envpc_lst = envpc_lst->next;
-		free(tmp->var);
-		tmp->var = NULL;
-	}
-	return (envpc_lst);
-}
-
-t_envp_cpy	*remove_var_if_present(char *var, int len, t_envp_cpy *envpc_lst)
-{
-	t_envp_cpy	*to_remove;
-	t_envp_cpy	*head;
-
-	to_remove = NULL;
-	envpc_lst = remove_var_if_first(len, var, envpc_lst);
-	head = envpc_lst;
-	while (envpc_lst->next)
-	{
-		if (ft_strncmp(var, envpc_lst->next->var, len) == 0)
-		{
-			to_remove = envpc_lst->next;
-			if (envpc_lst->next->next)
-				envpc_lst->next = envpc_lst->next->next;
-			else
-				envpc_lst->next = NULL;
-			free(to_remove->var);
-			free(to_remove);
-		}
-		if (envpc_lst->next != NULL)
-			envpc_lst = envpc_lst->next;
-	}
-	return (head);
-}
-
-t_envp_cpy	*unset(int ac, char **av, t_envp_cpy *envpc_lst)
-{
-	int						i;
-	t_envp_cpy				*head;
-
-	i = 1;
-	head = NULL;
-	if (ac == 1)
-		return (envpc_lst);
-	while (i < ac)
-	{
-		head = remove_var_if_present(av[i], ft_strlen(av[i]), envpc_lst);
-		envpc_lst = head;
+		if (s1_lst[i] == '=')
+			break ;
+		if (s1_lst[i] != s2[i])
+			return (0);
 		i++;
 	}
-	envpc_lst = head;
-	if (!envpc_lst->var)
+	if (s2[i] == '\0' && (s1_lst[i] == '\0' || s1_lst[i] == '='))
+		return (1);
+	return (0);
+}
+
+void remove_var_if_present(char *var, t_envp_cpy **envpc_lst)
+{
+	t_envp_cpy	*tmp;
+	t_envp_cpy	*tmp_previous;
+
+	
+	if (!envpc_lst || !(*envpc_lst))
+		return ;
+	tmp = *envpc_lst;
+	tmp_previous = NULL;
+	while (tmp)
 	{
-		free(envpc_lst);
-		envpc_lst = NULL;
+		if (ft_unsetcmp(tmp->var, var))
+		{
+			if (tmp_previous)
+				tmp_previous->next = tmp->next;
+			else
+				*envpc_lst = tmp->next;
+			free(tmp->var);
+			free(tmp);
+			return ;
+		}
+		tmp_previous = tmp;
+		tmp = tmp->next;
 	}
-	return (envpc_lst);
+}
+
+int	is_unset_valid_string(char *str)
+{
+	int	i;
+
+	i = 0;
+	if ( !str || str[0] == '=')
+		return (0);
+	if ((str[0] < 'A' || str[0] > 'Z')
+		&& (str[0] < 'a' || str[i] > 'z') && str[0] != '_')
+		return (0);
+	while (str[i])
+	{
+		if (!is_valid_identifier(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int unset(int ac, char **av, t_envp_cpy **envpc_lst)
+{
+	int						i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (is_unset_valid_string(av[i]))
+			remove_var_if_present(av[i], envpc_lst);
+		i++;
+	}
+	return (0);
 }

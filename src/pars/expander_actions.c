@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-//int	exit_code;
+//int	g_exit_code;
 
 int	ft_init_exp_actions(t_pars *pars)
 {

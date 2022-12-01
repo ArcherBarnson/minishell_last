@@ -6,13 +6,13 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:42:39 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:10:49 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-int	exit_code;
+int	g_exit_code;
 
 int	is_valid_history(char *str)
 {
@@ -51,7 +51,6 @@ void	fd_closer(t_shell *shell)
 
 void	reset_shell_values(t_shell *shell)
 {
-	//free_cmd_lst(&shell->cmd);
 	fd_closer(shell);
 	if (shell->cmd && shell->cmd->cmd)
 	{
@@ -87,9 +86,9 @@ void	minishell_loop(t_shell *shell)
 		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
 			if (shell->cmd && !shell->cmd->next)
-				exit_code = simple_exec(shell, shell->ms_env);
+				g_exit_code = simple_exec(shell, shell->ms_env);
 			else if (shell->cmd)
-				exit_code = pipeline(shell, shell->ms_env);
+				g_exit_code = pipeline(shell, shell->ms_env);
 		}
 		if (shell->retprompt)
 			free(shell->retprompt);
@@ -106,7 +105,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (!isatty(1) || !isatty(0) || !isatty(2))
 	{
-		write(2, "This shell doesn't handle non-interactive mode, exiting...\n", 60);
+		write(2,
+			"This shell doesn't handle non-interactive mode, exiting...\n", 60);
 		return (-1);
 	}
 	shell = minishell_init(envp);
@@ -116,6 +116,6 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	}
 	minishell_loop(shell);
-	ft_exit(1, NULL, shell);
+	ft_exit(1, NULL, shell, 0);
 	return (0);
 }

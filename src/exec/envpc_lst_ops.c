@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 07:54:56 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 13:17:49 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:14:41 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,20 @@ t_envp_cpy	*ft_envpcnew(char *var)
 	return (new);
 }
 
-void	ft_env_varadd_back(t_envp_cpy *envpc_lst, t_envp_cpy *new)
+void	ft_env_varadd_back(t_envp_cpy **envpc_lst, t_envp_cpy *new)
 {
-	if (!envpc_lst || !new)
+	if (!new || !envpc_lst)
 		return ;
-	while (envpc_lst->next)
+	if (!(*envpc_lst))
 	{
-		envpc_lst = envpc_lst->next;
+		*envpc_lst = new;
+		return ;
 	}
-	envpc_lst->next = new;
-	return ;
+	while ((*envpc_lst)->next)
+		*envpc_lst = (*envpc_lst)->next;
+	(*envpc_lst)->next = new;
 }
+
 /*void	del(void *data)
 {
 	free(data);
@@ -68,25 +71,16 @@ void	ft_envpc_clear(t_envp_cpy **lst, void (*del)(void *))
 
 void	clear_envpc_lst(t_envp_cpy *envpc_lst)
 {
-	t_envp_cpy	*head;
+	t_envp_cpy *tmp;
 
 	if (!envpc_lst)
 		return ;
-	head = envpc_lst;
-	envpc_lst = envpc_lst->next;
-	while (envpc_lst && envpc_lst->next)
+	while (envpc_lst)
 	{
-		free(head->var);
-		free(head);
-		head = envpc_lst;
+		tmp = envpc_lst;
 		envpc_lst = envpc_lst->next;
+		free(tmp->var);
+		free(tmp);
 	}
-	if (envpc_lst)
-	{
-		free(envpc_lst->var);
-		free(envpc_lst);
-	}
-	free(head->var);
-	free(head);
 	return ;
 }

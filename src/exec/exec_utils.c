@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:39:23 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:06:01 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cmds_get_n(t_shell *shell)
 	shell->cmd = shell->cmd_head;
 	if (shell->cmd->fd_in == -1)
 		shell->cmd = shell->cmd->next;
-	while (shell->cmd->next)
+	while (shell->cmd && shell->cmd->next)
 	{
 		n++;
 		shell->cmd = shell->cmd->next;
@@ -34,8 +34,8 @@ int	cmds_get_n(t_shell *shell)
 
 int	check_for_invalid_cmd(t_shell *shell)
 {
-	if (!shell->cmd->token || !shell->cmd->token[0])
-		return (0);
+	if (!shell || !shell->cmd || !shell->cmd->token || !shell->cmd->token[0])
+		return (1);
 	if (shell->cmd->token[0][0] == '.' && shell->cmd->token[0][1] == '\0')
 	{
 		write(2, shell->cmd->cmd, ft_strlen(shell->cmd->token[0]));
@@ -49,9 +49,11 @@ int	check_for_invalid_cmd(t_shell *shell)
 		return (126);
 	}
 	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-	if (command_not_found(shell))
+	/*if (command_not_found(shell) && shell->cmd->token[0][0] != '\0')
 		return (127);
-	return (0);
+	else if (command_not_found(shell) && shell->cmd->token[0][0] == '\0')
+		return (1);*/
+	return (command_not_found(shell));
 }
 
 int	command_not_found(t_shell *shell)
@@ -60,7 +62,9 @@ int	command_not_found(t_shell *shell)
 
 	tmp_fd = 0;
 	if (!is_valid_history(shell->retprompt))
-		return (-1);
+		return (1);
+	/*if (shell->cmd->token[0][0] == '\0')
+		return (1);*/
 	if (shell->cmd->cmd == NULL)
 	{
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));

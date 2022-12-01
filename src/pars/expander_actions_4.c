@@ -46,8 +46,7 @@ int	ft_exp_record_dol_part2(t_pars *pars, char *temp1)
 			pars->start_dol, pars->nb_taken_char);
 	if (ft_strcmp(temp, "?"))
 	{
-		temp2 = ft_itoa(exit_code);
-		temp = NULL;
+		temp2 = ft_itoa(g_exit_code);
 		pars->temp = ft_tempjoin(&temp1, &temp2);
 		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 	}
