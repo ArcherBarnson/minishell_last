@@ -12,6 +12,28 @@
 
 #include "../../inc/minishell.h"
 
+int	ft_exportcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] == '=' || s2[i] == '=')
+			break ;
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	if (s1[i] == '=' && !(s2[i]))
+		return (1);
+	if (s2[i] == '=' && !(s1[i]))
+		return (1);
+	return (!(s1[i] - s2[i]));
+}
+
 int	export_error(char *str, int i, int error_type)
 {
 	if (error_type == 0)
@@ -66,20 +88,5 @@ int	is_valid_string(char *str)
 			return (export_error(str, i, 1));
 		i++;
 	}
-	return (1);
-}
-
-int	ft_strccmp(char *s1, char *s2, char c)
-{
-	int	i;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (1);
-	while (s1[i] && s2[i] && s1[i] != c && s2[i] != c
-		&& s1[i] == s2[i] && s1[i] != '+')
-		i++;
-	if (s1[i] == s2[i] || (s1[i] == '+' && s2[i] == '='))
-		return (0);
 	return (1);
 }

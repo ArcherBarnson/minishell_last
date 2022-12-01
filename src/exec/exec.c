@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-extern int	exit_code;
+extern int	g_exit_code;
 
 void	dup_fds(t_shell *shell)
 {
@@ -82,11 +82,6 @@ int	simple_exec(t_shell *shell, char **envp)
 	}
 	close_cmd_fds(shell->cmd);
 	free_cmd_if(shell);
-	/*if (shell->cmd && shell->cmd->cmd)
-	{
-		free(shell->cmd->cmd);
-		shell->cmd->cmd = NULL;
-	}*/
 	return (ft_wait(pid, shell));
 }
 
@@ -100,7 +95,7 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	if (is_builtin == 2)
-		exit(exit_code);
+		exit(g_exit_code);
 	if (is_builtin == 0)
 	{
 		err_code = check_for_invalid_cmd(shell);

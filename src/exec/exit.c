@@ -62,7 +62,7 @@ int	ft_exit(int ac, char **av, t_shell *shell, int fork)
 	status = 2;
 	write(1, "exit\n", 5);
 	if (ac == 1 || av == NULL)
-		clean_exit(exit_code, shell, av, fork);
+		clean_exit(g_exit_code, shell, av, fork);
 	if (!is_exit_arg_valid(av[1]))
 		clean_exit(status, shell, av, fork);
 	if (ac > 2)

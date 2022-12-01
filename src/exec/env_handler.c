@@ -56,13 +56,13 @@ t_envp_cpy	*envp_to_lst(char **envp)
 	t_envp_cpy		*envpc_lst;
 	t_envp_cpy		*head;
 
-	i = 0;
+	i = -1;
 	if (!envp || !envp[0])
 		return (NULL);
 	envpc_lst = malloc(sizeof(t_envp_cpy));
 	if (!envpc_lst)
 		return (NULL);
-	while (envp && envp[i] != NULL)
+	while (envp && envp[++i] != NULL)
 	{
 		if (i == 0)
 		{
@@ -75,7 +75,6 @@ t_envp_cpy	*envp_to_lst(char **envp)
 			ft_env_varadd_back(&envpc_lst, ft_envpcnew(envp[i]));
 			envpc_lst = envpc_lst->next;
 		}
-		i++;
 	}
 	return (head);
 }

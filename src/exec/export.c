@@ -12,28 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-int	ft_exportcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (0);
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] == '=' || s2[i] == '=')
-			break ;
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
-	}
-	if (s1[i] == '=' && !(s2[i]))
-		return (1);
-	if (s2[i] == '=' && !(s1[i]))
-		return (1);
-	return (!(s1[i] - s2[i]));
-}
-
 char	*save_env_var(char *var)
 {
 	int			i;
@@ -86,13 +64,11 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 	env_var_buf = ft_strdup(envpc_lst->var);
 	if (mode == 1)
 	{
-		printf("MODE 1 : on va supprimer %s et replace par %s: \n", envpc_lst->var, var);
 		free(envpc_lst->var);
 		envpc_lst->var = ft_strdup(var);
 	}
 	if (mode == 2)
 	{
-		printf("MODE 2\n");
 		append_var(var, env_var_buf, envpc_lst);
 	}
 	free(env_var_buf);
@@ -127,13 +103,9 @@ int	export(t_shell *shell, char **av, t_envp_cpy **envpc_lst)
 		if (mode)
 		{
 			if (*envpc_lst && env_var_exists_export(av[i], *envpc_lst))
-			{
-				printf("ON MODIFIE %s\n", av[i]);
 				mod_env_var(av[i], *envpc_lst, mode);
-			}
 			else
 			{
-				printf("ON RAJOUTE %s\n", av[i]);
 				tmp = ft_strdup(av[i]);
 				ft_env_varadd_back(envpc_lst,
 					ft_envpcnew(tmp));

@@ -23,7 +23,6 @@ int	ft_wait(int *pid, t_shell *shell)
 	ncmds = cmds_get_n(shell);
 	while (i < ncmds)
 	{
-		printf("wait pid = %d\n", pid[i]);
 		waitpid(pid[i], &exit_code, 0);
 		if (WIFSIGNALED(exit_code))
 		{
@@ -33,7 +32,6 @@ int	ft_wait(int *pid, t_shell *shell)
 		}
 		else if (WIFEXITED(exit_code))
 			exit_code = WEXITSTATUS(exit_code);
-		printf("code = %d\n", exit_code);
 		i++;
 	}
 	free(pid);

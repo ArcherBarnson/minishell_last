@@ -26,7 +26,6 @@ int	ft_read_prompt(t_shell *shell)
 	temp = NULL;
 	if (ret)
 	{
-		printf("I am here\n");
 		return (ret);
 	}
 	shell->hdoc_tab = pars.hdoc_tab;
@@ -46,9 +45,7 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 	ft_general_initialize(lex, pars);
 	lex->user_input_raw = shell->retprompt;
 	pars->ms_env = shell->ms_env;
-	//printf("check shell->retprompt : %s\n", lex.user_input);
 	lex->user_input = ft_strdup(ft_initial_expansion(lex, pars));
-	//printf("expansion : %s\n", lex.user_input);
 	free(pars->token->id);
 	pars->token->id = NULL;
 	free(pars->token);

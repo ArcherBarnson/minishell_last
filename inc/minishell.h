@@ -87,7 +87,7 @@ typedef int						(*t_exp_func)(t_pars *);
 typedef int						(*t_redir_func)(t_pars *);
 typedef struct s_envp_cpy		t_envp_cpy;
 
-extern int						exit_code;
+extern int						g_exit_code;
 
 typedef struct s_shell
 {

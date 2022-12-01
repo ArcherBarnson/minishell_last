@@ -12,7 +12,7 @@
 
 #include "inc/minishell.h"
 
-int	exit_code;
+int	g_exit_code;
 
 int	is_valid_history(char *str)
 {
@@ -51,7 +51,6 @@ void	fd_closer(t_shell *shell)
 
 void	reset_shell_values(t_shell *shell)
 {
-	//free_cmd_lst(&shell->cmd);
 	fd_closer(shell);
 	if (shell->cmd && shell->cmd->cmd)
 	{
@@ -87,9 +86,9 @@ void	minishell_loop(t_shell *shell)
 		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
 		{
 			if (shell->cmd && !shell->cmd->next)
-				exit_code = simple_exec(shell, shell->ms_env);
+				g_exit_code = simple_exec(shell, shell->ms_env);
 			else if (shell->cmd)
-				exit_code = pipeline(shell, shell->ms_env);
+				g_exit_code = pipeline(shell, shell->ms_env);
 		}
 		if (shell->retprompt)
 			free(shell->retprompt);
@@ -106,7 +105,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (!isatty(1) || !isatty(0) || !isatty(2))
 	{
-		write(2, "This shell doesn't handle non-interactive mode, exiting...\n", 60);
+		write(2,
+			"This shell doesn't handle non-interactive mode, exiting...\n", 60);
 		return (-1);
 	}
 	shell = minishell_init(envp);
