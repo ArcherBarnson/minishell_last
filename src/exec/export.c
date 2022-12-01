@@ -59,6 +59,7 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 {
 	char	*env_var_buf;
 
+	printf("mode = %d\n", mode);
 	while (envpc_lst && !ft_exportcmp(envpc_lst->var, var))
 		envpc_lst = envpc_lst->next;
 	env_var_buf = ft_strdup(envpc_lst->var);

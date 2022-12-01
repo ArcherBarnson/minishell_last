@@ -36,7 +36,10 @@ int	ft_read_prompt(t_shell *shell)
 	shell->hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
+<<<<<<< Updated upstream
 	//printf("last_infile_mode = %d\n", pars.last_infile_mode);
+=======
+>>>>>>> Stashed changes
 	ft_tklist_freeall(&lex);
 	ft_pars_freeall(&pars);
 	return (0);

@@ -70,19 +70,51 @@ char	*get_home_path(char **envp)
 
 void	update_oldpwd(t_shell *shell, t_envp_cpy **envpc_lst)
 {
-	char	cwd[4096];
+	char	*cwd;
+	char	**export_cwd;
+	t_envp_cpy	*tmp;
+
+	export_cwd = malloc(sizeof(char *) * 3);
+	if (!export_cwd)
+		return ;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		tmp = *envpc_lst;
+		while (tmp->next)
+		{
+			if (ft_strncmp(tmp->var, "PWD=", 4) == 0)
+				cwd = ft_strdup(tmp->var + 4);
+			tmp = tmp->next;
+		}
+	}
+	export_cwd[0] = ft_strdup("export");
+	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
+	export_cwd[2] = NULL;
+	export(shell, export_cwd, envpc_lst);
+	free(export_cwd[0]);
+	free(export_cwd[1]);
+	free(export_cwd);
+	free(cwd);
+}
+
+void	update_pwd(t_shell *shell, t_envp_cpy **envpc_lst)
+{
+	char	*cwd;
 	char	**export_cwd;
 
 	export_cwd = malloc(sizeof(char *) * 3);
 	if (!export_cwd)
 		return ;
-	getcwd(cwd, 4096);
-	export_cwd[0] = NULL;
-	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
+	cwd = getcwd(NULL, 0);
+	export_cwd[0] = ft_strdup("export");
+	export_cwd[1] = ft_strjoin("PWD=", cwd);
 	export_cwd[2] = NULL;
 	export(shell, export_cwd, envpc_lst);
+	free(export_cwd[0]);
 	free(export_cwd[1]);
 	free(export_cwd);
+	free(cwd);
 }
 
 int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
@@ -99,6 +131,7 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
 		}
 		update_oldpwd(shell, envpc_lst);
 		chdir(home);
+		update_pwd(shell, envpc_lst);
 		free(home);
 		return (0);
 	}
@@ -111,5 +144,6 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
 	free(home);
 	update_oldpwd(shell, envpc_lst);
 	chdir(path[1]);
+	update_pwd(shell, envpc_lst);
 	return (0);
 }

@@ -56,11 +56,11 @@ void	reset_shell_values(t_shell *shell)
 	{
 		free(shell->cmd->cmd);
 		shell->cmd->cmd = NULL;
-	}		
+	}
 	ft_lstclear(&shell->cmd, del);
 	free_tab(shell->ms_env);
-	shell->ms_env = lst_to_envp(shell->envpc);
-	clear_envpc_lst(shell->envpc);
+	shell->ms_env = lst_to_envp(shell->envpc_head);
+	clear_envpc_lst(shell->envpc_head);
 	shell->retprompt = NULL;
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
