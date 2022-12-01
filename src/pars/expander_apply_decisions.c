@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 03:28:48 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:49:13 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int	ft_exp_apply_decision(t_pars *pars)
 	pars->new_exp_decision = pars->exp_decision[arg1][arg2];
 	if (pars->initial_mode)
 		ft_initial_mode_2(pars, &arg2);
+	if (pars->there_hdoc && pars->new_exp_decision.buffer_action == EXP_DOL
+		&& pars->new_exp_decision.char_action == EXP_SKIP)
+		pars->new_exp_decision =
+			(t_exp_proc){EXP_KEEP, EXP_TAKE, STD_EXP_RD_MD, TOK_WORD};
 	ft_debug_exp(pars);
 	pars->ft_exp[pars->new_exp_decision.buffer_action](pars);
 	return (pars->ft_exp[pars->new_exp_decision.char_action](pars));

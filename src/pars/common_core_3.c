@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:19:52 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:27:29 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:35:51 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ int	ft_redirector(t_pars *pars)
 			if (pars->redir && pars->j++)
 				pars->redir = 0;
 			if (pars->r)
+			{
+				printf("I am here redir\n");
 				return (pars->r);
+			}
+			if (pars->last_infile_mode == 0)
+				pars->command->fd_in = pars->mode0_fd_in;
+			else if (pars->last_infile_mode == 1)
+				pars->command->fd_in = pars->mode1_fd_in;
 			if (pars->command->nb_of_tokens)
 				pars->command->token = pars->command->token->next;
 		}
@@ -84,6 +91,15 @@ int	ft_inner_loop_expander(t_pars *pars)
 	ret = 0;
 	while (1)
 	{
+		if (pars->token->type == TOK_HDOC)
+		{
+			pars->lock_there_hdoc = 1;
+			pars->there_hdoc = 1;
+		}
+		else if (!pars->lock_there_hdoc)
+			pars->there_hdoc = 0;
+		else
+			pars->lock_there_hdoc = 0;
 		if (pars->token->type == TOK_WORD)
 			ret = ft_exp_apply_decision(pars);
 		if (pars->parser_text[0] == '\0' || pars->parser_text[0] == '\n')

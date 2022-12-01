@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:54:59 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 05:39:52 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:07:35 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	ft_redir_in(t_pars *pars)
 		ft_change_hdoc_filename(pars);
 	ret = ft_open_infile(pars, pars->command->token->next->id);
 	if (!ret && pars->command->fd_in != -1)
+	{
 			pars->command->fd_in = pars->fd_in;
+			pars->mode0_fd_in = pars->fd_in;
+	}
 	else
 		pars->command->fd_in = -1;
 	return (0);
@@ -60,7 +63,10 @@ int	ft_redir_heredoc(t_pars *pars)
 	}
 	ret = ft_open_heredoc(pars, pars->command->token->next->id);
 	if (!ret)
+	{
 		pars->command->fd_in = pars->fd_in;
+		pars->mode1_fd_in = pars->fd_in;
+	}
 	else
 		pars->command->fd_in = -1;
 	return (ret);

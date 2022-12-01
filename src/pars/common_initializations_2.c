@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:29:48 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:29:59 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:33:59 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_general_initialize(t_lex *lex, t_pars *pars)
 
 int	ft_init_expander(t_pars *pars)
 {
+	pars->there_hdoc = 0;
+	pars->lock_there_hdoc = 0;
 	pars->offset_start = 0;
 	pars->start_std = 0;
 	pars->start_dol = 0;
