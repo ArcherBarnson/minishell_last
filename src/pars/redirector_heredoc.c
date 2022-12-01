@@ -15,18 +15,38 @@
 int	ft_open_heredoc(t_pars *pars, char *delim)
 {
 	char	*file_name;
+	int		pid;
+	int		status;
 
 	pars->hdoc_i++;
 	file_name = ft_generate_valid_hdoc_name(pars);
 	pars->fd_in = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (pars->fd_in < 0)
 		return (ft_msgerr(ERR_FILEHDOC));
-	ft_inner_loop_heredoc(pars, delim);
+	pid = fork();
+	if (pid == 0)
+	{
+		free(file_name);
+		signal(SIGINT, sigint_heredoc);
+		ft_inner_loop_heredoc(pars, delim);
+		exit(0);
+	}
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	if (WEXITSTATUS(status) == 130)
+	{
+		printf("ctrl c catch ?? ");
+		// on se casse de la commande !!!!!
+		// go back to prompt
+		//set des variables a NULL; // clear qqchose ?? 
+		return (0);
+	}
 	close(pars->fd_in);
 	pars->fd_in = open(file_name, O_RDWR);
 	pars->hdoc_list = ft_hdoc_addnext(pars->hdoc_list,
 			ft_new_hdoc(file_name, pars->fd_in));
 	free(file_name);
+	signal(SIGINT, sigint_handler);
 	return (0);
 }
 

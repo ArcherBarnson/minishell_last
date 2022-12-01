@@ -69,7 +69,6 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 	ft_general_initialize(lex, pars);
 	lex->user_input_raw = shell->retprompt;
 	pars->ms_env = shell->ms_env;
-<<<<<<< HEAD
 	//printf("check shell->retprompt : %s\n", lex.user_input);
 	printf("there_hdoc : %d\n", ft_there_hdoc(pars, lex->user_input_raw));  //SUPPR
 	if (!pars->there_hdoc)
@@ -82,13 +81,6 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 		free(pars->token);
 		pars->token = NULL;
 	}
-=======
-	lex->user_input = ft_strdup(ft_initial_expansion(lex, pars));
-	free(pars->token->id);
-	pars->token->id = NULL;
-	free(pars->token);
-	pars->token = NULL;
->>>>>>> 473a7d00247100b38a1f07703c232792253c86e9
 	return (0);
 }
 

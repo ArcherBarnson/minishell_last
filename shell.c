@@ -110,6 +110,7 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	}
 	shell = minishell_init(envp);
+	free_heredoc(shell, 0);
 	if (!shell)
 	{
 		write(2, "Init error, exiting\n", 20);

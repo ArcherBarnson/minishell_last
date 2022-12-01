@@ -625,6 +625,7 @@ int				ft_copy_hdoc_new_name(t_pars *pars);
 int				ft_update_hdoc_list(t_pars *pars);
 int				ft_update_command_fds(t_pars *pars);
 int				ft_debug_hdoc_list(t_hdoc *hdoc);
+t_shell			*free_heredoc(t_shell *shell, int mode);
 
 /* ************************************************************************** */
 /*                           redirector_file_manager.c                        */
@@ -899,6 +900,7 @@ void			sigquit_ignore(int sig);
 int				check_builtins(t_shell *shell);
 int				exec_builtin(t_shell *shell, int fork);
 void			sigint_handler(int sig);
+void			sigint_heredoc(int sig);
 int				start_shell(t_shell *shell);
 int				is_valid_history(char *str);
 int				command_not_found(t_shell *shell);
@@ -930,5 +932,6 @@ t_envp_cpy		*ft_envpcnew(char *var);
 char			*find_path(char *cmd, char **env_paths);
 char			**get_env_paths(char **envp);
 t_shell			*minishell_init(char **envp);
+
 
 #endif
