@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 19:09:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 00:55:48 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,7 +440,7 @@ struct s_lex
 	char		*temp;
 	int			nb_taken_char;
 	char		*user_input;
-	char		*user_input_2;
+	char		*user_input_raw;
 	char		forbidden[NB_FORBIDDEN];
 	t_lex_proc	prev_decision;
 	t_lex_proc	new_decision;
@@ -498,6 +498,7 @@ struct s_pars
 	int				sq_opened;
 	int				ret;
 	int				redir;
+	int				initial_mode;
 };
 
 struct s_cmd
@@ -717,25 +718,23 @@ int				ft_init_redir_decision_3(t_pars *pars);
 /*                         lexer_apply_decision.c                             */
 /* ************************************************************************** */
 int				ft_lex_apply_decision(t_lex *lex);
-int				ft_debug_lex(t_lex *lex);
 
 /* ************************************************************************** */
 /*                         parser_apply_decision.c                            */
 /* ************************************************************************** */
 int				ft_pars_apply_decision(t_pars *pars);
-int				ft_debug_pars(t_pars *pars);
 
 /* ************************************************************************** */
 /*                        expander_apply_decision.c                           */
 /* ************************************************************************** */
 int				ft_exp_apply_decision(t_pars *pars);
-int				ft_debug_exp(t_pars *pars);
+int				ft_initial_mode_1(t_pars *pars, t_char_types *arg2);
+int				ft_initial_mode_2(t_pars *pars, t_char_types *arg2);
 
 /* ************************************************************************** */
 /*                       redirector_apply_decision.c                          */
 /* ************************************************************************** */
 int				ft_redir_apply_decision(t_pars *pars);
-int				ft_debug_redir(t_pars *pars);
 
 /* ************************************************************************** */
 /*                            lexer_actions.c                                 */

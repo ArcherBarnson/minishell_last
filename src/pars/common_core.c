@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:33:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 19:30:25 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 00:57:53 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,24 @@ int	ft_read_prompt(t_shell *shell)
 {
 	t_lex		lex;
 	t_pars		pars;
-	//char		*temp;
+	char		*temp;
 
 	ft_bzero(&lex, sizeof(t_lex));
 	ft_bzero(&pars, sizeof(t_pars));
 	ft_general_initialize(&lex, &pars);
-	lex.user_input = shell->retprompt;
+	lex.user_input_raw = shell->retprompt;
 	pars.ms_env = shell->ms_env;
 	//printf("check shell->retprompt : %s\n", lex.user_input);
-	//temp = lex.user_input;
-	//lex.user_input = ft_strdup(ft_initial_expansion(&lex, &pars));
-	//free(temp);
-	//printf("expansion : %s\n", lex.user_input);
+	lex.user_input = ft_strdup(ft_initial_expansion(&lex, &pars));
+	temp = lex.user_input;
+	printf("expansion : %s\n", lex.user_input);
+	//printf("HELLO\n");
+	free(pars.token->id);
+	pars.token->id = NULL;
+	free(pars.token);
+	pars.token = NULL;
 	//free(lex.user_input);
 	//lex.user_input = NULL;
-	//free(pars.parser_text);
-	//printf("HELLO\n");
-	//pars.parser_text = NULL;
-	//free(pars.token->id);
-	//pars.token->id = NULL;
-	//free(pars.token);
-	//pars.token = NULL;
 	if (ft_around_lexer(&lex) || ft_debug_content(&lex, &pars, "lex"))
 		return (ft_error_return(&lex, &pars, shell));
 	if (ft_around_parser(&lex, &pars) || ft_debug_content(&lex, &pars, "pars"))
@@ -51,6 +48,8 @@ int	ft_read_prompt(t_shell *shell)
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_tklist_freeall(&lex);
+	free(temp);
+	temp = NULL;
 	shell->pars = &pars;
 	//ft_execfree_freeall(&pars);
 	ft_pars_freeall(&pars);
@@ -177,7 +176,7 @@ int	ft_expander(t_pars *pars)
 			pars->token = pars->command->token;
 			ft_init_expander(pars);
 			pars->before_dol_mode = 0;
-			pars->parser_text = ft_strndup(pars->token->id, 0);
+			pars->parser_text = ft_strdup(pars->token->id);
 			temp = pars->parser_text;
 			ret = ft_inner_loop_expander(pars);
 			free(temp);

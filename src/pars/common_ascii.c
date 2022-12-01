@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/10/12 18:20:00 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 00:24:51 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	ft_char_type(char c)
 		return (END_CHAR);
 	if (c == DOLLAR)
 		return (DOL_CHAR);
-	if (c == ESCP)
-		return (ERR_CHAR);
+//	if (c == ESCP)
+//		return (ERR_CHAR);
 	else
 		return (STD_CHAR);
 }

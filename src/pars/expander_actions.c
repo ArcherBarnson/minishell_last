@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 19:11:47 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 00:49:25 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,24 @@ int	ft_init_exp_actions(t_pars *pars)
 char	*ft_initial_expansion(t_lex *lex, t_pars *pars)
 {
 	int		ret;
+	char	*temp;
 
+	ret = 0;
 	ft_init_expander(pars);
-	pars->parser_text = ft_strdup(lex->user_input);
+	pars->initial_mode = 1;
+	pars->parser_text = ft_strdup(lex->user_input_raw);
+	temp = pars->parser_text;
 	pars->token = ft_token_addnext(pars->token, ft_new_token(pars->parser_text));
 	pars->token->type = TOK_WORD;
 	pars->nb_of_tokens++;
-	//pars->token->type = lex->prev_decision.token_type;
 	pars->before_dol_mode = 0;
 	ret = ft_inner_loop_expander(pars);
 	if (ret)
 		return (NULL);
 	ft_init_expander(pars);
+	pars->initial_mode = 0;
+	free(temp);
+	temp = NULL;
 	return (pars->token->id);
 }
 
@@ -216,7 +222,7 @@ int	ft_exp_record_dol(t_pars *pars)
 	}
 	else if (pars->new_exp_decision.exp_read_mode == DOL_EXP_RD_MD)
 	{
-		temp2 = ft_strdup("");
+		temp2 = ft_strdup("$$");
 		pars->temp = ft_tempjoin(&temp1, &temp2);
 		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 	}
