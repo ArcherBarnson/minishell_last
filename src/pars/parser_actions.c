@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 21:46:21 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 04:45:39 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,50 +63,4 @@ int	ft_pars_keep(t_pars *pars)
 {
 	(void)pars;
 	return (0);
-}
-
-int	ft_pars_drop(t_pars *pars)
-{
-	(void)pars;
-	return (0);
-}
-
-int	ft_pars_take(t_pars *pars)
-{
-	if (pars->prev_pars_decision.pars_read_mode == NEW_PARS_RD_MD
-		|| pars->prev_pars_decision.pars_read_mode == PIPE_PARS_RD_MD)
-	{
-		ft_pars_new(pars);
-	}
-	else
-	{
-		pars->command->token = ft_token_addnext(pars->command->token,
-				ft_new_token(pars->token->id));
-		pars->command->nb_of_tokens++;
-	}
-	pars->command->token->type = pars->token->type;
-	return (0);
-}
-
-int	ft_pars_skip(t_pars *pars)
-{
-	(void)pars;
-	return (0);
-}
-
-int	ft_pars_record(t_pars *pars)
-{
-	(void)pars;
-	return (0);
-}
-
-int	ft_pars_end(t_pars *pars)
-{
-	(void)pars;
-	return (0);
-}
-
-int	ft_pars_err(t_pars *pars)
-{
-	return (1 + pars->new_pars_decision.pars_read_mode);
 }

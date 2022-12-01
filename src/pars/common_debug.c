@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:15:20 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:03:18 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ int	ft_debug_expander_content(t_pars *pars)
 	printf("\nEXPANDER CONTENT\n");
 	while (i++ < pars->nb_of_commands)
 	{
-		printf("------> starting command id <\033[0m%d\033[0m>\n", pars->command->id);
+		printf("------> starting command id <\033[0m%d\033[0m>\n",
+			pars->command->id);
 		while (j++ < pars->command->nb_of_tokens)
 		{
 			printf("\033[0m%s \033[0m<%s>\n", pars->command->token->id,

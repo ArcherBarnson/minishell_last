@@ -6,21 +6,32 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/11/30 17:45:55 by bgrulois         ###   ########.fr        #
+#    Updated: 2022/12/01 05:01:20 by mbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .DEFAULT_GOAL	=	all
 
-PARSRCS		=	common_core.c common_initializations.c common_memory.c \
-				common_error.c common_labels.c \
-				common_ascii.c common_debug.c \
+PARSRCS		=	common_core.c common_core_2.c common_core_3.c \
+				common_initializations.c common_initializations_2.c \
+				common_memory.c common_error.c common_ascii.c common_debug.c \
+				common_labels.c common_labels_2.c common_labels_3.c \
 				lexer_list.c parser_list.c \
-				lexer_init_decisions.c lexer_apply_decision.c lexer_actions.c \
-				parser_init_decisions.c parser_apply_decision.c parser_actions.c \
-				expander_init_decisions.c expander_apply_decisions.c expander_actions.c \
-				redirector_init_decisions.c redirector_apply_decisions.c redirector_actions.c \
-				redirector_file_manager.c redirector_heredoc.c \
+				lexer_init_decisions.c lexer_init_decisions_2.c \
+				lexer_apply_decision.c \
+				lexer_actions.c lexer_actions_2.c \
+				parser_actions.c parser_actions_2.c parser_actions_3.c \
+				parser_init_decisions.c parser_init_decisions_2.c \
+				parser_apply_decision.c \
+				expander_init_decisions.c expander_init_decisions_2.c \
+				expander_apply_decisions.c \
+				expander_actions.c expander_actions_2.c expander_actions_3.c \
+				expander_actions_4.c expander_actions_5.c \
+				redirector_init_decisions.c redirector_apply_decisions.c \
+				redirector_actions.c redirector_actions_2.c redirector_actions_3.c \
+				redirector_file_manager.c \
+				redirector_heredoc.c redirector_heredoc_2.c redirector_heredoc_3.c \
+				redirector_heredoc_4.c \
 				transformer_list.c \
 				#tests_main.c
 EXSRCS		=	init.c  memory_tools_utils.c memory_tools.c  misc.c \

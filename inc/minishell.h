@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 00:55:48 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 03:32:39 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,6 +499,11 @@ struct s_pars
 	int				ret;
 	int				redir;
 	int				initial_mode;
+	int				i;
+	int				j;
+	int				k;
+	int				count;
+	int				r;
 };
 
 struct s_cmd
@@ -549,8 +554,9 @@ struct s_hdoc_tab
 /* ************************************************************************** */
 /*                                 common_core.c                              */
 /* ************************************************************************** */
-//int				main(void);
 int				ft_read_prompt(t_shell *shell);
+int				ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell);
+int				ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_around_lexer(t_lex *lex);
 int				ft_around_parser(t_lex *lex, t_pars *pars);
@@ -575,6 +581,7 @@ int				ft_init_first_lex_decisions(t_lex *lex);
 int				ft_init_first_pars_decisions(t_pars *pars);
 int				ft_general_initialize(t_lex *lex, t_pars *pars);
 int				ft_init_expander(t_pars *pars);
+int				ft_init_pars_counts(t_pars *pars);
 
 /* ************************************************************************** */
 /*                               common_debug.c                               */
@@ -740,7 +747,6 @@ int				ft_redir_apply_decision(t_pars *pars);
 /*                            lexer_actions.c                                 */
 /* ************************************************************************** */
 int				ft_init_lex_actions(t_lex *lex);
-int				ft_check_forbidden_cmb(char *user_input);
 int				ft_lex_none(t_lex *lex);
 int				ft_lex_catch(t_lex *lex);
 int				ft_lex_keep(t_lex *lex);
@@ -784,6 +790,8 @@ char			*ft_init_exp_temp(t_pars *pars);
 char			*ft_tempjoin(char **temp1, char **temp2);
 char			*ft_getenv(char *temp2, t_pars *pars);
 int				ft_exp_record_dol(t_pars *pars);
+int				ft_exp_record_dol_part2(t_pars *pars, char *temp1);
+int				ft_exp_record_dol_part3(t_pars *pars, char *temp1);
 int				ft_exp_dol(t_pars *pars);
 int				ft_exp_eq(t_pars *pars);
 int				ft_exp_excd(t_pars *pars);
