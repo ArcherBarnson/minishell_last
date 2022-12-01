@@ -6,94 +6,64 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:36:27 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 14:37:15 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:41:37 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_modif_env(char *var, char *tmp2, char *cwd, int sh)
 {
-	long	nb;
-	char	c;
-
-	nb = (long)n;
-	if (n < 0)
+	if (ft_strncmp(var, "PWD", 3) == 0)
 	{
-		write(fd, "-", 1);
-		nb = (long)-n;
-		if (n == -2147483648)
-		{
-			write (fd, "2147483648", 10);
-			return ;
-		}
+		cwd = NULL;
+		cwd = getcwd(cwd, 0);
+		tmp2 = ft_strjoin("PWD=", cwd);
+		free(var);
+		var = ft_strdup(tmp2);
+		free(tmp2);
 	}
-	if (nb > 9)
-		ft_putnbr_fd(nb / 10, fd);
-	c = nb % 10 + '0';
-	write(fd, &c, 1);
+	if (ft_strncmp(var, "SHLVL", 5) == 0)
+		ft_shlvl(var, tmp2, sh);
 }
 
-//faire same pour shlvl]
+void	ft_pas_d_env(char *cwd, char *tmp2, t_envp_cpy **lst)
+{
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	tmp2 = ft_strjoin("PWD=", cwd);
+	ft_env_varadd_back(lst,
+		ft_envpcnew(tmp2));
+	free(tmp2);
+	tmp2 = ft_strdup("SHLVL=1");
+	ft_env_varadd_back(lst,
+		ft_envpcnew(tmp2));
+	free(tmp2);
+}
+
 void	add_pwd(t_envp_cpy **lst)
 {
-	char	*cwd;
-	t_envp_cpy *tmp;
-	char	*tmp2;
-	int		sh;
+	char		*cwd;
+	t_envp_cpy	*tmp;
+	char		*tmp2;
+	int			sh;
 
 	tmp = *lst;
+	tmp2 = NULL;
+	cwd = NULL;
+	sh = 0;
 	if (tmp)
 	{
 		while (tmp)
 		{
-			if (ft_strncmp(tmp->var , "PWD", 3) == 0)
-			{
-				cwd = NULL;
-				cwd = getcwd(cwd, 0); // can crash
-				tmp2 = ft_strjoin("PWD=", cwd);
-				free(tmp->var);
-				tmp->var = ft_strdup(tmp2);
-				free(tmp2);
-			}
-			if (ft_strncmp(tmp->var , "SHLVL", 5) == 0)
-			{
-				tmp2 = ft_strdup(tmp->var + 6);
-				sh = ft_atoll(tmp2) + 1;
-				if (sh > 999)
-				{
-					write(2, "minishell: warning: shell level ", 32);
-					ft_putnbr_fd(sh, 2);
-					write(2, " too high, resetting to 1\n", 26);
-					sh = 1;
-				}
-				else if (sh < 0)
-					sh = 0;
-				free(tmp2);
-				tmp2 = ft_itoa(sh);
-				free(tmp->var);
-				tmp->var = ft_strjoin("SHLVL=", tmp2);
-				free(tmp2);
-			}
+			ft_modif_env(tmp->var, tmp2, cwd, sh);
 			tmp = tmp->next;
 		}
 		lst = &tmp;
 		free(cwd);
 	}
 	else if (!(*lst))
-	{
-		cwd = NULL;
-		cwd = getcwd(cwd, 0); // can crash
-		tmp2 = ft_strjoin("PWD=", cwd);
-		ft_env_varadd_back(lst,
-			ft_envpcnew(tmp2));
-		free(tmp2);
-		tmp2 = ft_strdup("SHLVL=1");
-		ft_env_varadd_back(lst,
-		ft_envpcnew(tmp2));
-		free(tmp2);
-	}
-	// free(tmp);
+		ft_pas_d_env(cwd, tmp2, lst);
 }
 
 void	minishell_assign(t_shell *shell, char **envp)
@@ -104,7 +74,6 @@ void	minishell_assign(t_shell *shell, char **envp)
 	add_pwd(&(shell->envpc));
 	free_tab(shell->ms_env);
 	shell->ms_env = lst_to_envp(shell->envpc);
-
 	return ;
 }
 

@@ -65,7 +65,7 @@ int	is_env_var(char *str)
 int	is_valid_identifier(char c)
 {
 	if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z')
-		&& (c < '0' || c > '9') && c != '_')
+		&& (c < '0' || c > '9') && c != '_' && c == '+')
 		return (0);
 	return (1);
 }
@@ -82,8 +82,6 @@ int	is_valid_string(char *str)
 		return (export_error(str, 0, 1));
 	while (str[i] && str[i] != '=')
 	{
-		if (str[i + 1] == '=' && str[i] == '+')
-			return (2);
 		if (!is_valid_identifier(str[i]))
 			return (export_error(str, i, 1));
 		i++;
