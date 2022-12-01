@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:54:59 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 21:25:39 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:46:05 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ int	ft_redir_heredoc(t_shell *shell)
 		shell->pars->command->fd_in = shell->pars->fd_in;
 		shell->pars->mode1_fd_in = shell->pars->fd_in;
 	}
-	else if (g_exit_code != 130)
-		shell->pars->command->fd_in = -1;
 	else
-		ret = 1;
+		shell->pars->command->fd_in = -1;
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:41:08 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:42:44 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_init_exp_decision_3(t_pars *pars)
 		= (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[SPL_EXP_RD_MD][DOL_CHAR]
 		= (t_exp_proc){EXP_KEEP, EXP_TAKE, SPL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[SPL_EXP_RD_MD][END_CHAR]
+		= (t_exp_proc){EXP_NONE, EXP_SKIP, CMB_ERR_EXP_RD_MD, TOK_ERR_SPL};
 	return (0);
 }
 
@@ -89,6 +91,8 @@ int	ft_init_exp_decision_4(t_pars *pars)
 		= (t_exp_proc){EXP_KEEP, EXP_TAKE, DBL_EXP_RD_MD, TOK_WORD};
 	pars->exp_decision[DBL_EXP_RD_MD][DOL_CHAR]
 		= (t_exp_proc){EXP_DOL, EXP_SKIP, DOL_EXP_RD_MD, TOK_WORD};
+	pars->exp_decision[DBL_EXP_RD_MD][END_CHAR]
+		= (t_exp_proc){EXP_NONE, EXP_SKIP, CMB_ERR_EXP_RD_MD, TOK_ERR_SPL};
 	return (0);
 }
 

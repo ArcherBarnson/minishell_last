@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 21:11:45 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:06:56 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -756,6 +756,7 @@ int				ft_redir_apply_decision(t_shell *shell);
 /* ************************************************************************** */
 /*                            lexer_actions.c                                 */
 /* ************************************************************************** */
+int				ft_check_forbidden_cmb(char *user_input);
 int				ft_init_lex_actions(t_lex *lex);
 int				ft_lex_none(t_lex *lex);
 int				ft_lex_catch(t_lex *lex);

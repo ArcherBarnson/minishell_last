@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 23:03:57 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:36:59 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 
 int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 {
-	if (ft_around_lexer(lex)) // || ft_debug_content(lex, pars, "lex"))
+	if (ft_around_lexer(lex) || ft_debug_content(lex, pars, "lex"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_around_parser(lex, pars)) // || ft_debug_content(lex, pars, "pars"))
+	if (ft_around_parser(lex, pars) || ft_debug_content(lex, pars, "pars"))
 		return (ft_error_return(lex, pars, shell));
 	pars->there_hdoc = 0;
 	pars->lock_there_hdoc = 0;
-	if (ft_expander(pars)) // || ft_debug_content(lex, pars, "exp"))
+	if (ft_expander(pars) || ft_debug_content(lex, pars, "exp"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_around_redirector(lex, pars, shell))
-		// || ft_debug_content(lex, pars, "redir"))
+	if (ft_around_redirector(lex, pars, shell)
+		|| ft_debug_content(lex, pars, "redir"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_transformer(pars)) // || ft_debug_content(lex, pars, "trans"))
+	if (ft_transformer(pars) || ft_debug_content(lex, pars, "trans"))
 		return (ft_error_return(lex, pars, shell));
 	return (0);
 }

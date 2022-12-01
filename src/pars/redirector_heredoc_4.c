@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 05:00:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 21:06:13 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:33:29 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,4 @@ int	ft_debug_hdoc_list(t_hdoc *hdoc)
 		}
 	}
 	return (0);
-}
-
-t_shell	*free_heredoc(t_shell *shell, int mode)
-{
-	static t_shell	*save_shell;
-
-	if (mode == 0)
-		save_shell = shell;
-	return (save_shell);
-}
-
-void	sigint_heredoc(int sig)
-{
-	(void)sig;
-	write(0, "\0", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	// reste des leaks ???? 
-	free_all(free_heredoc(NULL, 1));
-	exit(130);
-	return ;
 }
