@@ -6,28 +6,17 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:19:52 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 14:35:51 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:18:24 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_around_redirector(t_lex *lex, t_pars *pars)
-{
-	if (ft_redirector(pars))
-	{
-		ft_tklist_freeall(lex);
-		ft_pars_freeall(pars);
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_redirector(t_pars *pars)
+int	ft_redirector(t_pars *pars, t_shell *shell)
 {
 	ft_init_pars_counts(pars);
 	ft_init_redir_decisions(pars);
-	ft_init_redir_actions(pars);
+	ft_init_redir_actions(shell);
 	while (pars->i++ < pars->nb_of_commands)
 	{
 		pars->k = pars->command->nb_of_tokens;
@@ -35,25 +24,33 @@ int	ft_redirector(t_pars *pars)
 		while (pars->j++ < pars->k)
 		{
 			pars->token = pars->command->token;
-			pars->r = ft_redir_apply_decision(pars);
-			if (pars->redir && pars->j++)
-				pars->redir = 0;
+			pars->r = ft_redir_apply_decision(shell);
+			//if (pars->redir && pars->j++)
+			//	pars->redir = 0;
 			if (pars->r)
-			{
-				printf("I am here redir\n");
 				return (pars->r);
-			}
-			if (pars->last_infile_mode == 0)
-				pars->command->fd_in = pars->mode0_fd_in;
-			else if (pars->last_infile_mode == 1)
-				pars->command->fd_in = pars->mode1_fd_in;
-			if (pars->command->nb_of_tokens)
-				pars->command->token = pars->command->token->next;
+			ft_finilize_fd_in(pars);
 		}
 		pars->command = pars->command->next;
 		pars->count += pars->command->nb_of_tokens;
 		pars->j = 0;
 	}
+	return (0);
+}
+
+int	ft_finilize_fd_in(t_pars *pars)
+{
+	if (pars->fd_in && pars->last_infile_mode == 0)
+		pars->command->fd_in = pars->mode0_fd_in;
+	else if (pars->fd_in && pars->last_infile_mode == 1)
+	{
+		pars->command->fd_in = pars->mode1_fd_in;
+		if (pars->mode0_fd_in)
+			close (pars->mode0_fd_in);
+	}
+	if (pars->command->nb_of_tokens)
+		pars->command->token = pars->command->token->next;
+	pars->fd_in = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 14:33:44 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:11:45 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 
 typedef struct s_lex			t_lex;
 typedef struct s_pars			t_pars;
+typedef struct s_shell			t_shell;
 typedef struct s_token			t_token;
 typedef struct s_command		t_command;
 typedef struct s_lex_proc		t_lex_proc;
@@ -84,12 +85,12 @@ typedef enum e_err_codes		t_err_codes;
 typedef int						(*t_lex_func)(t_lex *);
 typedef int						(*t_pars_func)(t_pars *);
 typedef int						(*t_exp_func)(t_pars *);
-typedef int						(*t_redir_func)(t_pars *);
+typedef int						(*t_redir_func)(t_shell *);
 typedef struct s_envp_cpy		t_envp_cpy;
 
 extern int						g_exit_code;
 
-typedef struct s_shell
+struct s_shell
 {
 	t_hdoc_tab	*hdoc_tab;
 	t_cmd		*cmd;
@@ -102,8 +103,9 @@ typedef struct s_shell
 	char		*retprompt;
 	char		**ms_env;
 	char		**env_paths;
+	t_lex		*lex;
 	t_pars		*pars;
-}		t_shell;
+};
 
 enum e_err_codes
 {
@@ -566,12 +568,13 @@ int				ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_around_lexer(t_lex *lex);
 int				ft_around_parser(t_lex *lex, t_pars *pars);
-int				ft_around_redirector(t_lex *lex, t_pars *pars);
+int				ft_around_redirector(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_lexer(t_lex *lex);
 int				ft_parser(t_lex *lex, t_pars *pars);
 int				ft_expander(t_pars *pars);
 int				ft_inner_loop_expander(t_pars *pars);
-int				ft_redirector(t_pars *pars);
+int				ft_redirector(t_pars *pars, t_shell *shell);
+int				ft_finilize_fd_in(t_pars *pars);
 int				ft_transformer(t_pars *pars);
 void			ft_lstclear(t_cmd **lst, void (*del)(void *));
 void			del(void *data);
@@ -585,7 +588,7 @@ int				ft_init_exp_decisions(t_pars *pars);
 int				ft_init_redir_decisions(t_pars *pars);
 int				ft_init_first_lex_decisions(t_lex *lex);
 int				ft_init_first_pars_decisions(t_pars *pars);
-int				ft_general_initialize(t_lex *lex, t_pars *pars);
+int				ft_general_initialize(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_init_expander(t_pars *pars);
 int				ft_init_pars_counts(t_pars *pars);
 
@@ -608,7 +611,7 @@ int				ft_debug_transformer_content(t_cmd *cmd);
 /* ************************************************************************** */
 /*                            redirector_heredoc.c                            */
 /* ************************************************************************** */
-int				ft_open_heredoc(t_pars *pars, char *delim);
+int				ft_open_heredoc(t_shell *shell, char *delim);
 t_hdoc			*ft_new_hdoc(char *str, int fd);
 t_hdoc			*ft_hdoc_addnext(t_hdoc *current, t_hdoc *next);
 t_hdoc			*ft_hdoc_jumpcurrent(t_hdoc *prev, t_hdoc *next);
@@ -748,7 +751,7 @@ int				ft_initial_mode_2(t_pars *pars, t_char_types *arg2);
 /* ************************************************************************** */
 /*                       redirector_apply_decision.c                          */
 /* ************************************************************************** */
-int				ft_redir_apply_decision(t_pars *pars);
+int				ft_redir_apply_decision(t_shell *shell);
 
 /* ************************************************************************** */
 /*                            lexer_actions.c                                 */
@@ -810,23 +813,23 @@ int				ft_exp_err(t_pars *pars);
 /* ************************************************************************** */
 /*                          redirector_actions.c                              */
 /* ************************************************************************** */
-int				ft_init_redir_actions(t_pars *pars);
+int				ft_init_redir_actions(t_shell *shell);
 int				ft_inner_loop_heredoc(t_pars *pars, char *delim);
-int				ft_redir_none(t_pars *pars);
-//int				ft_redir_new(t_pars *pars);
-int				ft_redir_catch(t_pars *pars);
-int				ft_redir_keep(t_pars *pars);
-int				ft_redir_drop(t_pars *pars);
-//int				ft_redir_take(t_pars *pars);
-int				ft_redir_skip(t_pars *pars);
-int				ft_redir_record(t_pars *pars);
-int				ft_redir_in(t_pars *pars);
-int				ft_redir_heredoc(t_pars *pars);
-int				ft_redir_out(t_pars *pars);
-int				ft_redir_out_append(t_pars *pars);
-int				ft_redir_del_two(t_pars *pars);
-int				ft_redir_end(t_pars *pars);
-int				ft_redir_err(t_pars *pars);
+int				ft_redir_none(t_shell *shell);
+//int				ft_redir_new(t_shell *shell);
+int				ft_redir_catch(t_shell *shell);
+int				ft_redir_keep(t_shell *shell);
+int				ft_redir_drop(t_shell *shell);
+//int				ft_redir_take(t_shell *shell);
+int				ft_redir_skip(t_shell *shell);
+int				ft_redir_record(t_shell *shell);
+int				ft_redir_in(t_shell *shell);
+int				ft_redir_heredoc(t_shell *shell);
+int				ft_redir_out(t_shell *shell);
+int				ft_redir_out_append(t_shell *shell);
+int				ft_redir_del_two(t_shell *shell);
+int				ft_redir_end(t_shell *shell);
+int				ft_redir_err(t_shell *shell);
 
 /* ************************************************************************** */
 /*                             common_ascii.c                                 */
@@ -932,6 +935,8 @@ t_envp_cpy		*ft_envpcnew(char *var);
 char			*find_path(char *cmd, char **env_paths);
 char			**get_env_paths(char **envp);
 t_shell			*minishell_init(char **envp);
+void			minishell_loop(t_shell *shell);
+void			reset_shell_values(t_shell *shell);
 
 
 #endif

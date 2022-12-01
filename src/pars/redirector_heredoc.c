@@ -6,46 +6,56 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:18:49 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 12:34:53 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:56:34 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_open_heredoc(t_pars *pars, char *delim)
+int	ft_open_heredoc(t_shell *shell, char *delim)
 {
+	g_exit_code = 678;
 	char	*file_name;
 	int		pid;
 	int		status;
 
-	pars->hdoc_i++;
-	file_name = ft_generate_valid_hdoc_name(pars);
-	pars->fd_in = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0664);
-	if (pars->fd_in < 0)
+	shell->pars->hdoc_i++;
+	file_name = ft_generate_valid_hdoc_name(shell->pars);
+	shell->pars->fd_in = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0664);
+	if (shell->pars->fd_in < 0)
 		return (ft_msgerr(ERR_FILEHDOC));
 	pid = fork();
 	if (pid == 0)
 	{
 		free(file_name);
 		signal(SIGINT, sigint_heredoc);
-		ft_inner_loop_heredoc(pars, delim);
+		ft_inner_loop_heredoc(shell->pars, delim);
 		exit(0);
 	}
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == 130)
 	{
-		printf("ctrl c catch ?? ");
+		free(file_name);
+		close(shell->pars->fd_in);
+		write(1, "\n", 1);
+
+		g_exit_code = 130;
+		ft_pars_freeall(shell->pars);
+		//ft_tklist_freeall(shell->lex);
+		reset_shell_values(shell);
+		minishell_loop(shell);
 		// on se casse de la commande !!!!!
 		// go back to prompt
 		//set des variables a NULL; // clear qqchose ?? 
-		return (0);
+		//return (1);
 	}
-	close(pars->fd_in);
-	pars->fd_in = open(file_name, O_RDWR);
-	pars->hdoc_list = ft_hdoc_addnext(pars->hdoc_list,
-			ft_new_hdoc(file_name, pars->fd_in));
-	free(file_name);
+	g_exit_code = WEXITSTATUS(status);
+	close(shell->pars->fd_in);
+	shell->pars->fd_in = open(file_name, O_RDWR);
+	shell->pars->hdoc_list = ft_hdoc_addnext(shell->pars->hdoc_list,
+			ft_new_hdoc(file_name, shell->pars->fd_in));
+	//free(file_name);
 	signal(SIGINT, sigint_handler);
 	return (0);
 }
@@ -54,7 +64,11 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 {
 	char	*str_gnl;
 
-	while (1)
+	write(1, ">", 1);
+	str_gnl = get_next_line(0);
+	if (!str_gnl)
+		exit(199);
+	while (str_gnl)
 	{
 		write(1, ">", 1);
 		str_gnl = get_next_line(0);
@@ -69,8 +83,11 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 				free(str_gnl);
 			}
 		}
-	}
+		else
+			exit(199);
+		}
 	free(str_gnl);
+	exit(0);
 	return (0);
 }
 

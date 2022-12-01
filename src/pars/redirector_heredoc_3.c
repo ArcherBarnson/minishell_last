@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:57:10 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 05:00:34 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:30:57 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,24 @@ char	*ft_generate_valid_hdoc_name(t_pars *pars)
 		file_name = ft_strjoin(temp2, "_tmp");
 		free(temp2);
 		temp2 = NULL;
-		printf("current hdoc_i : %d\n", pars->hdoc_i);
-		printf("tentative name : %s\n", file_name);
+		//printf("current hdoc_i : %d\n", pars->hdoc_i);
+		//printf("tentative name : %s\n", file_name);
 		if (access(file_name, F_OK) && !ft_is_hdoc(file_name, pars))
 			break ;
 		free(file_name);
 		pars->hdoc_i++;
 	}
-	printf("valid name : %s\n", file_name);
+	//printf("valid name : %s\n", file_name);
 	return (file_name);
 }
 
 int	ft_change_hdoc_filename(t_pars *pars)
 {
 	pars->hdoc_i++;
-	printf("***changing name and copying file from %s\n",
-		pars->current_filename);
+	//printf("***changing name and copying file from %s\n",
+	//	pars->current_filename);
 	pars->new_filename = ft_generate_valid_hdoc_name(pars);
-	printf("...to chosen new name : %s\n", pars->new_filename);
+	//printf("...to chosen new name : %s\n", pars->new_filename);
 	ft_copy_hdoc_new_name(pars);
 	ft_update_hdoc_list(pars);
 	ft_update_command_fds(pars);
@@ -99,14 +99,14 @@ int	ft_copy_hdoc_new_name(t_pars *pars)
 {
 	char	*str_gnl;
 
-	printf("closing current_fd = %d\n", pars->current_fd);
+	//printf("closing current_fd = %d\n", pars->current_fd);
 	close(pars->current_fd);
 	pars->current_fd = open(pars->current_filename, O_RDWR, 0664);
-	printf("opened current_hdocfile named <%s> with fd : %d\n",
-		pars->current_filename, pars->current_fd);
+	//printf("opened current_hdocfile named <%s> with fd : %d\n",
+	//	pars->current_filename, pars->current_fd);
 	pars->new_fd = open(pars->new_filename, O_RDWR | O_CREAT | O_TRUNC, 0664);
-	printf("opened new_hdocfile named <%s> with fd : %d\n",
-		pars->new_filename, pars->new_fd);
+	//printf("opened new_hdocfile named <%s> with fd : %d\n",
+	//	pars->new_filename, pars->new_fd);
 	if (pars->new_fd < 0)
 		return (ft_msgerr(ERR_FILECPY));
 	str_gnl = get_next_line(pars->current_fd);

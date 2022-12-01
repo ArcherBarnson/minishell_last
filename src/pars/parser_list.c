@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:22:22 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/29 21:47:18 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:09:06 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	ft_free_commandlist(t_command *command)
 		command = ft_command_jumpcurrent(command->prev, command->next);
 		free(temp);
 		if (command == temp)
+		{
+			command = NULL;
 			break ;
+		}
 		temp = NULL;
 	}
 	command = NULL;

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:29:48 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 14:33:59 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:19:28 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_init_first_pars_decisions(t_pars *pars)
 	return (0);
 }
 
-int	ft_general_initialize(t_lex *lex, t_pars *pars)
+int	ft_general_initialize(t_lex *lex, t_pars *pars, t_shell *shell)
 {
 	ft_init_lex_decisions(lex);
 	ft_init_pars_decisions(pars);
@@ -40,14 +40,14 @@ int	ft_general_initialize(t_lex *lex, t_pars *pars)
 	ft_init_lex_actions(lex);
 	ft_init_pars_actions(pars);
 	ft_init_exp_actions(pars);
-	ft_init_redir_actions(pars);
+	ft_init_redir_actions(shell);
 	return (0);
 }
 
 int	ft_init_expander(t_pars *pars)
 {
-	pars->there_hdoc = 0;
-	pars->lock_there_hdoc = 0;
+	//pars->there_hdoc = 0;
+	//pars->lock_there_hdoc = 0;
 	pars->offset_start = 0;
 	pars->start_std = 0;
 	pars->start_dol = 0;

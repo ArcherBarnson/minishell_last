@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 13:20:48 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:08:11 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	ft_tklist_freeall(t_lex *lex)
 	ft_free_tokenlist(&(lex->token));
 	*(&(lex->token)) = NULL;
 	ft_bzero(lex, sizeof(t_lex));
-	ft_init_lex_decisions(lex);
-	ft_init_lex_actions(lex);
+	//ft_init_lex_decisions(lex);
+	//ft_init_lex_actions(lex);
 	return (0);
 }
 
@@ -57,9 +57,9 @@ int	ft_pars_freeall(t_pars *pars)
 	ft_free_commandlist(pars->command);
 	*(&(pars->command)) = NULL;
 	ft_bzero(pars, sizeof(t_pars));
-	ft_init_pars_decisions(pars);
-	ft_init_pars_actions(pars);
-	ft_init_exp_decisions(pars);
-	ft_init_exp_actions(pars);
+	//ft_init_pars_decisions(pars);
+	//ft_init_pars_actions(pars);
+	//ft_init_exp_decisions(pars);
+	//ft_init_exp_actions(pars);
 	return (0);
 }

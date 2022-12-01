@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:22:22 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/11/30 18:37:46 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:23:18 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	ft_free_tokenlist(t_token **token)
 	current = *token;
 	while (1)
 	{
+		printf("BEN\n");
 		temp = current;
 		current = ft_token_jumpcurrent(current->prev, current->next);
 		free(temp->id);

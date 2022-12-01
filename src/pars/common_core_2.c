@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:18:09 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:19:47 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:17:43 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,16 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 	}
 	if (pars->r)
 		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt(pars->r - 1)));
+	return (0);
+}
+
+int	ft_around_redirector(t_lex *lex, t_pars *pars, t_shell *shell)
+{
+	if (ft_redirector(pars, shell))
+	{
+		ft_tklist_freeall(lex);
+		ft_pars_freeall(pars);
+		return (1);
+	}
 	return (0);
 }

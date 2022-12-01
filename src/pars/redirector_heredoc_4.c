@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 05:00:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 05:00:58 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:06:13 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	ft_update_command_fds(t_pars *pars)
 	i = 0;
 	while (i++ < pars->nb_of_commands)
 	{
-		printf("initial fd in and out are <%d> <%d> \n",
-			pars->command->fd_in, pars->command->fd_out);
+		//printf("initial fd in and out are <%d> <%d> \n",
+		//	pars->command->fd_in, pars->command->fd_out);
 		if (pars->command->fd_in == pars->current_fd)
 			pars->command->fd_in = pars->new_fd;
 		if (pars->command->fd_out == pars->current_fd)
@@ -65,10 +65,10 @@ int	ft_debug_hdoc_list(t_hdoc *hdoc)
 	i = 0;
 	if (count)
 	{
-		printf("\nHDOC_LIST CONTENT\n");
+		//printf("\nHDOC_LIST CONTENT\n");
 		while (i < count)
 		{
-			printf("\033[33;2m<%d> %s\033[0m\n", hdoc->fd, hdoc->file_name);
+			//printf("\033[33;2m<%d> %s\033[0m\n", hdoc->fd, hdoc->file_name);
 			hdoc = hdoc->next;
 			i++;
 		}
@@ -78,7 +78,7 @@ int	ft_debug_hdoc_list(t_hdoc *hdoc)
 
 t_shell	*free_heredoc(t_shell *shell, int mode)
 {
-	static t_shell *save_shell;
+	static t_shell	*save_shell;
 
 	if (mode == 0)
 		save_shell = shell;
@@ -88,7 +88,7 @@ t_shell	*free_heredoc(t_shell *shell, int mode)
 void	sigint_heredoc(int sig)
 {
 	(void)sig;
-	write(0,"\0",1);
+	write(0, "\0", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -97,4 +97,3 @@ void	sigint_heredoc(int sig)
 	exit(130);
 	return ;
 }
-
