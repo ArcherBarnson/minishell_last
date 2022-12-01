@@ -55,23 +55,22 @@ int	get_formated_status(char *arg)
 	return ((int)formated_status);
 }
 
-int	ft_exit(int ac, char **av, t_shell *shell)
+int	ft_exit(int ac, char **av, t_shell *shell, int fork)
 {
 	int	status;
 
 	status = 2;
 	write(1, "exit\n", 5);
 	if (ac == 1 || av == NULL)
-		clean_exit(exit_code, shell, av);
+		clean_exit(exit_code, shell, av, fork);
 	if (!is_exit_arg_valid(av[1]))
-		clean_exit(status, shell, av);
+		clean_exit(status, shell, av, fork);
 	if (ac > 2)
 	{
 		write(2, "Too many arguments\n", 20);
-		clean_exit(status, shell, av);
 		return (1);
 	}
 	status = get_formated_status(av[1]);
-	clean_exit(status, shell, av);
+	clean_exit(status, shell, av, fork);
 	return (0);
 }

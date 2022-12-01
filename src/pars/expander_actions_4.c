@@ -47,14 +47,12 @@ int	ft_exp_record_dol_part2(t_pars *pars, char *temp1)
 	if (ft_strcmp(temp, "?"))
 	{
 		temp2 = ft_itoa(exit_code);
-		temp = NULL;
 		pars->temp = ft_tempjoin(&temp1, &temp2);
 		pars->new_exp_decision.exp_read_mode = NEW_EXP_RD_MD;
 	}
 	else
 	{
 		temp2 = ft_getenv(temp, pars);
-		temp = NULL;
 		pars->temp = ft_tempjoin(&temp1, &temp2);
 	}
 	free(temp);

@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 
 
-int	exec_builtin(t_shell *shell)
+int	exec_builtin(t_shell *shell, int fork)
 {
 	if (ft_strcmp(shell->cmd->token[0], UNSET) == 1)
 		return (unset(get_tab_size(shell->cmd->token),
@@ -34,7 +34,7 @@ int	exec_builtin(t_shell *shell)
 		return (env(shell, shell->ms_env, 0));
 	if (ft_strcmp(shell->cmd->token[0], EXIT) == 1)
 		return (ft_exit(get_tab_size(shell->cmd->token),
-				shell->cmd->token, shell));
+				shell->cmd->token, shell, fork));
 	return (-1);
 }
 

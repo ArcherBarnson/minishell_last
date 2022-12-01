@@ -37,7 +37,7 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 	{
 		if (mode == 1)
 		{
-			status = exec_builtin(shell);
+			status = exec_builtin(shell, 1);
 			close_cmd_fds(shell->cmd);
 			free(shell->cmd->cmd);
 			ft_lstclear(&shell->cmd_head, del);
@@ -66,7 +66,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
 	if (is_builtin == 1)
-		return (free(pid), exec_builtin(shell));
+		return (free(pid), exec_builtin(shell, 0));
 	err_code = check_for_invalid_cmd(shell);
 	if (err_code > 1)
 		return (free(pid), err_code);
@@ -127,7 +127,7 @@ int	pipeline(t_shell *shell, char **envp)
 	int	i;
 	int	*pids;
 
-	i = 0;
+	i = -1;
 	pids = make_pid_tab(cmds_get_n(shell));
 	shell->cmd = shell->cmd_head;
 	while (shell->cmd->next)
@@ -135,7 +135,7 @@ int	pipeline(t_shell *shell, char **envp)
 		pipe(shell->pipefd);
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
-		pids[i] = pipexec(shell, shell->pipefd[0], envp, pids);
+		pids[++i] = pipexec(shell, shell->pipefd[0], envp, pids);
 		if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
 		if (shell->cmd->fd_out > 1)
@@ -145,7 +145,7 @@ int	pipeline(t_shell *shell, char **envp)
 		if (shell->cmd->fd_in == 0)
 			shell->cmd->fd_in = shell->pipefd[0];
 	}
-	pids[i] = pipexec(shell, -1, envp, pids);
+	pids[++i] = pipexec(shell, -1, envp, pids);
 	close_cmd_fds(shell->cmd);
 	/*if (shell->cmd->fd_in > 0)
 		close(shell->cmd->fd_in);

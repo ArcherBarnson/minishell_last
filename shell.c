@@ -90,8 +90,6 @@ void	minishell_loop(t_shell *shell)
 				exit_code = simple_exec(shell, shell->ms_env);
 			else if (shell->cmd)
 				exit_code = pipeline(shell, shell->ms_env);
-			if (exit_code == 141)
-				exit_code = 0;
 		}
 		if (shell->retprompt)
 			free(shell->retprompt);
@@ -118,6 +116,6 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	}
 	minishell_loop(shell);
-	ft_exit(1, NULL, shell);
+	ft_exit(1, NULL, shell, 0);
 	return (0);
 }

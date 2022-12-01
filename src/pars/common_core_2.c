@@ -33,6 +33,7 @@ int	ft_lexer(t_lex *lex)
 {
 	int	ret;
 
+	ret = 0;
 	while (*lex->user_input && *lex->user_input != '\n')
 	{
 		ret = ft_lex_apply_decision(lex);
