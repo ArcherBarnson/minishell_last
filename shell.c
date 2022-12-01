@@ -12,44 +12,6 @@
 
 #include "inc/minishell.h"
 
-//############### DEBUG FUNCTIONS ################################
-
-char 	**file_to_tab(int fd, int size)
-{
-	char	fileline[size + 1];
-	char	**returntab;
-
-	returntab = NULL;
-	read(fd, fileline, size);
-	fileline[size] = '\0';
-	returntab = ft_split(fileline, '\n');
-	return (returntab);
-}
-
-char	**debug_lst(void)
-{
-	int	fd_msh;
-	int	i = 0;
-	char	**msh_tab;
-	char	dudbuf[2048];
-
-	fd_msh = open("./test.dbg", O_RDONLY);		//use with caution
-	if (fd_msh < 0)
-	{
-		printf("Fd failure, check your files\n");
-		return (NULL);
-	}
-	while (read(fd_msh, dudbuf, 1) != 0)
-		i++;
-	close(fd_msh);
-	fd_msh = open("./test.dbg", O_RDONLY);		//use with caution
-	msh_tab = file_to_tab(fd_msh, i);
-	close(fd_msh);
-	return (msh_tab);
-
-}
-//#################################################################
-
 int	exit_code;
 
 int	is_valid_history(char *str)
@@ -104,19 +66,18 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
-	//ft_unlink_allhdoc(shell->hdoc_tab);
+	ft_unlink_allhdoc(shell->hdoc_tab);
+	ft_free_hdoctab(shell->hdoc_tab);
 	return ;
 }
 
 void	minishell_loop(t_shell *shell)
 {
-	static int i;
 	while (1)
 	{
-		printf("loop tour n %d\n", ++i);
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
-		shell->retprompt = readline("$>");
+		shell->retprompt = readline("minishell$> ");
 		if (shell->retprompt == NULL)
 			break ;
 		if (is_valid_history(shell->retprompt))
@@ -129,10 +90,6 @@ void	minishell_loop(t_shell *shell)
 				exit_code = simple_exec(shell, shell->ms_env);
 			else if (shell->cmd)
 				exit_code = pipeline(shell, shell->ms_env);
-		//	printf("---exit_code = %i---\n", exit_code);
-			//if (shell->retprompt)
-			//	bzero(shell->retprompt,
-			//		ft_strlen(shell->retprompt));
 		}
 		if (shell->retprompt)
 			free(shell->retprompt);
