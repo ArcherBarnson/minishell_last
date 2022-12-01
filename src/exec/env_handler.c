@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 05:06:28 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/28 13:31:40 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:58:46 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ t_envp_cpy	*envp_to_lst(char **envp)
 	t_envp_cpy		*head;
 
 	i = 0;
+	if (!envp || !envp[0])
+		return (NULL);
 	envpc_lst = malloc(sizeof(t_envp_cpy));
 	if (!envpc_lst)
 		return (NULL);
-	while (envp[i] != NULL)
+	while (envp && envp[i] != NULL)
 	{
 		if (i == 0)
 		{
@@ -70,7 +72,7 @@ t_envp_cpy	*envp_to_lst(char **envp)
 		}
 		else
 		{
-			ft_env_varadd_back(envpc_lst, ft_envpcnew(envp[i]));
+			ft_env_varadd_back(&envpc_lst, ft_envpcnew(envp[i]));
 			envpc_lst = envpc_lst->next;
 		}
 		i++;

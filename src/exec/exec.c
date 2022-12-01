@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:30:54 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:11:38 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	simple_exec(t_shell *shell, char **envp)
 	if (is_builtin == 1)
 		return (free(pid), exec_builtin(shell));
 	err_code = check_for_invalid_cmd(shell);
-	if (err_code)
+	if (err_code > 1)
 		return (free(pid), err_code);
+	else if (err_code == 1)
+		return (free(pid), 0);
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 14:42:39 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:10:49 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	minishell_loop(t_shell *shell)
 				exit_code = simple_exec(shell, shell->ms_env);
 			else if (shell->cmd)
 				exit_code = pipeline(shell, shell->ms_env);
+			if (exit_code == 141)
+				exit_code = 0;
 		}
 		if (shell->retprompt)
 			free(shell->retprompt);

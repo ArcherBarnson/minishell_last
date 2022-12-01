@@ -53,7 +53,7 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-void	update_oldpwd(t_shell *shell, char **envp, t_envp_cpy *envpc_lst)
+void	update_oldpwd(t_shell *shell, t_envp_cpy **envpc_lst)
 {
 	char	cwd[4096];
 	char	**export_cwd;
@@ -65,12 +65,12 @@ void	update_oldpwd(t_shell *shell, char **envp, t_envp_cpy *envpc_lst)
 	export_cwd[0] = NULL;
 	export_cwd[1] = ft_strjoin("OLDPWD=", cwd);
 	export_cwd[2] = NULL;
-	export(shell, export_cwd, envp, envpc_lst);
+	export(shell, export_cwd, envpc_lst);
 	free(export_cwd[1]);
 	free(export_cwd);
 }
 
-int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy *envpc_lst)
+int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
 {
 	char	*home;
 
@@ -82,7 +82,7 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy *envpc_lst)
 			write(2, "cd : HOME not set\n", 19);
 			return (1);
 		}
-		update_oldpwd(shell, envp, envpc_lst);
+		update_oldpwd(shell, envpc_lst);
 		chdir(home);
 		free(home);
 		return (0);
@@ -94,7 +94,7 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy *envpc_lst)
 		return (1);
 	}
 	free(home);
-	update_oldpwd(shell, envp, envpc_lst);
+	update_oldpwd(shell, envpc_lst);
 	chdir(path[1]);
 	return (0);
 }

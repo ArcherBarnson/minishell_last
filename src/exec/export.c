@@ -17,6 +17,8 @@ int	ft_exportcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	while (s1[i] && s2[i])
 	{
 		if (s1[i] == '=' || s2[i] == '=')
@@ -29,7 +31,7 @@ int	ft_exportcmp(char *s1, char *s2)
 		return (1);
 	if (s2[i] == '=' && !(s1[i]))
 		return (1);
-	return (s1[i] - s2[i]);
+	return (!(s1[i] - s2[i]));
 }
 
 char	*save_env_var(char *var)
@@ -79,23 +81,38 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 {
 	char	*env_var_buf;
 
-	while (envpc_lst->next && (ft_strccmp(var, envpc_lst->var, '=') != 0
-			|| ft_strncmp(var, envpc_lst->var, ft_strlen(envpc_lst->var)
-				&& var[ft_strlen(envpc_lst->var) - 1])))
+	while (envpc_lst && !ft_exportcmp(envpc_lst->var, var))
 		envpc_lst = envpc_lst->next;
 	env_var_buf = ft_strdup(envpc_lst->var);
 	if (mode == 1)
 	{
+		printf("MODE 1 : on va supprimer %s et replace par %s: \n", envpc_lst->var, var);
 		free(envpc_lst->var);
 		envpc_lst->var = ft_strdup(var);
 	}
 	if (mode == 2)
+	{
+		printf("MODE 2\n");
 		append_var(var, env_var_buf, envpc_lst);
+	}
 	free(env_var_buf);
 	return ;
 }
 
-int	export(t_shell *shell, char **av, char **envpc, t_envp_cpy *envpc_lst)
+int	env_var_exists_export(char *str, t_envp_cpy *envpc)
+{
+	if (!str || !envpc)
+		return (0);
+	while (envpc)
+	{
+		if (ft_exportcmp(str, envpc->var))
+			return (1);
+		envpc = envpc->next;
+	}
+	return (0);
+}
+
+int	export(t_shell *shell, char **av, t_envp_cpy **envpc_lst)
 {
 	int			i;
 	int			mode;
@@ -103,16 +120,20 @@ int	export(t_shell *shell, char **av, char **envpc, t_envp_cpy *envpc_lst)
 
 	i = 1;
 	if (get_tab_size(av) == 1)
-		return (export_no_args(shell, envpc_lst));
+		return (export_no_args(shell, *envpc_lst));
 	while (i < get_tab_size(av))
 	{
 		mode = is_valid_string(av[i]);
-		if (mode == 1 || mode == 2)
+		if (mode)
 		{
-			if (env_var_exists(av[i], envpc, mode))
-				mod_env_var(av[i], envpc_lst, mode);
+			if (*envpc_lst && env_var_exists_export(av[i], *envpc_lst))
+			{
+				printf("ON MODIFIE %s\n", av[i]);
+				mod_env_var(av[i], *envpc_lst, mode);
+			}
 			else
 			{
+				printf("ON RAJOUTE %s\n", av[i]);
 				tmp = ft_strdup(av[i]);
 				ft_env_varadd_back(envpc_lst,
 					ft_envpcnew(tmp));

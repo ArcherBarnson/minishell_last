@@ -53,7 +53,7 @@ int	is_valid_string(char *str)
 	int	i;
 
 	i = 0;
-	if (str[0] == '=')
+	if (!str || str[0] == '=')
 		return (export_error(str, 0, 0));
 	if ((str[0] < 'A' || str[0] > 'Z')
 		&& (str[0] < 'a' || str[i] > 'z') && str[0] != '_')

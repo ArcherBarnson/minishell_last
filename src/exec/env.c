@@ -20,7 +20,7 @@ char	*export_format(char *var)
 	return (formated_var);
 }
 
-int	env_var_exists(char *str, char **envpc, int mode)
+int	env_var_exists(char *str, char **envpc)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	env_var_exists(char *str, char **envpc, int mode)
 		return (0);
 	while (envpc[i] != NULL)
 	{
-		if ((mode == 1 || mode == 2) && ft_exportcmp(str, envpc[i]))
+		if (ft_exportcmp(str, envpc[i]))
 			return (1);
 		i++;
 	}
