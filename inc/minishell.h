@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 03:32:39 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:33:44 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -504,6 +504,11 @@ struct s_pars
 	int				k;
 	int				count;
 	int				r;
+	int				last_infile_mode;
+	int				mode0_fd_in;
+	int				mode1_fd_in;
+	int				there_hdoc;
+	int				lock_there_hdoc;
 };
 
 struct s_cmd
@@ -555,6 +560,7 @@ struct s_hdoc_tab
 /*                                 common_core.c                              */
 /* ************************************************************************** */
 int				ft_read_prompt(t_shell *shell);
+int				ft_there_hdoc(t_pars *pars, char *str);
 int				ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_error_return(t_lex *lex, t_pars *pars, t_shell *shell);
