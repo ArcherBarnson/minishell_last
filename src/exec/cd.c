@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 00:44:31 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:23:21 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,11 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
 	}
 	free(home);
 	update_oldpwd(shell, envpc_lst);
-	chdir(path[1]);
+	if (chdir(path[1]))
+	{
+		perror("cd ");
+		return (1);
+	}
 	update_pwd(shell, envpc_lst);
 	return (0);
 }

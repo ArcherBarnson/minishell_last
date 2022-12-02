@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/01 10:11:38 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:57:56 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 			free_all(shell);
 			exit(status);
 		}
-		printf("in = %d et out = %d\n", shell->cmd->fd_in, shell->cmd->fd_out);
 		dup_fds(shell);
 		if (shell->cmd->cmd != NULL)
 			execve(shell->cmd->cmd, shell->cmd->token, envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_apply_decisions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:50:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 23:38:42 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:03:00 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_exp_apply_decision(t_pars *pars)
 		&& pars->new_exp_decision.char_action == EXP_SKIP)
 		pars->new_exp_decision = (t_exp_proc)
 		{EXP_KEEP, EXP_TAKE, STD_EXP_RD_MD, TOK_WORD};
-	ft_debug_exp(pars);
+	//ft_debug_exp(pars);
 	pars->ft_exp[pars->new_exp_decision.buffer_action](pars);
 	return (pars->ft_exp[pars->new_exp_decision.char_action](pars));
 }

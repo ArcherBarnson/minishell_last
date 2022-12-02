@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_memory.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 02:20:26 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:03:32 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_tklist_freeall(t_lex *lex)
 int	ft_execfree_freeall(t_pars *pars)
 {
 	ft_free_cmdlist(pars->cmd);
-	ft_debug_hdoc_list(pars->hdoc_list);
+	//ft_debug_hdoc_list(pars->hdoc_list);
 	ft_free_hdoclist(pars->hdoc_list);
 	ft_unlink_allhdoc(pars->hdoc_tab);
 	ft_free_hdoctab(pars->hdoc_tab);

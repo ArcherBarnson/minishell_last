@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinding.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:20:11 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 11:07:04 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:18:46 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ char	**get_env_paths(char **envp)
 		i++;
 	if (envp[i] == NULL)
 		return (NULL);
-	if (ft_strncmp((const char *)envp[i], "PATH=", 5 != 0))
-		return (paths);
 	path_var = ft_strdup(envp[i]);
-	paths = ft_split(path_var, ':');
+	paths = ft_split(path_var + 5, ':');
 	free(path_var);
 	return (paths);
 }
