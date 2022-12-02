@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 11:13:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:31:06 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@
 # define ERR_SPL "Error! Simple quote is missing"
 # define ERR_DBL "Error! Double quote is missing"
 # define ERR_FILEHDOC "Error! Opening file for heredoc"
-# define ERR_FILEIN "Error! infile does not exist"
-# define ERR_FILEOUT "Error! Opening outfile for redirection"
+# define ERR_FILEIN "Error! Cannot access the in-file"
+# define ERR_FILEOUT "Error! Cannot access the out-file"
 # define ERR_FILECPY "Error! Opening file for copy"
 
 typedef struct s_lex			t_lex;
