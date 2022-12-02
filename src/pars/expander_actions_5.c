@@ -22,6 +22,8 @@ char	*ft_find_envstr(char *str, t_pars *pars)
 	while (pars->ms_env[i])
 	{
 		k = ft_find_eq(pars->ms_env[i]) - 1;
+		if (k == 0)
+			return (NULL);
 		comp_str = ft_substr(pars->ms_env[i], 0, k + 1);
 		if (!ft_strncmp(str, comp_str, ft_strlen(str)))
 		{
