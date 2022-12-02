@@ -6,13 +6,13 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:36:27 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/01 23:41:37 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:40:55 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_modif_env(char *var, char *tmp2, char *cwd, int sh)
+char	*ft_modif_env(char *var, char *tmp2, char *cwd, int sh)
 {
 	if (ft_strncmp(var, "PWD", 3) == 0)
 	{
@@ -21,10 +21,12 @@ void	ft_modif_env(char *var, char *tmp2, char *cwd, int sh)
 		tmp2 = ft_strjoin("PWD=", cwd);
 		free(var);
 		var = ft_strdup(tmp2);
+		free(cwd);
 		free(tmp2);
 	}
-	if (ft_strncmp(var, "SHLVL", 5) == 0)
-		ft_shlvl(var, tmp2, sh);
+	else if (ft_strncmp(var, "SHLVL", 5) == 0)
+		return (ft_shlvl(var, tmp2, sh));
+	return (var);
 }
 
 void	ft_pas_d_env(char *cwd, char *tmp2, t_envp_cpy **lst)
@@ -56,11 +58,10 @@ void	add_pwd(t_envp_cpy **lst)
 	{
 		while (tmp)
 		{
-			ft_modif_env(tmp->var, tmp2, cwd, sh);
+			tmp->var = ft_modif_env(tmp->var, tmp2, cwd, sh);
 			tmp = tmp->next;
 		}
 		lst = &tmp;
-		free(cwd);
 	}
 	else if (!(*lst))
 		ft_pas_d_env(cwd, tmp2, lst);

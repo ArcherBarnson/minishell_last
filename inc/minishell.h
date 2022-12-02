@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 23:06:56 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:39:26 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -870,7 +870,7 @@ int				export(t_shell *shell, char **av,
 int				ft_exportcmp(char *s1, char *s2);
 int				export_no_args(t_shell *shell, t_envp_cpy *envpc_lst);
 int				export_error(char *str, int i, int error_type);
-void			ft_shlvl(char *var, char *tmp2, int sh);
+char			*ft_shlvl(char *var, char *tmp2, int sh);
 int				ft_strccmp(char *s1, char *s2, char c);
 int				is_env_var(char *str);
 void			mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode);

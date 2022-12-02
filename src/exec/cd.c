@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:12:14 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 21:16:30 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:44:31 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int	cd(t_shell *shell, char **path, char **envp, t_envp_cpy **envpc_lst)
 
 	home = get_home_path(envp);
 	if (get_tab_size(shell->cmd->token) == 1)
+	{
 		ft_check_home(home, shell, envpc_lst);
+		return (1);
+	}
 	if (get_tab_size(shell->cmd->token) > 2)
 	{
 		free(home);

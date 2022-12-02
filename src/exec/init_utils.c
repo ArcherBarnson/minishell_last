@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 23:35:24 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/01 23:40:47 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:38:23 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &c, 1);
 }
 
-void	ft_shlvl(char *var, char *tmp2, int sh)
+char	*ft_shlvl(char *var, char *tmp2, int sh)
 {
 	tmp2 = ft_strdup(var + 6);
 	sh = ft_atoll(tmp2) + 1;
@@ -49,7 +49,9 @@ void	ft_shlvl(char *var, char *tmp2, int sh)
 		sh = 0;
 	free(tmp2);
 	tmp2 = ft_itoa(sh);
+	printf("salope = %s\n", var);
 	free(var);
 	var = ft_strjoin("SHLVL=", tmp2);
 	free(tmp2);
+	return (var);
 }
