@@ -52,34 +52,3 @@ void	ft_lstclear(t_cmd **lst, void (*del)(void *))
 	}
 	*lst = NULL;
 }
-
-void	del2(void *data)
-{
-	free(data);
-}
-
-void	ft_lstdelone2(t_token *lst, void (*del)(void *))
-{
-	if (!lst || !del)
-		return ;
-	if (lst->id)
-		free(lst->id);
-	free(lst);
-}
-
-void	ft_lstclear2(t_token *lst, void (*del)(void *))
-{
-	t_token	*list;
-	t_token	*tmp;
-
-	if (!lst || !del)
-		return ;
-	list = lst;
-	while (list)
-	{
-		tmp = list->next;
-		ft_lstdelone2(list, del);
-		list = tmp;
-	}
-	lst = NULL;
-}

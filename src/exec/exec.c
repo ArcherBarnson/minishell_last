@@ -63,7 +63,6 @@ int	simple_exec(t_shell *shell, char **envp)
 	int	err_code;
 	int	is_builtin;
 
-	//printf("hdoc == %p, %d + %s\n", shell->hdoc_tab, shell->hdoc_tab->fd, shell->hdoc_tab->file_name);
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
@@ -126,14 +125,14 @@ int	pipeline(t_shell *shell, char **envp)
 	while (shell->cmd->next)
 	{
 		pipe(shell->pipefd);
-		printf("pip[0]=%d et pipe[1]=%d\n", shell->pipefd[0], shell->pipefd[1]);
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
 		pids[++i] = pipexec(shell, shell->pipefd[0], envp, pids);
-		if (shell->cmd->fd_in > 0)
+		close_cmd_fds(shell->cmd);
+		/*if (shell->cmd->fd_in > 0)
 			close(shell->cmd->fd_in);
 		if (shell->cmd->fd_out > 1)
-			close(shell->cmd->fd_out);
+			close(shell->cmd->fd_out);*/
 		close(shell->pipefd[1]);
 		shell->cmd = shell->cmd->next;
 		if (shell->cmd->fd_in == 0)

@@ -49,7 +49,6 @@ char	*ft_shlvl(char *var, char *tmp2, int sh)
 		sh = 0;
 	free(tmp2);
 	tmp2 = ft_itoa(sh);
-	printf("salope = %s\n", var);
 	free(var);
 	var = ft_strjoin("SHLVL=", tmp2);
 	free(tmp2);

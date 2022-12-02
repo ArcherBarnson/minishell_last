@@ -40,6 +40,7 @@ int	ft_free_commandtoken(t_command *command)
 	t_command	*temp;
 
 	if (!command)
+
 		return (1);
 	while (1)
 	{
