@@ -21,7 +21,7 @@ int	ft_unlink_allhdoc(t_hdoc_tab *hdoc_tab)
 	{
 		while (hdoc_tab[i].file_name)
 		{
-			//close(hdoc_tab[i].fd);
+			close(hdoc_tab[i].fd);
 			unlink(hdoc_tab[i].file_name);
 			i++;
 		}

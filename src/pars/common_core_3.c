@@ -25,6 +25,8 @@ int	ft_redirector(t_pars *pars)
 		{
 			pars->token = pars->command->token;
 			pars->r = ft_redir_apply_decision(pars);
+			if (pars->r == 45)
+				return (45);
 			if (pars->redir && pars->j++)
 				pars->redir = 0;
 			if (pars->r)
@@ -112,19 +114,23 @@ int	ft_inner_loop_expander(t_pars *pars)
 
 int	ft_transformer(t_pars *pars)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i++ < pars->nb_of_commands)
 	{
-		pars->cmd = ft_cmd_addnext(pars->cmd,
-				ft_new_cmd(ft_token_list_to_tab(pars->command)));
-		if (i == 1)
-			pars->cmd_head = pars->cmd;
-		pars->cmd->id = pars->command->id;
-		pars->cmd->nb_of_tokens = pars->command->nb_of_tokens;
-		pars->cmd->fd_in = pars->command->fd_in;
-		pars->cmd->fd_out = pars->command->fd_out;
+		printf("token nb = %d\n", pars->command->nb_of_tokens);
+		if (pars->command->nb_of_tokens && !(pars->ret_45))
+		{
+			pars->cmd = ft_cmd_addnext(pars->cmd,
+					ft_new_cmd(ft_token_list_to_tab(pars->command)));
+			if (i == 1)
+				pars->cmd_head = pars->cmd;
+			pars->cmd->id = pars->command->id;
+			pars->cmd->nb_of_tokens = pars->command->nb_of_tokens;
+			pars->cmd->fd_in = pars->command->fd_in;
+			pars->cmd->fd_out = pars->command->fd_out;
+		}
 		pars->command = pars->command->next;
 	}
 	pars->hdoc_tab = ft_hdoc_list_to_tab(pars->hdoc_list,

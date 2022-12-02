@@ -91,8 +91,13 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 
 int	ft_around_redirector(t_lex *lex, t_pars *pars)
 {
-	if (ft_redirector(pars))
+	int r;
+
+	r = ft_redirector(pars);
+	if (r)
 	{
+		if (r == 45)
+			return (45);
 		(void)lex;
 		//ft_tklist_freeall(lex);
 		//ft_pars_freeall(pars);

@@ -16,7 +16,7 @@ void	prep_pipexec(int *pids, int tbc)
 {
 	free(pids);
 	child_signals();
-	if (tbc >= 0)
+	if (tbc > 0)
 		close(tbc);
 }
 

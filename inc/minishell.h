@@ -512,6 +512,7 @@ struct s_pars
 	int				there_hdoc;
 	int				lock_there_hdoc;
 	char			*str_gnl;
+	int				ret_45;
 };
 
 struct s_cmd
@@ -632,6 +633,7 @@ int				ft_update_hdoc_list(t_pars *pars);
 int				ft_update_command_fds(t_pars *pars);
 int				ft_debug_hdoc_list(t_hdoc *hdoc);
 t_shell			*free_heredoc(t_shell *shell, int mode);
+int				ft_free_commandtoken(t_command *command);
 
 /* ************************************************************************** */
 /*                           redirector_file_manager.c                        */

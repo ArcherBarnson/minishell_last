@@ -31,7 +31,18 @@ int	ft_read_prompt(t_shell *shell)
 	else
 		lex.user_input = shell->retprompt;
 	ret = ft_all_parsing_steps(&lex, &pars, shell);
-	ft_transformer(&pars);
+	if (ret == 45)
+	{
+		printf("ctrl +c ?\n");
+		ft_redir_del_two(&pars);
+		ft_lstclear(&pars.cmd, del);
+		ft_lstclear(&shell->cmd, del);
+		ft_transformer(&pars);
+		ft_tklist_freeall(&lex);
+		ft_free_commandtoken(pars.command);
+		ft_pars_freeall(&pars);
+		return (ret);
+	}
 	if (val == 1)
 	{
 		free(temp);
@@ -39,12 +50,19 @@ int	ft_read_prompt(t_shell *shell)
 	}
 	if (ret)
 	{
+		/*ft_redir_del_two(&pars);
+		ft_lstclear(&pars.cmd, del);
 		ft_lstclear(&shell->cmd, del);
+		ft_transformer(&pars);
 		ft_tklist_freeall(&lex);
-		ft_pars_freeall(&pars);
+		ft_pars_freeall(&pars);*/ //????
+		printf("ctrl +d ?\n");
 		return (ret);
 	}
+	printf("marche\n");
+	//printf("hdoc == %p, %d + %s\n", pars.hdoc_tab, pars.hdoc_tab->fd, pars.hdoc_tab->file_name);
 	shell->hdoc_tab = pars.hdoc_tab;
+
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
 	ft_pars_freeall(&pars);
@@ -57,12 +75,17 @@ int	ft_there_hdoc(t_pars *pars, char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != '<')
-		i++;
-	if (str[i] == '<' && str[i + 1] == '<')
+	while (str[i] )
 	{
-		pars->there_hdoc = 1;
-		return (1);
+		if (str[i] == '<')
+		{
+			if (str[i + 1] == '<')
+			{
+				pars->there_hdoc = 1;
+				return (1);
+			}
+		}
+		i++;
 	}
 	return (0);
 }
@@ -78,6 +101,7 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 	lex->user_input_raw = shell->retprompt;
 	pars->ms_env = shell->ms_env;
 	ft_there_hdoc(pars, lex->user_input_raw);
+	printf("is heredoc ?? = %d\n", pars->there_hdoc);
 	if (!pars->there_hdoc)
 	{
 		lex->user_input = ft_strdup(ft_initial_expansion(lex, pars));
@@ -92,6 +116,8 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 
 int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 {
+	int	r;
+
 	if (ft_around_lexer(lex))//|| ft_debug_content(lex, pars, "lex"))
 		return (ft_error_return(lex, pars, shell));
 	if (ft_around_parser(lex, pars))// || ft_debug_content(lex, pars, "pars"))
@@ -100,8 +126,14 @@ int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 	pars->lock_there_hdoc = 0;
 	if (ft_expander(pars))// || ft_debug_content(lex, pars, "exp"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_around_redirector(lex, pars))
-		//|| ft_debug_content(lex, pars, "redir"))
+	r = ft_around_redirector(lex, pars); 
+	if (r)//|| ft_debug_content(lex, pars, "redir"))
+	{
+		if (r == 45)
+			return (45);
+		return (ft_error_return(lex, pars, shell));
+	}
+	if (ft_transformer(pars) || ft_debug_content(lex, pars, "trans"))
 		return (ft_error_return(lex, pars, shell));
 	return (0);
 }

@@ -34,3 +34,25 @@ void	sigint_heredoc(int sig)
 	//ft_pars_freeall(pars);
 	exit(130);
 }
+
+int	ft_free_commandtoken(t_command *command)
+{
+	t_command	*temp;
+
+	if (!command)
+		return (1);
+	while (1)
+	{
+		temp = command;
+		command = ft_command_jumpcurrent(command->prev, command->next);
+		ft_free_tokenlist(&(temp->token));
+		if (command == temp)
+		{
+			command = NULL;
+			break ;
+		}
+		temp = NULL;
+	}
+	command = NULL;
+	return (0);
+}

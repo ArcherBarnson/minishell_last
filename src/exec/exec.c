@@ -45,6 +45,7 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 			free_all(shell);
 			exit(status);
 		}
+		printf("in = %d et out = %d\n", shell->cmd->fd_in, shell->cmd->fd_out);
 		dup_fds(shell);
 		if (shell->cmd->cmd != NULL)
 			execve(shell->cmd->cmd, shell->cmd->token, envp);
@@ -62,6 +63,7 @@ int	simple_exec(t_shell *shell, char **envp)
 	int	err_code;
 	int	is_builtin;
 
+	//printf("hdoc == %p, %d + %s\n", shell->hdoc_tab, shell->hdoc_tab->fd, shell->hdoc_tab->file_name);
 	signal(SIGINT, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	pid = make_pid_tab(cmds_get_n(shell));
@@ -124,6 +126,7 @@ int	pipeline(t_shell *shell, char **envp)
 	while (shell->cmd->next)
 	{
 		pipe(shell->pipefd);
+		printf("pip[0]=%d et pipe[1]=%d\n", shell->pipefd[0], shell->pipefd[1]);
 		if (shell->cmd->fd_out == 1)
 			shell->cmd->fd_out = shell->pipefd[1];
 		pids[++i] = pipexec(shell, shell->pipefd[0], envp, pids);
@@ -135,6 +138,8 @@ int	pipeline(t_shell *shell, char **envp)
 		shell->cmd = shell->cmd->next;
 		if (shell->cmd->fd_in == 0)
 			shell->cmd->fd_in = shell->pipefd[0];
+		else
+			close(shell->pipefd[0]);
 	}
 	pids[++i] = pipexec(shell, -1, envp, pids);
 	close_cmd_fds(shell->cmd);

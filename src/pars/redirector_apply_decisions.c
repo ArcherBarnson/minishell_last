@@ -25,6 +25,8 @@ int	ft_redir_apply_decision(t_pars *pars)
 	else if (pars->new_redir_decision.token_action == REDIR_HDOC)
 		pars->last_infile_mode = 1;
 	ret = pars->ft_redir[pars->new_redir_decision.token_action](pars);
+	if (pars->new_redir_decision.token_action == REDIR_HDOC && ret == 45)
+		return (45);
 	if (ret)
 		return (ret);
 	return (pars->ft_redir[pars->new_redir_decision.redir_list_action](pars));

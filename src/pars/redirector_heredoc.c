@@ -36,9 +36,12 @@ int	ft_open_heredoc(t_pars *pars, char *delim)
 	{
 		write(1, "\n", 1);
 		g_exit_code = 130;
+		close(pars->fd_in);
+		unlink(file_name);
 		free(file_name);
 		ft_lstclear(&free_heredoc(NULL, 1)->cmd, del);
-		return (1);
+		pars->ret_45 = 1;
+		return (45);
 	}
 	close(pars->fd_in);
 	pars->fd_in = open(file_name, O_RDWR);
@@ -57,10 +60,11 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 		if (pars->str_gnl)
 		{
 			if (!ft_strncmp(pars->str_gnl, delim, ft_strlen(delim))
-				&& ft_strlen(delim) == ft_strlen(pars->str_gnl) - 1)
+				&& ft_strlen(delim) == ft_strlen(pars->str_gnl))
 			{
 				if (ft_transformer(pars))// || ft_debug_content(lex, pars, "trans"))
 					return (ft_error_return(free_heredoc(NULL, 1)->lex, pars,(free_heredoc(NULL, 1))));
+				ft_free_commandlist(pars->command);
 				ft_tklist_freeall(free_heredoc(NULL, 1)->lex);
 				ft_lstclear(&pars->cmd, del);
 				free_all(free_heredoc(NULL, 1));
@@ -70,6 +74,7 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 			else
 			{
 				write(pars->fd_in, pars->str_gnl, ft_strlen(pars->str_gnl));
+				write(pars->fd_in, "\n", 1);
 				free(pars->str_gnl);
 			}
 		}
@@ -77,6 +82,7 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 		{
 			if (ft_transformer(pars))// || ft_debug_content(lex, pars, "trans"))
 				return (ft_error_return(free_heredoc(NULL, 1)->lex, pars,(free_heredoc(NULL, 1))));
+			ft_free_commandlist(pars->command);
 			ft_lstclear(&pars->cmd, del);
 			ft_tklist_freeall(free_heredoc(NULL, 1)->lex);
 			free_all(free_heredoc(NULL, 1));

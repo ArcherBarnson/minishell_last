@@ -66,6 +66,8 @@ int	ft_redir_heredoc(t_pars *pars)
 		pars->command->fd_in = pars->fd_in;
 		pars->mode1_fd_in = pars->fd_in;
 	}
+	else if (ret == 45)
+		return (45);
 	else
 		pars->command->fd_in = -1;
 	return (ret);

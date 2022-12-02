@@ -16,10 +16,9 @@ void	clean_exit(int status, t_shell *shell, char **av, int fork)
 {
 	if (fork == 1)
 	{
-		close_cmd_fds(shell->cmd);
 		free(shell->cmd->cmd);
-		ft_lstclear(&shell->cmd_head, del);
-		shell->cmd = NULL;
+		ft_lstclear(&shell->cmd, del);
+		ft_lstclear(&shell->pars->cmd, del);
 		free_all(shell);
 		exit(status);
 	}
