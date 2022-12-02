@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 14:31:06 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:41:29 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -953,5 +953,6 @@ char			**get_env_paths(char **envp);
 t_shell			*minishell_init(char **envp);
 void			minishell_loop(t_shell *shell);
 void			reset_shell_values(t_shell *shell);
+int				ft_free_commandtokenlol(t_command *command);
 
 #endif

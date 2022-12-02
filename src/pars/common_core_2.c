@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_core_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:18:09 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 10:23:48 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:12:59 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ int	ft_lexer(t_lex *lex)
 
 int	ft_around_parser(t_lex *lex, t_pars *pars)
 {
+	int	ret;
+
 	pars->nb_of_commands = 0;
 	pars->nb_of_tokens = lex->nb_of_tokens;
-	if (ft_parser(lex, pars))
+	ret = ft_parser(lex, pars);
+	if (ret)
 	{
+		if (ret == 45)
+			return (45);
 		ft_tklist_freeall(lex);
 		ft_pars_freeall(pars);
 		return (1);
@@ -85,7 +90,10 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 		pars->command = pars->command->next;
 	}
 	if (pars->r)
-		return (ft_msgerr((char *)ft_getlabel_error_msgs_txt(pars->r - 1)));
+	{
+		ft_msgerr((char *)ft_getlabel_error_msgs_txt(pars->r - 1));
+		return(45);
+	}
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirector_heredoc_5.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 23:33:35 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 11:16:10 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:51:59 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	ft_free_commandtoken(t_pars *pars)
 {
 	t_command	*temp;
 
-	//if (!command)
-	if (pars->nb_of_tokens)
-		return (1);
 	while (1)
 	{
 		temp = pars->command;
@@ -55,6 +52,28 @@ int	ft_free_commandtoken(t_pars *pars)
 		temp = NULL;
 	}
 	pars->command = NULL;
+	return (0);
+}
+
+int	ft_free_commandtokenlol(t_command *command)
+{
+	t_command	*temp;
+
+	if (!command || !command->nb_of_tokens)
+		return (1);
+	while (1)
+	{
+		temp = command;
+		command = ft_command_jumpcurrent(command->prev, command->next);
+		ft_free_tokenlist(&(temp->token));
+		if (command == temp)
+		{
+			command = NULL;
+			break ;
+		}
+		temp = NULL;
+	}
+	command = NULL;
 	return (0);
 }
 
