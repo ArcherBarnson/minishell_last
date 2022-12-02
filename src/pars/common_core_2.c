@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:18:09 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 02:43:44 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:23:48 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	ft_lexer(t_lex *lex)
 {
 	int	ret;
 
-	ret = ft_check_forbidden_cmb(lex->user_input);
-	while (*lex->user_input && *lex->user_input != '\n'
-			&& ret == 0)
+	//ret = ft_check_forbidden_cmb(lex->user_input);
+	ret = 0;
+	while (*lex->user_input && *lex->user_input != '\n' && ret == 0)
 	{
 		ret = ft_lex_apply_decision(lex);
 		lex->user_input++;
@@ -91,7 +91,7 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 
 int	ft_around_redirector(t_lex *lex, t_pars *pars)
 {
-	int r;
+	int	r;
 
 	r = ft_redirector(pars);
 	if (r)
