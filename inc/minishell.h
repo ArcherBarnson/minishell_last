@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 04:36:18 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:13:23 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -513,6 +513,8 @@ struct s_pars
 	int				lock_there_hdoc;
 	char			*str_gnl;
 	int				ret_45;
+	int				pid;
+	int				status;
 };
 
 struct s_cmd
@@ -564,6 +566,7 @@ struct s_hdoc_tab
 /*                                 common_core.c                              */
 /* ************************************************************************** */
 int				ft_read_prompt(t_shell *shell);
+int				ft_error_ctrl_c(t_shell *shell, t_pars *pars, t_lex *lex);
 int				ft_there_hdoc(t_pars *pars, char *str);
 int				ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell);
 int				ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell);
@@ -616,6 +619,8 @@ int				ft_debug_transformer_content(t_cmd *cmd);
 /*                            redirector_heredoc.c                            */
 /* ************************************************************************** */
 int				ft_open_heredoc(t_pars *pars, char *delim);
+int				ft_hdoc_ctrl_c(t_pars *pars, char *file_name);
+int				ft_check_delim(t_pars *pars, char *delim);
 t_hdoc			*ft_new_hdoc(char *str, int fd);
 t_hdoc			*ft_hdoc_addnext(t_hdoc *current, t_hdoc *next);
 t_hdoc			*ft_hdoc_jumpcurrent(t_hdoc *prev, t_hdoc *next);
@@ -633,7 +638,7 @@ int				ft_update_hdoc_list(t_pars *pars);
 int				ft_update_command_fds(t_pars *pars);
 int				ft_debug_hdoc_list(t_hdoc *hdoc);
 t_shell			*free_heredoc(t_shell *shell, int mode);
-int				ft_free_commandtoken(t_command *command);
+int				ft_free_commandtoken(t_pars *pars);
 
 /* ************************************************************************** */
 /*                           redirector_file_manager.c                        */

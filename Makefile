@@ -6,13 +6,13 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/12/01 23:34:15 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/12/02 11:05:18 by mbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .DEFAULT_GOAL	=	all
 
-PARSRCS		=	common_core.c common_core_2.c common_core_3.c \
+PARSRCS		=	common_core.c common_core_2.c common_core_3.c common_core_4.c \
 				common_initializations.c common_initializations_2.c \
 				common_memory.c common_error.c common_ascii.c common_debug.c \
 				common_labels.c common_labels_2.c common_labels_3.c \
@@ -39,7 +39,7 @@ EXSRCS		=	init_utils.c init.c  memory_tools_utils.c memory_tools.c  misc.c \
 				export_utils.c cd_utils.c cd.c echo.c pwd.c env.c \
 				export_no_args.c export.c unset.c builtins_ctl.c \
 				envpc_lst_ops.c env_handler.c \
-				signals.c exec.c ../../shell.c #../../builtins/*.c\
+				signals.c exec.c shell.c #../../builtins/*.c\
 
 PARSRCDIR	=	src/pars
 PARPATH		=	$(addprefix $(PARSRCDIR)/, $(PARSRCS))

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 01:34:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:16:37 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	ft_init_lex_actions(t_lex *lex)
 	return (0);
 }
 
-int	ft_check_forbidden_cmb(char *user_input)
+/*int	ft_check_forbidden_cmb(char *user_input)
 {
-	int	i;
+	int		i;
 	char	*forbidden[] = { NULL };
 
 	i = 0;
@@ -39,7 +39,7 @@ int	ft_check_forbidden_cmb(char *user_input)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int	ft_lex_none(t_lex *lex)
 {
