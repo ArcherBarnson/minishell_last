@@ -12,7 +12,6 @@
 
 #include "../inc/minishell.h"
 
-
 int	exec_builtin(t_shell *shell, int fork)
 {
 	if (ft_strcmp(shell->cmd->token[0], UNSET) == 1)

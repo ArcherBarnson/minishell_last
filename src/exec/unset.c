@@ -30,12 +30,11 @@ int	ft_unsetcmp(char *s1_lst, char*s2)
 	return (0);
 }
 
-void remove_var_if_present(char *var, t_envp_cpy **envpc_lst)
+void	remove_var_if_present(char *var, t_envp_cpy **envpc_lst)
 {
 	t_envp_cpy	*tmp;
 	t_envp_cpy	*tmp_previous;
 
-	
 	if (!envpc_lst || !(*envpc_lst))
 		return ;
 	tmp = *envpc_lst;
@@ -62,7 +61,7 @@ int	is_unset_valid_string(char *str)
 	int	i;
 
 	i = 0;
-	if ( !str || str[0] == '=')
+	if (!str || str[0] == '=')
 		return (0);
 	if ((str[0] < 'A' || str[0] > 'Z')
 		&& (str[0] < 'a' || str[i] > 'z') && str[0] != '_')
@@ -76,7 +75,7 @@ int	is_unset_valid_string(char *str)
 	return (1);
 }
 
-int unset(int ac, char **av, t_envp_cpy **envpc_lst)
+int	unset(int ac, char **av, t_envp_cpy **envpc_lst)
 {
 	int						i;
 

@@ -106,10 +106,6 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 	if (pid == 0)
 	{
 		prep_pipexec(pids, tbc);
-		/*free(pids);
-		child_signals();
-		if (tbc >= 0)
-			close(tbc);*/
 		execute_command(shell, envp, is_builtin);
 		exit(1);
 	}
@@ -142,9 +138,5 @@ int	pipeline(t_shell *shell, char **envp)
 	}
 	pids[++i] = pipexec(shell, -1, envp, pids);
 	close_cmd_fds(shell->cmd);
-	/*if (shell->cmd->fd_in > 0)
-		close(shell->cmd->fd_in);
-	if (shell->cmd->fd_out > 1)
-		close(shell->cmd->fd_out);*/
 	return (ft_wait(pids, shell));
 }

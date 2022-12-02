@@ -34,9 +34,9 @@ PARSRCS		=	common_core.c common_core_2.c common_core_3.c \
 				redirector_heredoc_4.c redirector_heredoc_5.c \
 				transformer_list.c \
 				#tests_main.c
-EXSRCS		=	init.c  memory_tools_utils.c memory_tools.c  misc.c \
+EXSRCS		=	init_utils.c init.c  memory_tools_utils.c memory_tools.c  misc.c \
 				pathfinding.c exec_utils.c exit_utils.c exit.c wait.c \
-				export_utils.c cd.c echo.c pwd.c env.c \
+				export_utils.c cd_utils.c cd.c echo.c pwd.c env.c \
 				export_no_args.c export.c unset.c builtins_ctl.c \
 				envpc_lst_ops.c env_handler.c \
 				signals.c exec.c ../../shell.c #../../builtins/*.c\

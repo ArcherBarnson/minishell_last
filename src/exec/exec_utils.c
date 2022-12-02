@@ -49,10 +49,6 @@ int	check_for_invalid_cmd(t_shell *shell)
 		return (126);
 	}
 	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);
-	/*if (command_not_found(shell) && shell->cmd->token[0][0] != '\0')
-		return (127);
-	else if (command_not_found(shell) && shell->cmd->token[0][0] == '\0')
-		return (1);*/
 	return (command_not_found(shell));
 }
 
@@ -63,8 +59,6 @@ int	command_not_found(t_shell *shell)
 	tmp_fd = 0;
 	if (!is_valid_history(shell->retprompt))
 		return (1);
-	/*if (shell->cmd->token[0][0] == '\0')
-		return (1);*/
 	if (shell->cmd->cmd == NULL)
 	{
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));

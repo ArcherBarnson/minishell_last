@@ -38,40 +38,9 @@ void	ft_env_varadd_back(t_envp_cpy **envpc_lst, t_envp_cpy *new)
 	(*envpc_lst)->next = new;
 }
 
-/*void	del(void *data)
-{
-	free(data);
-}
-
-void	ft_lstdel_envpc(t_envp_cpy *lst, void (*del)(void *))
-{
-	if (!lst || !del)
-		return ;
-	if (lst->var)
-		(*del)(lst->var);
-	free(lst);
-}
-
-void	ft_envpc_clear(t_envp_cpy **lst, void (*del)(void *))
-{
-	t_envp_cpy	*list;
-	t_envp_cpy	*tmp;
-
-	if (!lst || !del)
-		return ;
-	list = *lst;
-	while (list)
-	{
-		tmp = list->next;
-		ft_lstdel_envpc(list, del);
-		list = tmp;
-	}
-	*lst = NULL;
-}*/
-
 void	clear_envpc_lst(t_envp_cpy *envpc_lst)
 {
-	t_envp_cpy *tmp;
+	t_envp_cpy	*tmp;
 
 	if (!envpc_lst)
 		return ;

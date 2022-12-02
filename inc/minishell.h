@@ -873,6 +873,7 @@ int				export(t_shell *shell, char **av,
 int				ft_exportcmp(char *s1, char *s2);
 int				export_no_args(t_shell *shell, t_envp_cpy *envpc_lst);
 int				export_error(char *str, int i, int error_type);
+void			ft_shlvl(char *var, char *tmp2, int sh);
 int				ft_strccmp(char *s1, char *s2, char c);
 int				is_env_var(char *str);
 void			mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode);
@@ -887,6 +888,7 @@ void			free_tab(char **tab);
 int				get_tab_size(char **tab);
 int				cd(t_shell *shell, char **path, char **envp,
 					t_envp_cpy **envpc_lst);
+char			*get_home_path(char **envp);
 int				pwd(int ac, char **av, int fd);
 void			write_arg(char *str, int fd);
 int				n_flag_present(char *str);
