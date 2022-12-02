@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/12/02 11:05:18 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/12/02 15:59:45 by lcalvie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,9 +61,9 @@ HDPATH	=	$(addprefix $(HDDIR)/, $(HDSRCS))
 
 NAME		=	minishell
 LIB1_DIR	=	lib/gnl
-LIB1_NAME	=	libgnl.a
+LIB1_NAME	=	lib/gnl/libgnl.a
 LIB2_DIR	=	lib/libft
-LIB2_NAME	=	libft.a
+LIB2_NAME	=	lib/libft/libft.a
 HDLIB1_DIR	=	$(LIB1_DIR)/inc
 HDLIB2_DIR	=	$(LIB2_DIR)/inc
 CC			=	gcc

@@ -128,10 +128,6 @@ int	pipeline(t_shell *shell, char **envp)
 			shell->cmd->fd_out = shell->pipefd[1];
 		pids[++i] = pipexec(shell, shell->pipefd[0], envp, pids);
 		close_cmd_fds(shell->cmd);
-		/*if (shell->cmd->fd_in > 0)
-			close(shell->cmd->fd_in);
-		if (shell->cmd->fd_out > 1)
-			close(shell->cmd->fd_out);*/
 		close(shell->pipefd[1]);
 		shell->cmd = shell->cmd->next;
 		if (shell->cmd->fd_in == 0)

@@ -22,7 +22,7 @@ char	*save_env_var(char *var)
 	j = 0;
 	while (var[++i] != '+')
 		;
-	i+=2;
+	i += 2;
 	while (var[i + j])
 		j++;
 	save = malloc(sizeof(char) * (j + 1));
@@ -36,18 +36,6 @@ char	*save_env_var(char *var)
 	}
 	save[j] = '\0';
 	return (save);
-}
-
-int		check_if_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while(str[i] && str[i] != '=')
-		i++;
-	return (str[i] == '=');
 }
 
 void	append_var(char *var, char *env_var_buf, t_envp_cpy *envpc_lst)

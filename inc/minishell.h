@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 14:31:06 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:41:29 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -888,6 +888,7 @@ int				env_var_exists(char *str, char **envpc);
 int				env_var_exists_export(char *str, t_envp_cpy *envpc);
 int				is_valid_identifier(char c);
 int				is_valid_string(char *str);
+int				check_if_equal(char *str);
 int				unset(int ac, char **av, t_envp_cpy **envpc_lst);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**dup_tab(char **tab);
@@ -952,6 +953,6 @@ char			**get_env_paths(char **envp);
 t_shell			*minishell_init(char **envp);
 void			minishell_loop(t_shell *shell);
 void			reset_shell_values(t_shell *shell);
-
+int				ft_free_commandtokenlol(t_command *command);
 
 #endif

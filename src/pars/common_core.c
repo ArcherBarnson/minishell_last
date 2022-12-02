@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   common_core.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 15:12:09 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 16:02:29 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:51:44 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +49,9 @@ int	ft_error_ctrl_c(t_shell *shell, t_pars *pars, t_lex *lex)
 	ft_lstclear(&shell->cmd, del);
 	ft_transformer(pars);
 	ft_tklist_freeall(lex);
-	ft_free_commandtoken(pars);
+	//printf("token=%d\n", pars->nb_of_tokens);
+	if (pars->command)
+		ft_free_commandtokenlol(pars->command);
 	ft_pars_freeall(pars);
 	return (0);
 }
