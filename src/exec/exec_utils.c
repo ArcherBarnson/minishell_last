@@ -34,6 +34,8 @@ int	cmds_get_n(t_shell *shell)
 
 int	check_for_invalid_cmd(t_shell *shell)
 {
+	int	fd;
+
 	if (!shell || !shell->cmd || !shell->cmd->token || !shell->cmd->token[0])
 		return (1);
 	if (shell->cmd->token[0][0] == '.' && shell->cmd->token[0][1] == '\0')
@@ -42,10 +44,12 @@ int	check_for_invalid_cmd(t_shell *shell)
 		write(2, ": usage . filename[arguments]\n", 29);
 		return (2);
 	}
-	if (open(shell->cmd->token[0], O_DIRECTORY) != -1)
+	fd = open(shell->cmd->token[0], O_DIRECTORY);
+	if (fd != -1)
 	{
 		write(2, shell->cmd->token[0], ft_strlen(shell->cmd->token[0]));
 		write(2, " : is a directory\n", 19);
+		close(fd);
 		return (126);
 	}
 	shell->cmd->cmd = find_path(shell->cmd->token[0], shell->env_paths);

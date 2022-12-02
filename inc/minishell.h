@@ -277,7 +277,7 @@ enum e_exp_read_modes
 	OR_EXP_RD_MD,
 	AND_EXP_RD_MD,
 	HDOC_EXP_RD_MD,
-	GGRT_EXP_RD_MD,int	check_if_equal(char *str)
+	GGRT_EXP_RD_MD,
 	DOL_EXP_RD_MD,
 	LEN_EXP_RD_MDS
 };
