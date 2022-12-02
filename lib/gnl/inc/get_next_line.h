@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:23:23 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 04:01:20 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 20:04:27 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define BUFFER_SIZE 1
 
 char	*ft_strchr(const char *s, int c);
-size_t		ft_strlen(const char *str);
+size_t	ft_strlen(const char *str);
 char	*get_next_line(int fd);
 char	*ft_get_line(char *str);
 char	*ft_next_line(char *str);

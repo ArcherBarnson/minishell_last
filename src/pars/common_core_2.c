@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:18:09 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 16:12:59 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 20:40:17 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_around_lexer(t_lex *lex)
 {
 	if (ft_lexer(lex))
 	{
-		ft_free_tokenlist(&(lex->token)); //VERIF
+		ft_free_tokenlist(&(lex->token));
 		lex->token = NULL;
 		lex->temp = ft_strndup("", 0);
 		lex->token = ft_token_addnext(lex->token, ft_new_token(lex->temp));
@@ -33,7 +33,6 @@ int	ft_lexer(t_lex *lex)
 {
 	int	ret;
 
-	//ret = ft_check_forbidden_cmb(lex->user_input);
 	ret = 0;
 	while (*lex->user_input && *lex->user_input != '\n' && ret == 0)
 	{
@@ -92,7 +91,7 @@ int	ft_parser(t_lex *lex, t_pars *pars)
 	if (pars->r)
 	{
 		ft_msgerr((char *)ft_getlabel_error_msgs_txt(pars->r - 1));
-		return(45);
+		return (45);
 	}
 	return (0);
 }
@@ -107,8 +106,6 @@ int	ft_around_redirector(t_lex *lex, t_pars *pars)
 		if (r == 45)
 			return (45);
 		(void)lex;
-		//ft_tklist_freeall(lex);
-		//ft_pars_freeall(pars);
 		return (1);
 	}
 	return (0);

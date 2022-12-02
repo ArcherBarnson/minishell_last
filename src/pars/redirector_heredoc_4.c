@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 05:00:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 19:28:56 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:29:58 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,33 @@ int	ft_debug_hdoc_list(t_hdoc *hdoc)
 	i = 0;
 	if (count)
 	{
-		//printf("\nHDOC_LIST CONTENT\n");
 		while (i < count)
 		{
-			//printf("\033[33;2m<%d> %s\033[0m\n", hdoc->fd, hdoc->file_name);
 			hdoc = hdoc->next;
 			i++;
 		}
 	}
+	return (0);
+}
+
+int	ft_free_commandtokenlol(t_command *command)
+{
+	t_command	*temp;
+
+	if (!command || !command->nb_of_tokens)
+		return (1);
+	while (1)
+	{
+		temp = command;
+		command = ft_command_jumpcurrent(command->prev, command->next);
+		ft_free_tokenlist(&(temp->token));
+		if (command == temp)
+		{
+			command = NULL;
+			break ;
+		}
+		temp = NULL;
+	}
+	command = NULL;
 	return (0);
 }

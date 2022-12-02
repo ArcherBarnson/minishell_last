@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 11:24:18 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:58:52 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_init_redir_decision_2(t_pars *pars)
 	pars->redir_decision[HDOC_REDIR_RD_MD][TOK_LSS]
 		= (t_redir_proc){REDIR_IN, REDIR_DEL_TWO, STD_REDIR_RD_MD};
 	pars->redir_decision[HDOC_REDIR_RD_MD][TOK_GRT]
-			= (t_redir_proc){REDIR_OUT, REDIR_DEL_TWO, STD_REDIR_RD_MD};
+		= (t_redir_proc){REDIR_OUT, REDIR_DEL_TWO, STD_REDIR_RD_MD};
 	pars->redir_decision[HDOC_REDIR_RD_MD][TOK_GGRT]
 		= (t_redir_proc){REDIR_OUT_APPEND, REDIR_DEL_TWO, STD_REDIR_RD_MD};
 	pars->redir_decision[HDOC_REDIR_RD_MD][TOK_HDOC]

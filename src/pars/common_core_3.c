@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:19:52 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 14:29:29 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:58:31 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	ft_transformer(t_pars *pars)
 	i = 0;
 	while (i++ < pars->nb_of_commands)
 	{
-		//printf("token nb = %d\n", pars->command->nb_of_tokens);
 		if (pars->command->nb_of_tokens && !(pars->ret_45))
 		{
 			pars->cmd = ft_cmd_addnext(pars->cmd,

@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:36:03 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 13:12:56 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:59:52 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*ft_find_envstr(char *str, t_pars *pars)
 	char	*comp_str;
 
 	i = 0;
-	//printf("la var qu on recher : %s\n", str);
 	while (pars->ms_env[i])
 	{
 		k = ft_strkchr(pars->ms_env[i], '=');

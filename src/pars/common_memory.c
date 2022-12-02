@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 13:03:32 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 20:00:09 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,12 @@ int	ft_tklist_freeall(t_lex *lex)
 	ft_free_tokenlist(&(lex->token));
 	*(&(lex->token)) = NULL;
 	ft_bzero(lex, sizeof(t_lex));
-	//ft_init_lex_decisions(lex);
-	//ft_init_lex_actions(lex);
 	return (0);
 }
 
 int	ft_execfree_freeall(t_pars *pars)
 {
 	ft_free_cmdlist(pars->cmd);
-	//ft_debug_hdoc_list(pars->hdoc_list);
 	ft_free_hdoclist(pars->hdoc_list);
 	ft_unlink_allhdoc(pars->hdoc_tab);
 	ft_free_hdoctab(pars->hdoc_tab);
@@ -57,9 +54,5 @@ int	ft_pars_freeall(t_pars *pars)
 	ft_free_commandlist(pars->command);
 	*(&(pars->command)) = NULL;
 	ft_bzero(pars, sizeof(t_pars));
-	//ft_init_pars_decisions(pars);
-	//ft_init_pars_actions(pars);
-	//ft_init_exp_decisions(pars);
-	//ft_init_exp_actions(pars);
 	return (0);
 }

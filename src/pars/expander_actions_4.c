@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:36:38 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:36:41 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 20:01:21 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_exp_record_dol(t_pars *pars)
 	else
 		ft_exp_record_dol_part3(pars, temp1);
 	ft_init_expander(pars);
-	//free(temp1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:44:34 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 15:32:52 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 20:00:44 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ int	ft_init_lex_decision_9(t_lex *lex)
 		= (t_lex_proc){LEX_NONE, LEX_ERR, SYN_ERR_LEX_RD_MD, TOK_NEW};
 	lex->decision[GGRT_LEX_RD_MD][DOL_CHAR]
 		= (t_lex_proc){LEX_CATCH, LEX_TAKE, STD_LEX_RD_MD, TOK_WORD};
-	//lex->decision[GGRT_LEX_RD_MD][END_CHAR]
-	//	= (t_lex_proc){LEX_CATCH, LEX_SKIP, NEW_LEX_RD_MD, TOK_NEW};
 	lex->decision[GGRT_LEX_RD_MD][END_CHAR]
 		= (t_lex_proc){LEX_NONE, LEX_ERR, SYN_ERR_LEX_RD_MD, TOK_NEW};
 	return (0);

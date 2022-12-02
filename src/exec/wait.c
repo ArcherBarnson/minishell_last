@@ -6,11 +6,18 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:27:00 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 19:27:40 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 20:35:28 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_end_wait(t_shell *shell, int *pid)
+{
+	free(pid);
+	ft_lstclear(&shell->cmd_head, del);
+	shell->cmd_head = NULL;
+}
 
 int	ft_wait(int *pid, t_shell *shell)
 {
@@ -27,6 +34,8 @@ int	ft_wait(int *pid, t_shell *shell)
 		if (WIFSIGNALED(exit_code))
 		{
 			exit_code = WTERMSIG(exit_code) + 128;
+			if (exit_code == 141)
+				exit_code = 127;
 			if (!shell->cmd->next)
 				display_signal_intercept(exit_code);
 		}
@@ -34,8 +43,6 @@ int	ft_wait(int *pid, t_shell *shell)
 			exit_code = WEXITSTATUS(exit_code);
 		i++;
 	}
-	free(pid);
-	ft_lstclear(&shell->cmd_head, del);
-	shell->cmd_head = NULL;
+	ft_end_wait(shell, pid);
 	return (exit_code);
 }

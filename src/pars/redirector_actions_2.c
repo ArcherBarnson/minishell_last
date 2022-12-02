@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:54:59 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 14:27:49 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 20:05:21 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ int	ft_redir_in(t_pars *pars)
 
 int	ft_redir_heredoc(t_pars *pars)
 {
-	int		ret;
 	t_hdoc	*hdoc_current;
 
-	ret = 0;
+	pars->ret = 0;
 	if (pars->prev_redir_decision.redir_read_mode == HDOC_REDIR_RD_MD)
 	{
 		close(pars->hdoc_list->fd);
@@ -63,8 +62,8 @@ int	ft_redir_heredoc(t_pars *pars)
 			pars->hdoc_list = hdoc_current;
 		pars->hdoc_i--;
 	}
-	ret = ft_open_heredoc(pars, pars->command->token->next->id);
-	if (!ret && pars->command->fd_in != -1)
+	pars->ret = ft_open_heredoc(pars, pars->command->token->next->id);
+	if (!pars->ret && pars->command->fd_in != -1)
 	{
 		pars->command->fd_in = pars->fd_in;
 		pars->mode1_fd_in = pars->fd_in;
@@ -74,9 +73,7 @@ int	ft_redir_heredoc(t_pars *pars)
 		pars->command->fd_in = -1;
 		pars->mode1_fd_in = -1;
 	}
-	//else if (ret == 45)
-	//	return (45);
-	return (ret);
+	return (pars->ret);
 }
 
 int	ft_redir_out(t_pars *pars)

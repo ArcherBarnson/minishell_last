@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 23:33:35 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 19:28:57 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:30:08 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,6 @@ int	ft_free_commandtoken(t_pars *pars)
 		temp = NULL;
 	}
 	pars->command = NULL;
-	return (0);
-}
-
-int	ft_free_commandtokenlol(t_command *command)
-{
-	t_command	*temp;
-
-	if (!command || !command->nb_of_tokens)
-		return (1);
-	while (1)
-	{
-		temp = command;
-		command = ft_command_jumpcurrent(command->prev, command->next);
-		ft_free_tokenlist(&(temp->token));
-		if (command == temp)
-		{
-			command = NULL;
-			break ;
-		}
-		temp = NULL;
-	}
-	command = NULL;
 	return (0);
 }
 
