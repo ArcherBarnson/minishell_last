@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 23:36:59 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 04:29:02 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,37 @@ int	ft_read_prompt(t_shell *shell)
 	t_pars		pars;
 	char		*temp;
 	int			ret;
+	int			val;
 
+	val = 0;
 	ft_init_core(&lex, &pars, shell);
 	pars.r = 0;
 	if (!pars.there_hdoc)
+	{
 		temp = lex.user_input;
+		val = 1;
+	}
 	else
 		lex.user_input = shell->retprompt;
 	ret = ft_all_parsing_steps(&lex, &pars, shell);
-	if (!pars.there_hdoc)
+	ft_transformer(&pars);
+	if (val == 1)
 	{
 		free(temp);
 		temp = NULL;
 	}
 	if (ret)
+	{
+		ft_lstclear(&shell->cmd, del);
+		ft_tklist_freeall(&lex);
+		ft_pars_freeall(&pars);
 		return (ret);
+	}
 	shell->hdoc_tab = pars.hdoc_tab;
 	pars.cmd = pars.cmd_head;
 	shell->cmd = pars.cmd;
-	ft_tklist_freeall(&lex);
 	ft_pars_freeall(&pars);
+	ft_tklist_freeall(&lex);
 	return (0);
 }
 
@@ -62,10 +73,11 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 	ft_bzero(pars, sizeof(t_pars));
 	shell->lex = lex;
 	shell->pars = pars;
-	ft_general_initialize(lex, pars, shell);
+	ft_general_initialize(lex, pars);
 	pars->there_hdoc = 0;
 	lex->user_input_raw = shell->retprompt;
 	pars->ms_env = shell->ms_env;
+	ft_there_hdoc(pars, lex->user_input_raw);
 	if (!pars->there_hdoc)
 	{
 		lex->user_input = ft_strdup(ft_initial_expansion(lex, pars));
@@ -80,18 +92,16 @@ int	ft_init_core(t_lex *lex, t_pars *pars, t_shell *shell)
 
 int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 {
-	if (ft_around_lexer(lex) || ft_debug_content(lex, pars, "lex"))
+	if (ft_around_lexer(lex))//|| ft_debug_content(lex, pars, "lex"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_around_parser(lex, pars) || ft_debug_content(lex, pars, "pars"))
+	if (ft_around_parser(lex, pars))// || ft_debug_content(lex, pars, "pars"))
 		return (ft_error_return(lex, pars, shell));
 	pars->there_hdoc = 0;
 	pars->lock_there_hdoc = 0;
-	if (ft_expander(pars) || ft_debug_content(lex, pars, "exp"))
+	if (ft_expander(pars))// || ft_debug_content(lex, pars, "exp"))
 		return (ft_error_return(lex, pars, shell));
-	if (ft_around_redirector(lex, pars, shell)
-		|| ft_debug_content(lex, pars, "redir"))
-		return (ft_error_return(lex, pars, shell));
-	if (ft_transformer(pars) || ft_debug_content(lex, pars, "trans"))
+	if (ft_around_redirector(lex, pars))
+		//|| ft_debug_content(lex, pars, "redir"))
 		return (ft_error_return(lex, pars, shell));
 	return (0);
 }

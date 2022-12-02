@@ -6,65 +6,117 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/08/15 21:46:26 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 03:57:25 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+char	*ft_read(char *buff, int fd)
+{
+	int		ret;
+	char	*tmp;
+
+	ret = 1;
+	tmp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	while (ret != 0 && !ft_strchr(buff, '\n'))
+	{
+		ret = read(fd, tmp, BUFFER_SIZE);
+		if (ret == -1)
+		{
+			free(tmp);
+			return (NULL);
+		}
+		tmp[ret] = '\0';
+		buff = ft_strjoin_gnl(buff, tmp);
+	}
+	free(tmp);
+	return (buff);
+}
+
+char	*ft_next_line(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!str[i])
+	{
+		free(str);
+		return (NULL);
+	}
+	tmp = malloc(sizeof(char) * (ft_strlen(str) - i) + 1);
+	i++;
+	j = 0;
+	while (str[i + j])
+	{
+		tmp[j] = str[i + j];
+		j++;
+	}
+	tmp[j] = '\0';
+	free(str);
+	return (tmp);
+}
+
+char	*ft_get_line(char *str)
+{
+	char	*line;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		line = malloc(sizeof(char) * (i + 2));
+	else
+		line = malloc(sizeof(char) * (i + 1));
+	while (str[j] && str[j] != '\n')
+	{
+		line[j] = str[j];
+		j++;
+	}
+	if (str[j] == '\n')
+	{
+		line[j] = '\n';
+		j++;
+	}
+	line[j] = '\0';
+	return (line);
+}
 
 char	*get_next_line(int fd)
 {
-	static char	*stock;
-	int			index_nl;
+	char		*line;
+	static char	*buff;
 
-	if (!stock)
-		stock = ft_mem_alloc(1);
-	index_nl = ft_index_nl(stock);
-	if (index_nl == -1)
+	if (fd == 42)
 	{
-		index_nl = ft_read_buffer(fd, &stock);
-		if (index_nl == -1)
-		{
-			stock = NULL;
-			free(stock);
-			return (NULL);
-		}
+		free(buff);
+		return (NULL);
 	}
-	return (ft_update_stock(&stock, ft_strlen2(stock), index_nl));
-}
-
-int	ft_read_buffer(int fd, char **stock)
-{
-	char	*buffer;
-	int		index_nl;
-	int		nb_char;
-
-	nb_char = BUFFER_SIZE;
-	index_nl = -1;
-	while (nb_char == BUFFER_SIZE && index_nl == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buff = ft_read(buff, fd);
+	if (!buff)
+		return (NULL);
+	if (!buff[0])
 	{
-		buffer = ft_mem_alloc(BUFFER_SIZE + 1);
-		nb_char = read(fd, buffer, BUFFER_SIZE);
-		if (nb_char == -1)
-			break ;
-		index_nl = ft_index_nl(buffer);
-		*stock = ft_strjoin2(*stock, buffer);
+		free(buff);
+		buff = NULL;
+		return (NULL);
 	}
-	if (nb_char == -1 || !*stock[0])
-	{
-		if (nb_char == -1)
-			free(buffer);
-		free(*stock);
-		return (-1);
-	}
-	return (ft_strlen2(*stock) - (index_nl >= 0) * (nb_char - index_nl));
-}
-
-char	*ft_update_stock(char **stock, int stock_size, int index_nl)
-{
-	char	*new_line;
-
-	new_line = ft_substr2(stock, 0, index_nl + 1);
-	*stock = ft_substr2(stock, index_nl + 1, stock_size - index_nl - 1);
-	return (new_line);
+	line = ft_get_line(buff);
+	buff = ft_next_line(buff);
+	return (line);
 }

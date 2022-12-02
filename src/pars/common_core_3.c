@@ -6,17 +6,17 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:19:52 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 19:18:24 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 04:19:19 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_redirector(t_pars *pars, t_shell *shell)
+int	ft_redirector(t_pars *pars)
 {
 	ft_init_pars_counts(pars);
 	ft_init_redir_decisions(pars);
-	ft_init_redir_actions(shell);
+	ft_init_redir_actions(pars);
 	while (pars->i++ < pars->nb_of_commands)
 	{
 		pars->k = pars->command->nb_of_tokens;
@@ -24,9 +24,9 @@ int	ft_redirector(t_pars *pars, t_shell *shell)
 		while (pars->j++ < pars->k)
 		{
 			pars->token = pars->command->token;
-			pars->r = ft_redir_apply_decision(shell);
-			//if (pars->redir && pars->j++)
-			//	pars->redir = 0;
+			pars->r = ft_redir_apply_decision(pars);
+			if (pars->redir && pars->j++)
+				pars->redir = 0;
 			if (pars->r)
 				return (pars->r);
 			ft_finilize_fd_in(pars);
