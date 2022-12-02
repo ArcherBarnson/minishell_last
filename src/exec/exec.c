@@ -49,6 +49,7 @@ void	execute_command(t_shell *shell, char **envp, int mode)
 		if (shell->cmd->cmd != NULL)
 			execve(shell->cmd->cmd, shell->cmd->token, envp);
 	}
+	ft_free_hdoctab(shell->hdoc_tab);
 	free(shell->cmd->cmd);
 	shell->cmd->cmd = NULL;
 	ft_lstclear(&shell->cmd_head, del);

@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:18:49 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 10:57:36 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:01:15 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	ft_inner_loop_heredoc(t_pars *pars, char *delim)
 			if (ft_transformer(pars))
 				return (ft_error_return(free_heredoc(NULL, 1)->lex, pars,
 						(free_heredoc(NULL, 1))));
+			ft_free_hdoctab(pars->hdoc_tab);
 			ft_free_commandlist(pars->command);
 			ft_lstclear(&pars->cmd, del);
 			ft_tklist_freeall(free_heredoc(NULL, 1)->lex);
@@ -84,6 +85,7 @@ int	ft_check_delim(t_pars *pars, char *delim)
 		if (ft_transformer(pars))
 			return (ft_error_return(free_heredoc(NULL, 1)->lex, pars,
 					(free_heredoc(NULL, 1))));
+		ft_free_hdoctab(pars->hdoc_tab);
 		ft_free_commandlist(pars->command);
 		ft_tklist_freeall(free_heredoc(NULL, 1)->lex);
 		ft_lstclear(&pars->cmd, del);

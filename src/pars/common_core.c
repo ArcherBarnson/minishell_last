@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 16:19:48 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 18:57:13 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	ft_read_prompt(t_shell *shell)
 		lex.user_input = shell->retprompt;
 	pars.r = ft_all_parsing_steps(&lex, &pars, shell);
 	if (pars.r == 45)
+	{
+		shell->hdv = 45;
 		return (ft_error_ctrl_c(shell, &pars, &lex));
+	}
 	else if (pars.r == 44)
 	{
 		ft_lstclear(&pars.cmd, del);
@@ -114,10 +117,10 @@ int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 	int	r;
 	int r0;
 
-	if (ft_around_lexer(lex) || ft_debug_content(lex, pars, "lex"))
+	if (ft_around_lexer(lex))// || ft_debug_content(lex, pars, "lex"))
 		return (ft_error_return(lex, pars, shell));
 	r0 = ft_around_parser(lex, pars);
-	if (r0 || ft_debug_content(lex, pars, "pars"))
+	if (r0)// || ft_debug_content(lex, pars, "pars"))
 	{
 		if (r0 == 45)
 			return (44);
@@ -125,16 +128,16 @@ int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 	}
 	pars->there_hdoc = 0;
 	pars->lock_there_hdoc = 0;
-	if (ft_expander(pars)  || ft_debug_content(lex, pars, "exp"))
+	if (ft_expander(pars))// || ft_debug_content(lex, pars, "exp"))
 		return (ft_error_return(lex, pars, shell));
 	r = ft_around_redirector(lex, pars);
-	if (r || ft_debug_content(lex, pars, "redir"))
+	if (r)//|| ft_debug_content(lex, pars, "redir"))
 	{
 		if (r == 45)
 			return (45);
 		return (ft_error_return(lex, pars, shell));
 	}
-	if (ft_transformer(pars) || ft_debug_content(lex, pars, "trans"))
+	if (ft_transformer(pars))//|| ft_debug_content(lex, pars, "trans"))
 		return (ft_error_return(lex, pars, shell));
 	return (0);
 }

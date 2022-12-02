@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 15:41:29 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:26:59 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ struct s_shell
 	int			pipefd[2];
 	int			tmp_fd;
 	int			exit_status;
+	int			hdv;
 	char		*retprompt;
+	char		*cwd;
 	char		**ms_env;
 	char		**env_paths;
 	t_lex		*lex;
@@ -639,6 +641,8 @@ int				ft_update_command_fds(t_pars *pars);
 int				ft_debug_hdoc_list(t_hdoc *hdoc);
 t_shell			*free_heredoc(t_shell *shell, int mode);
 int				ft_free_commandtoken(t_pars *pars);
+void			ft_pas_d_env(char *cwd, char *tmp2, t_envp_cpy **lst);
+int				ft_little_add(int c, int p, t_envp_cpy **lst, char *tmp2);
 
 /* ************************************************************************** */
 /*                           redirector_file_manager.c                        */
@@ -880,7 +884,7 @@ int				export(t_shell *shell, char **av,
 int				ft_exportcmp(char *s1, char *s2);
 int				export_no_args(t_shell *shell, t_envp_cpy *envpc_lst);
 int				export_error(char *str, int i, int error_type);
-char			*ft_shlvl(char *var, char *tmp2, int sh);
+char			*ft_shlvl(char *var, char *tmp2);
 int				ft_strccmp(char *s1, char *s2, char c);
 int				is_env_var(char *str);
 void			mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode);

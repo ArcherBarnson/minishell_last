@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/01 10:06:01 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:05:50 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	cmds_get_n(t_shell *shell)
 
 	n = 0;
 	shell->cmd = shell->cmd_head;
-	if (shell->cmd->fd_in == -1)
-		shell->cmd = shell->cmd->next;
 	while (shell->cmd && shell->cmd->next)
 	{
 		n++;
@@ -27,8 +25,6 @@ int	cmds_get_n(t_shell *shell)
 	}
 	n++;
 	shell->cmd = shell->cmd_head;
-	if (shell->cmd->fd_in == -1)
-		shell->cmd = shell->cmd->next;
 	return (n);
 }
 

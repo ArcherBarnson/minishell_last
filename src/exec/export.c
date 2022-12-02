@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:26:22 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 13:58:12 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:42:05 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ void	mod_env_var(char *var, t_envp_cpy *envpc_lst, int mode)
 	env_var_buf = ft_strdup(envpc_lst->var);
 	if (mode == 1)
 	{
-		free(envpc_lst->var);
-		envpc_lst->var = ft_strdup(var);
+		if (check_if_equal(var))
+		{
+			free(envpc_lst->var);
+			envpc_lst->var = ft_strdup(var);
+		}	
 	}
 	if (mode == 2)
 	{

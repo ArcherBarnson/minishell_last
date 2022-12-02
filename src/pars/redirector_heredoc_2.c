@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:56:47 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 04:57:07 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 18:56:46 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_free_hdoctab(t_hdoc_tab *hdoc_tab)
 			i++;
 		}
 		free(hdoc_tab);
+		hdoc_tab = NULL;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 23:33:35 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 15:51:59 by lcalvie          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:28:57 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ t_shell	*free_heredoc(t_shell *shell, int mode)
 void	sigint_heredoc(int sig)
 {
 	(void)sig;
-	//free(free_heredoc(NULL, 1)->pars->str_gnl);
 	ft_transformer(free_heredoc(NULL, 1)->pars);
 	ft_tklist_freeall(free_heredoc(NULL, 1)->lex);
 	ft_pars_freeall(free_heredoc(NULL, 1)->pars);
 	ft_lstclear(&free_heredoc(NULL, 1)->pars->cmd, del);
 	free_all(free_heredoc(NULL, 1));
-	//free(pars->token->id);
-	//ft_pars_freeall(pars);
 	exit(130);
 }
 
@@ -42,7 +39,8 @@ int	ft_free_commandtoken(t_pars *pars)
 	while (1)
 	{
 		temp = pars->command;
-		pars->command = ft_command_jumpcurrent(pars->command->prev, pars->command->next);
+		pars->command = ft_command_jumpcurrent(pars->command->prev,
+				pars->command->next);
 		ft_free_tokenlist(&(temp->token));
 		if (pars->command == temp)
 		{

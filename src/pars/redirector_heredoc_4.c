@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 05:00:37 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 11:10:23 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:28:56 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	ft_update_command_fds(t_pars *pars)
 	i = 0;
 	while (i++ < pars->nb_of_commands)
 	{
-		//printf("initial fd in and out are <%d> <%d> \n",
-		//	pars->command->fd_in, pars->command->fd_out);
 		if (pars->command->fd_in == pars->current_fd)
 			pars->command->fd_in = pars->new_fd;
 		if (pars->command->fd_out == pars->current_fd)
