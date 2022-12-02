@@ -277,7 +277,7 @@ enum e_exp_read_modes
 	OR_EXP_RD_MD,
 	AND_EXP_RD_MD,
 	HDOC_EXP_RD_MD,
-	GGRT_EXP_RD_MD,
+	GGRT_EXP_RD_MD,int	check_if_equal(char *str)
 	DOL_EXP_RD_MD,
 	LEN_EXP_RD_MDS
 };
@@ -888,6 +888,7 @@ int				env_var_exists(char *str, char **envpc);
 int				env_var_exists_export(char *str, t_envp_cpy *envpc);
 int				is_valid_identifier(char c);
 int				is_valid_string(char *str);
+int				check_if_equal(char *str);
 int				unset(int ac, char **av, t_envp_cpy **envpc_lst);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**dup_tab(char **tab);
@@ -952,6 +953,5 @@ char			**get_env_paths(char **envp);
 t_shell			*minishell_init(char **envp);
 void			minishell_loop(t_shell *shell);
 void			reset_shell_values(t_shell *shell);
-
 
 #endif

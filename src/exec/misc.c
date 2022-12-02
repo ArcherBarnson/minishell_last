@@ -12,6 +12,18 @@
 
 #include "../../inc/minishell.h"
 
+int	check_if_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != '=')
+		i++;
+	return (str[i] == '=');
+}
+
 void	prep_pipexec(int *pids, int tbc)
 {
 	free(pids);
