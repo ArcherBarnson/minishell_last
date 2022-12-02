@@ -6,27 +6,29 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:23:23 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/08/15 21:45:26 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 04:01:20 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+# define BUFFER_SIZE 1
 
+char	*ft_strchr(const char *s, int c);
+size_t		ft_strlen(const char *str);
 char	*get_next_line(int fd);
-int		ft_read_buffer(int fd, char **stock);
-char	*ft_update_stock(char **stock, int stock_size, int index_nl);
-char	*ft_mem_alloc(int n);
-int		ft_strlen2(const char *s);
-char	*ft_strjoin2(char *s1, char *s2);
-char	*ft_substr2(char **s, int start, int len);
-int		ft_index_nl(char *str);
+char	*ft_get_line(char *str);
+char	*ft_next_line(char *str);
+char	*ft_read(char *tmp, int fd);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+void	ft_bzero2(void *s, size_t n);
 
 #endif

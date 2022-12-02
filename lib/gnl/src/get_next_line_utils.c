@@ -6,99 +6,92 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:44:12 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/08/15 21:46:57 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 04:03:46 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_mem_alloc(int n)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*str;
-	char	*str_cpy;
+	int	i;
 
-	str = malloc((n) * sizeof(char));
-	if (!str)
+	if (!s)
 		return (NULL);
-	str_cpy = str;
-	while (n-- > 0)
-		*str_cpy++ = '\0';
-	return (str);
-}
-
-int	ft_strlen2(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (*s)
+	i = 0;
+	while (s[i])
 	{
-		s++;
-		count++;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
 	}
-	return (count);
+	if (c == s[i])
+		return ((char *)&s[i]);
+	return (NULL);
 }
 
-char	*ft_strjoin2(char *s1, char *s2)
+/*int	ft_strlen(const char *str)
 {
-	char	*str;
-	char	*str_cpy;
-	int		length;
-	int		i;
+	int	i;
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}*/
+
+void	ft_bzero2(void *s, size_t n)
+{
+	size_t	i;
+	char	*cpy;
 
 	i = 0;
-	if (s1 == NULL || s2 == NULL)
+	cpy = s;
+	while (i < n)
+	{
+		cpy[i] = '\0';
+		i++;
+	}
+	s = cpy;
+}
+
+char	*ft_strjoin2(char *s1, char *s2, char *res)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (s1[++i])
+	{
+		res[j] = s1[i];
+		j++;
+	}
+	i = -1;
+	while (s2[++i])
+	{
+		res[j] = s2[i];
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
+}
+
+char	*ft_strjoin_gnl(char *s1, char *s2)
+{
+	char	*res;
+
+	if (!s1)
+	{
+		s1 = malloc(1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
 		return (NULL);
-	length = ft_strlen2(s1) + ft_strlen2(s2);
-	str = ft_mem_alloc(length + 1);
-	str_cpy = str;
-	while (s1[i])
-		*str_cpy++ = s1[i++];
-	i = 0;
-	while (s2[i])
-		*str_cpy++ = s2[i++];
-	*str_cpy = '\0';
+	res = malloc(sizeof(char) * ((ft_strlen((char *)s1)
+					+ ft_strlen((char *)s2)) + 1));
+	if (!res)
+		return (0);
+	res = ft_strjoin2(s1, s2, res);
 	free(s1);
-	free(s2);
-	return (str);
-}
-
-char	*ft_substr2(char **s, int start, int length)
-{
-	char	*str;
-	int		shift;
-	int		len_s;
-
-	if (*s == NULL)
-		return (NULL);
-	len_s = ft_strlen2(*s);
-	if (start >= len_s)
-		length = 0;
-	else if (start + length >= len_s)
-		length = len_s - start;
-	if (length == 0)
-	{
-		free(*s);
-		return (NULL);
-	}
-	str = ft_mem_alloc(length + 1);
-	shift = -1;
-	while (++shift < length)
-		*(str + shift) = *((*s + shift) + start);
-	*(str + shift) = '\0';
-	if (start != 0)
-		free(*s);
-	return (str);
-}
-
-int	ft_index_nl(char *str)
-{
-	int	count;
-
-	count = 0;
-	while (str[count] != '\n' && str[count] != '\0')
-		count++;
-	if (str[count] == '\0')
-		return (-1);
-	return (count);
+	return (res);
 }

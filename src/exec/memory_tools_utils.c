@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:33:54 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/30 17:49:38 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/02 02:37:02 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,35 @@ void	ft_lstclear(t_cmd **lst, void (*del)(void *))
 		list = tmp;
 	}
 	*lst = NULL;
+}
+
+void	del2(void *data)
+{
+	free(data);
+}
+
+void	ft_lstdelone2(t_token *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	if (lst->id)
+		free(lst->id);
+	free(lst);
+}
+
+void	ft_lstclear2(t_token *lst, void (*del)(void *))
+{
+	t_token	*list;
+	t_token	*tmp;
+
+	if (!lst || !del)
+		return ;
+	list = lst;
+	while (list)
+	{
+		tmp = list->next;
+		ft_lstdelone2(list, del);
+		list = tmp;
+	}
+	lst = NULL;
 }
