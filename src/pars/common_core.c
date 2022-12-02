@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:02:32 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 11:40:10 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:36:39 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_all_parsing_steps(t_lex *lex, t_pars *pars, t_shell *shell)
 {
 	int	r;
 
-	if (ft_around_lexer(lex)) //|| ft_debug_content(lex, pars, "lex"))
+	if (ft_around_lexer(lex)) // || ft_debug_content(lex, pars, "lex"))
 		return (ft_error_return(lex, pars, shell));
 	if (ft_around_parser(lex, pars)) // || ft_debug_content(lex, pars, "pars"))
 		return (ft_error_return(lex, pars, shell));

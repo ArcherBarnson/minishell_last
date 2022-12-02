@@ -6,7 +6,7 @@
 /*   By: mbourgeo <mbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 00:47:14 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/01 12:29:03 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:56:48 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	ft_open_infile(t_pars *pars, char *file)
 		close (pars->fd_in);
 	pars->fd_in = open(file, O_RDWR);
 	if (pars->fd_in < 0)
-		return (ft_msgerr(ERR_FILEIN));
+	{
+		ft_msgerr(ERR_FILEIN);
+		return (-1);
+	}
 	return (0);
 }
 
@@ -34,7 +37,7 @@ int	ft_open_outfile(t_pars *pars, char *file)
 	if (pars->fd_out < 0)
 	{
 		ft_msgerr(ERR_FILEOUT);
-		return (ft_msgerr(ERR_FILEOUT));
+		return (-1);
 	}
 	return (0);
 }
@@ -49,7 +52,7 @@ int	ft_open_append_outfile(t_pars *pars, char *file)
 	if (pars->fd_out < 0)
 	{
 		ft_msgerr(ERR_FILEOUT);
-		return (ft_msgerr(ERR_FILEOUT));
+		return (-1);
 	}
 	return (0);
 }

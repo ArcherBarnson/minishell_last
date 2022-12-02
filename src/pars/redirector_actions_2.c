@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 04:54:59 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 02:13:02 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:27:49 by lcalvie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ int	ft_redir_in(t_pars *pars)
 	ret = ft_open_infile(pars, pars->command->token->next->id);
 	if (!ret && pars->command->fd_in != -1)
 	{
-			pars->command->fd_in = pars->fd_in;
-			pars->mode0_fd_in = pars->fd_in;
+		pars->command->fd_in = pars->fd_in;
+		pars->mode0_fd_in = pars->fd_in;
 	}
 	else
+	{
 		pars->command->fd_in = -1;
+		pars->mode0_fd_in = -1;
+	}
 	return (0);
 }
 
@@ -61,15 +64,18 @@ int	ft_redir_heredoc(t_pars *pars)
 		pars->hdoc_i--;
 	}
 	ret = ft_open_heredoc(pars, pars->command->token->next->id);
-	if (!ret)
+	if (!ret && pars->command->fd_in != -1)
 	{
 		pars->command->fd_in = pars->fd_in;
 		pars->mode1_fd_in = pars->fd_in;
 	}
-	else if (ret == 45)
-		return (45);
 	else
+	{
 		pars->command->fd_in = -1;
+		pars->mode1_fd_in = -1;
+	}
+	//else if (ret == 45)
+	//	return (45);
 	return (ret);
 }
 
