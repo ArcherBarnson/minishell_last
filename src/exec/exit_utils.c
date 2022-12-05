@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:39:01 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 20:47:59 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:38:10 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	clean_exit(int status, t_shell *shell, char **av, int fork)
 	if (fork == 1)
 	{
 		free(shell->cmd->cmd);
-		ft_lstclear(&shell->cmd, del);
 		free_all(shell);
 		exit(status);
 	}

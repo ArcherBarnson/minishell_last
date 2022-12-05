@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/11/29 16:24:49 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:38:17 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_all(t_shell *shell)
 	if (shell)
 	{
 		if (shell->cmd)
-			free(shell->cmd);
+			ft_lstclear(&shell->cmd_head, del);
 		if (shell->retprompt)
 			free(shell->retprompt);
 		if (shell->env_paths)
