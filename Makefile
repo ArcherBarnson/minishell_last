@@ -6,7 +6,7 @@
 #    By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 20:52:12 by bgrulois          #+#    #+#              #
-#    Updated: 2022/12/02 20:52:16 by bgrulois         ###   ########.fr        #
+#    Updated: 2022/12/06 12:48:07 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PARSRCS		=	common_core.c common_core_2.c common_core_3.c common_core_4.c \
 				redirector_file_manager.c \
 				redirector_heredoc.c redirector_heredoc_2.c redirector_heredoc_3.c \
 				redirector_heredoc_4.c redirector_heredoc_5.c \
-				transformer_list.c
+				transformer_list.c reset_hd.c \
 
 EXSRCS		=	init_utils.c init.c  memory_tools_utils.c memory_tools.c  misc.c \
 				pathfinding.c exec_utils.c exit_utils.c exit.c wait.c \

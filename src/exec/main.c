@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/06 12:10:11 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:50:49 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,7 @@ void	reset_shell_values(t_shell *shell)
 	free_tab(shell->env_paths);
 	shell->env_paths = get_env_paths(shell->ms_env);
 	shell->envpc_head = set_env(shell, shell->ms_env);
-	if (shell->hdv != 45)
-	{
-		ft_unlink_allhdoc(shell->hdoc_tab);
-		ft_free_hdoctab(shell->hdoc_tab);
-		shell->hdv = 0;
-	}
-	else if (g_exit_code != 130)
-	{
-		ft_unlink_allhdoc(shell->hdoc_tab);
-		ft_free_hdoctab(shell->hdoc_tab);
-	}
+	reset_hd(shell);
 	return ;
 }
 
@@ -92,7 +82,7 @@ void	minishell_loop(t_shell *shell)
 			add_history(shell->retprompt);
 		ft_read_prompt(shell);
 		shell->cmd_head = shell->cmd;
-		if (shell->cmd_head != NULL && shell->cmd_head->token[0])
+		if (shell->cmd_head != NULL && ft_strlen(shell->cmd_head->token[0]) > 0)
 		{
 			if (shell->cmd && !shell->cmd->next)
 				g_exit_code = simple_exec(shell, shell->ms_env);

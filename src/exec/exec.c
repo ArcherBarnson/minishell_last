@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:49:33 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/06 11:51:24 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:00:26 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	pipexec(t_shell *shell, int tbc, char **envp, int *pids)
 
 	err_code = 0;
 	signal(SIGINT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
 	is_builtin = check_builtins(shell);
 	if (is_builtin == 2)
 		exit(g_exit_code);

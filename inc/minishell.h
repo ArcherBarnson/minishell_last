@@ -6,7 +6,7 @@
 /*   By: lcalvie <lcalvie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 09:44:25 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/12/02 19:26:59 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:49:00 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -616,6 +616,7 @@ int				ft_debug_parser_content(t_pars *pars);
 int				ft_debug_expander_content(t_pars *pars);
 int				ft_debug_redirector_content(t_pars *pars);
 int				ft_debug_transformer_content(t_cmd *cmd);
+void			reset_hd(t_shell *shell);
 
 /* ************************************************************************** */
 /*                            redirector_heredoc.c                            */
