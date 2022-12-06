@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:42:08 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 20:27:04 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:10:11 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,12 @@ void	reset_shell_values(t_shell *shell)
 	shell->envpc_head = set_env(shell, shell->ms_env);
 	if (shell->hdv != 45)
 	{
+		ft_unlink_allhdoc(shell->hdoc_tab);
+		ft_free_hdoctab(shell->hdoc_tab);
 		shell->hdv = 0;
+	}
+	else if (g_exit_code != 130)
+	{
 		ft_unlink_allhdoc(shell->hdoc_tab);
 		ft_free_hdoctab(shell->hdoc_tab);
 	}
