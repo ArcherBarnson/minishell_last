@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:33:54 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 02:37:02 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/12/06 09:51:19 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_lstdelone(t_cmd *lst, void (*del)(void *))
 {
 	if (!lst || !del)
 		return ;
-	if (lst->token)
+	if (lst->token != NULL)
 		free_tab(lst->token);
 	free(lst);
 }

@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:35:18 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/05 15:38:17 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/12/06 09:45:20 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@ void	free_tab(char **tab)
 	while (tab[++i])
 	{
 		if (tab[i])
+		{
 			free(tab[i]);
+			tab[i] = NULL;
+		}
 	}
 	free(tab);
+	tab = NULL;
 	return ;
 }
 
