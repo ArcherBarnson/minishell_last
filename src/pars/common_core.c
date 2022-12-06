@@ -50,6 +50,8 @@ int	ft_read_prompt(t_shell *shell)
 	else
 		lex.user_input = shell->retprompt;
 	pars.r = ft_all_parsing_steps(&lex, &pars, shell);
+	if (pars.temp)
+		free(pars.temp);
 	if (pars.r == 45)
 	{
 		shell->hdv = 45;

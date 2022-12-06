@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:39:01 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/06 09:54:44 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:00:10 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	clean_exit(int status, t_shell *shell, char **av, int fork)
 		free_all(shell);
 		exit(status);
 	}
-	//free_tab(av);
 	free_all(shell);
 	exit(status);
 }
