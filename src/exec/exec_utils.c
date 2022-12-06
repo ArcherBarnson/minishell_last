@@ -6,7 +6,7 @@
 /*   By: bgrulois <bgrulois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:25:21 by bgrulois          #+#    #+#             */
-/*   Updated: 2022/12/02 17:05:50 by bgrulois         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:12:30 by bgrulois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	check_for_invalid_cmd(t_shell *shell)
 		return (1);
 	if (shell->cmd->token[0][0] == '.' && shell->cmd->token[0][1] == '\0')
 	{
-		write(2, shell->cmd->cmd, ft_strlen(shell->cmd->token[0]));
-		write(2, ": usage . filename[arguments]\n", 29);
+		write(2, "msh : .:filename argument required\n", 36);
+		write(2, ".: usage . filename[arguments]\n", 31);
 		return (2);
 	}
 	fd = open(shell->cmd->token[0], O_DIRECTORY);
